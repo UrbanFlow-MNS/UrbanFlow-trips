@@ -7,4 +7,7 @@ public class Stop_Trip
     public TimeOnly DepartureTime  { get; set; }
     public int StopId { get; set; }
     public int StopSequence { get; set; }
+    
+    public Trip Trip { get; set; }
+
 }
