@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UrbanFlow-trips")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+472243af87b2fdf4cba8b5c37c6fb9728e6f164a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+89c969874d480ef933860851df2c15f340b06690")]
 [assembly: System.Reflection.AssemblyProductAttribute("UrbanFlow-trips")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UrbanFlow-trips")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
