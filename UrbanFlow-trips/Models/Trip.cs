@@ -7,7 +7,7 @@ public class Trip
     public int ServiceId { get; set; }
     public string TripHeadsign { get; set; }
     
-    public Routes Route { get; set; }
+    public Routes Routes { get; set; }
     public Calendar Calendar { get; set; }
     public ICollection<Stop_Trip> StopTrips { get; set; }
 }
