@@ -24,4 +24,10 @@ public class AgencyController : Controller
             message = "Agency created successfully"
         });
     }
+
+    [HttpGet("/all")]
+    public async Task<IActionResult> GetAllAgencies()
+    {
+        return Ok(await _agencyRepository.GetAllAgenciesAsync());
+    }
 }
