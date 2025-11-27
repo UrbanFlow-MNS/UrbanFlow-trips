@@ -15,7 +15,7 @@ public class RoutesController : Controller
         _routesRepository = routesRepository;
     }
     
-    [HttpPost("/create")]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateAgency(CreateRouteDTO routeDTO)
     {
         await _routesRepository.CreateRouteAsync(routeDTO);
@@ -25,7 +25,7 @@ public class RoutesController : Controller
         });
     }
 
-    [HttpGet("/all")]
+    [HttpGet("all")]
     public async Task<IActionResult> GetAllAgencies()
     {
         return Ok(await _routesRepository.GetAllRoutesAsync());

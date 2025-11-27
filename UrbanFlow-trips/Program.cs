@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using UrbanFlow_trips.Database;
+using UrbanFlow_trips.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +9,13 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<TripsDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-//builder.Services.AddOpenApi();
+builder.Services.AddScoped<AgencyRepository>();
+builder.Services.AddScoped<RoutesRepository>();
+builder.Services.AddScoped<RouteTypeRepository>();
+
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
@@ -18,9 +25,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<TripsDbContext>();
-
         context.Database.EnsureCreated();
-
     }
     catch (Exception ex)
     {
@@ -28,15 +33,16 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-// Configure the HTTP request pipeline.
+/*
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseHttpsRedirection();  
+
 }
+*/
 
-app.UseHttpsRedirection();
-
-
-
+app.UseHttpsRedirection();  
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();

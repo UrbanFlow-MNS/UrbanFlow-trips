@@ -15,7 +15,7 @@ public class AgencyController : Controller
         _agencyRepository = agencyRepository;
     }
     
-    [HttpPost("/create")]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateAgency(CreateAgencyDTO agencyDto)
     {
         await _agencyRepository.CreateAgencyAsync(agencyDto);
@@ -25,7 +25,7 @@ public class AgencyController : Controller
         });
     }
 
-    [HttpGet("/all")]
+    [HttpGet("all")]
     public async Task<IActionResult> GetAllAgencies()
     {
         return Ok(await _agencyRepository.GetAllAgenciesAsync());
