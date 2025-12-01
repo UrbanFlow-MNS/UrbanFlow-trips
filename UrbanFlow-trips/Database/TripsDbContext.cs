@@ -81,6 +81,12 @@ public class TripsDbContext : DbContext
             modelBuilder.Entity<Stop_Trip>()
                 .HasIndex(st => new { st.TripId, st.StopId })
                 .IsUnique();
+            
+            modelBuilder.Entity<Stop_Times>()
+                .HasOne(s => s.Agency)
+                .WithMany(a => a.Stops)
+                .HasForeignKey(s => s.AgencyId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
         }

@@ -7,5 +7,7 @@ public class Agency
     public string TimeZone { get; set; }
     
     public ICollection<Routes> Routes { get; set; }
+    public ICollection<Stop_Times> Stops { get; set; } 
+
 
 }
