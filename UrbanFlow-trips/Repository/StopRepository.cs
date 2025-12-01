@@ -13,7 +13,8 @@ public class StopRepository(TripsDbContext dbcontext)
         {
             StopName = stopDto.StopName,
             StopLat = stopDto.StopLat,
-            StopLong = stopDto.StopLong
+            StopLong = stopDto.StopLong,
+            AgencyId = stopDto.AgencyId
         };
         
         await dbcontext.Stops.AddAsync(stop);

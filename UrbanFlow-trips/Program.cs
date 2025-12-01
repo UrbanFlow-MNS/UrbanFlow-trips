@@ -25,10 +25,14 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var context = services.GetRequiredService<TripsDbContext>();
-        context.Database.EnsureCreated();
+        
+        context.Database.Migrate();
+        
+        Console.WriteLine("Database migrations OK.");
     }
     catch (Exception ex)
     {
+        Console.WriteLine($"Database migration NOT OK: {ex.Message}");
     }
 }
 
