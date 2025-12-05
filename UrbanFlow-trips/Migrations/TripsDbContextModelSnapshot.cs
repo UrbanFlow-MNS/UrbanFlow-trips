@@ -139,6 +139,9 @@ namespace UrbanFlow_trips.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StopId"));
 
+                    b.Property<int>("AgencyId")
+                        .HasColumnType("integer");
+
                     b.Property<decimal>("StopLat")
                         .HasColumnType("numeric");
 
@@ -151,15 +154,14 @@ namespace UrbanFlow_trips.Migrations
 
                     b.HasKey("StopId");
 
+                    b.HasIndex("AgencyId");
+
                     b.ToTable("Stops");
                 });
 
             modelBuilder.Entity("UrbanFlow_trips.Models.Stop_Trip", b =>
                 {
                     b.Property<int>("TripId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("StopSequence")
                         .HasColumnType("integer");
 
                     b.Property<TimeOnly>("ArrivalTime")
@@ -171,7 +173,10 @@ namespace UrbanFlow_trips.Migrations
                     b.Property<int>("StopId")
                         .HasColumnType("integer");
 
-                    b.HasKey("TripId", "StopSequence");
+                    b.Property<int>("StopSequence")
+                        .HasColumnType("integer");
+
+                    b.HasKey("TripId");
 
                     b.HasIndex("StopId");
 
@@ -227,6 +232,17 @@ namespace UrbanFlow_trips.Migrations
                     b.Navigation("RouteType");
                 });
 
+            modelBuilder.Entity("UrbanFlow_trips.Models.Stop_Times", b =>
+                {
+                    b.HasOne("UrbanFlow_trips.Models.Agency", "Agency")
+                        .WithMany("Stops")
+                        .HasForeignKey("AgencyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Agency");
+                });
+
             modelBuilder.Entity("UrbanFlow_trips.Models.Stop_Trip", b =>
                 {
                     b.HasOne("UrbanFlow_trips.Models.Stop_Times", "Stop")
@@ -268,6 +284,8 @@ namespace UrbanFlow_trips.Migrations
             modelBuilder.Entity("UrbanFlow_trips.Models.Agency", b =>
                 {
                     b.Navigation("Routes");
+
+                    b.Navigation("Stops");
                 });
 
             modelBuilder.Entity("UrbanFlow_trips.Models.Calendar", b =>

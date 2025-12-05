@@ -66,6 +66,7 @@ namespace UrbanFlow_trips.Migrations
                 {
                     StopId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AgencyId = table.Column<int>(type: "integer", nullable: false),
                     StopName = table.Column<string>(type: "text", nullable: false),
                     StopLat = table.Column<decimal>(type: "numeric", nullable: false),
                     StopLong = table.Column<decimal>(type: "numeric", nullable: false)
@@ -73,6 +74,12 @@ namespace UrbanFlow_trips.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Stops", x => x.StopId);
+                    table.ForeignKey(
+                        name: "FK_Stops_Agencies_AgencyId",
+                        column: x => x.AgencyId,
+                        principalTable: "Agencies",
+                        principalColumn: "AgencyId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -135,14 +142,14 @@ namespace UrbanFlow_trips.Migrations
                 columns: table => new
                 {
                     TripId = table.Column<int>(type: "integer", nullable: false),
-                    StopSequence = table.Column<int>(type: "integer", nullable: false),
                     ArrivalTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false),
                     DepartureTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false),
-                    StopId = table.Column<int>(type: "integer", nullable: false)
+                    StopId = table.Column<int>(type: "integer", nullable: false),
+                    StopSequence = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StopTrips", x => new { x.TripId, x.StopSequence });
+                    table.PrimaryKey("PK_StopTrips", x => x.TripId);
                     table.ForeignKey(
                         name: "FK_StopTrips_Stops_StopId",
                         column: x => x.StopId,
@@ -166,6 +173,11 @@ namespace UrbanFlow_trips.Migrations
                 name: "IX_Routes_RouteTypeId",
                 table: "Routes",
                 column: "RouteTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stops_AgencyId",
+                table: "Stops",
+                column: "AgencyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StopTrips_StopId",
