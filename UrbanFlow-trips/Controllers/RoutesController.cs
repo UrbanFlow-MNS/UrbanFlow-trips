@@ -21,7 +21,7 @@ public class RoutesController : Controller
         await _routesRepository.CreateRouteAsync(routeDTO);
         return Ok(new
         {
-            message = "Agency created successfully"
+            message = "Route created successfully"
         });
     }
 
