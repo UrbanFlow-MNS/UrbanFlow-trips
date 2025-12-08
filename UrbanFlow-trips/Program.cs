@@ -1,9 +1,17 @@
+using System.Text;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using RabbitMQ.Client;
 using UrbanFlow_trips.Database;
+using UrbanFlow_trips.DTO;
+using UrbanFlow_trips.Options;
 using UrbanFlow_trips.Repository;
+using UrbanFlow_trips.Service;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<RabbitMQOptions>(builder.Configuration.GetSection("RabbitMq"));
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<TripsDbContext>(options =>
@@ -12,6 +20,8 @@ builder.Services.AddDbContext<TripsDbContext>(options =>
 builder.Services.AddScoped<AgencyRepository>();
 builder.Services.AddScoped<RoutesRepository>();
 builder.Services.AddScoped<RouteTypeRepository>();
+
+builder.Services.AddScoped<IRabbitMQService, RabbitMQService>();
 
 
 builder.Services.AddControllers();
@@ -41,7 +51,6 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();  
-
 }
 */
 
