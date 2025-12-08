@@ -15,7 +15,7 @@ using IChannel channel = await connection.CreateChannelAsync();
 
 var message = new
 {
-    pattern = "log_created",
+    pattern = "logs_created",
     data = new LogMessage
     {
         MicroserviceName = "test trips",
