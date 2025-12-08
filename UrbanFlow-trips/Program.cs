@@ -15,8 +15,7 @@ await channel.QueueDeclareAsync(queue: "hello", durable: false, exclusive: false
 var message = new
 {
     pattern = "hello",
-    message = "Hello World!"
-
+    data = "Hello World!"
 };
 
 var json = JsonSerializer.Serialize(message);
