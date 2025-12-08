@@ -1,6 +1,22 @@
+using System.Text;
 using Microsoft.EntityFrameworkCore;
+using RabbitMQ.Client;
 using UrbanFlow_trips.Database;
 using UrbanFlow_trips.Repository;
+
+
+ConnectionFactory factory = new ConnectionFactory(){HostName = "localhost"};
+using IConnection? connection = await factory.CreateConnectionAsync();
+using IChannel channel = await connection.CreateChannelAsync();
+
+await channel.QueueDeclareAsync(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
+
+const string message = "Hello World!";
+byte[] body = Encoding.UTF8.GetBytes(message);
+
+await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "hello", body: body);
+Console.WriteLine(" [x] Sent {0}", message);
+
 
 var builder = WebApplication.CreateBuilder(args);
 
