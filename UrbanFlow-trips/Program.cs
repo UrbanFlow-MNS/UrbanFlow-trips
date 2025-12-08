@@ -5,8 +5,9 @@ using RabbitMQ.Client;
 using UrbanFlow_trips.Database;
 using UrbanFlow_trips.DTO;
 using UrbanFlow_trips.Repository;
+using UrbanFlow_trips.Service;
 
-
+/*
 ConnectionFactory factory = new ConnectionFactory(){HostName = "rabbitmq", UserName = "user", Password = "password"};
 using IConnection? connection = await factory.CreateConnectionAsync();
 using IChannel channel = await connection.CreateChannelAsync();
@@ -34,7 +35,7 @@ byte[] body = Encoding.UTF8.GetBytes(json);
 
 await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "LOGS_QUEUE_IN", body: body);
 Console.WriteLine(" [x] Sent {0}", message);
-
+*/
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,8 @@ builder.Services.AddDbContext<TripsDbContext>(options =>
 builder.Services.AddScoped<AgencyRepository>();
 builder.Services.AddScoped<RoutesRepository>();
 builder.Services.AddScoped<RouteTypeRepository>();
+
+builder.Services.AddScoped<IRabbitMQService, RabbitMQService>();
 
 
 builder.Services.AddControllers();
