@@ -30,7 +30,7 @@ var json = JsonSerializer.Serialize(message);
 byte[] body = Encoding.UTF8.GetBytes(json);
 
 
-await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "hello", body: body);
+await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "LOGS_QUEUE_IN", body: body);
 Console.WriteLine(" [x] Sent {0}", message);
 
 
