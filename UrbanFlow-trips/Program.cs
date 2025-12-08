@@ -15,7 +15,7 @@ const string message = "Hello World!";
 byte[] body = Encoding.UTF8.GetBytes(message);
 
 
-await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "hello_routing", body: body);
+await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "hello", body: body);
 Console.WriteLine(" [x] Sent {0}", message);
 
 
