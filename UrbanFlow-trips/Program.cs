@@ -9,14 +9,13 @@ ConnectionFactory factory = new ConnectionFactory(){HostName = "rabbitmq", UserN
 using IConnection? connection = await factory.CreateConnectionAsync();
 using IChannel channel = await connection.CreateChannelAsync();
 
-await channel.QueueDeclareAsync(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
 await channel.ExchangeDeclareAsync(exchange: "hello", type: ExchangeType.Fanout);
 
 const string message = "Hello World!";
 byte[] body = Encoding.UTF8.GetBytes(message);
 
 
-await channel.BasicPublishAsync(exchange: "hello", routingKey: "hello", body: body);
+await channel.BasicPublishAsync(exchange: "hello", routingKey: string.Empty, body: body);
 Console.WriteLine(" [x] Sent {0}", message);
 
 
