@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
 using UrbanFlow_trips.Database;
@@ -11,8 +12,15 @@ using IChannel channel = await connection.CreateChannelAsync();
 
 await channel.QueueDeclareAsync(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
 
-const string message = "Hello World!";
-byte[] body = Encoding.UTF8.GetBytes(message);
+var message = new
+{
+    pattern = "hello",
+    message = "Hello World!"
+
+};
+
+var json = JsonSerializer.Serialize(message);
+byte[] body = Encoding.UTF8.GetBytes(json);
 
 
 await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "hello", body: body);
