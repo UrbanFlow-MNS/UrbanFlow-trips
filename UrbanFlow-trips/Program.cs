@@ -5,7 +5,7 @@ using UrbanFlow_trips.Database;
 using UrbanFlow_trips.Repository;
 
 
-ConnectionFactory factory = new ConnectionFactory(){HostName = "localhost"};
+ConnectionFactory factory = new ConnectionFactory(){HostName = "rabbitmq", UserName = "user", Password = "password"};
 using IConnection? connection = await factory.CreateConnectionAsync();
 using IChannel channel = await connection.CreateChannelAsync();
 
