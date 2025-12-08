@@ -15,10 +15,10 @@ public class LogsController : Controller
         _mq = mq;
     }
 
-    [HttpPost("log")]
-    public async Task<IActionResult> SendLog(LogMessage message)
+    [HttpPost("create")]
+    public async Task<IActionResult> SendLog(LogMessageDTO messageDto)
     {
-        await _mq.PublishAsync("LOGS_QUEUE_IN", message, "logs_created");
+        await _mq.PublishAsync("LOGS_QUEUE_IN", messageDto, "logs_created");
         return Ok("Log envoyé !");
     }
 }
