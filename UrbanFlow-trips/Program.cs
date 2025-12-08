@@ -11,7 +11,7 @@ ConnectionFactory factory = new ConnectionFactory(){HostName = "rabbitmq", UserN
 using IConnection? connection = await factory.CreateConnectionAsync();
 using IChannel channel = await connection.CreateChannelAsync();
 
-//await channel.QueueDeclareAsync(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
+await channel.QueueDeclareAsync(queue: "LOGS_QUEUE_IN", durable: false, exclusive: false, autoDelete: false, arguments: null);
 
 var message = new
 {
