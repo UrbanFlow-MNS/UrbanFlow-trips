@@ -13,6 +13,8 @@ using IChannel channel = await connection.CreateChannelAsync();
 
 await channel.QueueDeclareAsync(queue: "LOGS_QUEUE_IN", durable: false, exclusive: false, autoDelete: false, arguments: null);
 
+var option = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
 var message = new
 {
     pattern = "logs_created",
@@ -26,7 +28,7 @@ var message = new
 
 
 
-var json = JsonSerializer.Serialize(message);
+var json = JsonSerializer.Serialize(message, option);
 byte[] body = Encoding.UTF8.GetBytes(json);
 
 
