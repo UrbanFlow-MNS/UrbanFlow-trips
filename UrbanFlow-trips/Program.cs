@@ -3,6 +3,7 @@ using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
 using UrbanFlow_trips.Database;
+using UrbanFlow_trips.DTO;
 using UrbanFlow_trips.Repository;
 
 
@@ -10,13 +11,20 @@ ConnectionFactory factory = new ConnectionFactory(){HostName = "rabbitmq", UserN
 using IConnection? connection = await factory.CreateConnectionAsync();
 using IChannel channel = await connection.CreateChannelAsync();
 
-await channel.QueueDeclareAsync(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
+//await channel.QueueDeclareAsync(queue: "hello", durable: false, exclusive: false, autoDelete: false, arguments: null);
 
 var message = new
 {
-    pattern = "hello",
-    data = "Hello World!"
+    pattern = "log_created",
+    data = new LogMessage
+    {
+        MicroserviceName = "test trips",
+        CodeOfEvent = 200,
+        Event = "Log created"
+    }
 };
+
+
 
 var json = JsonSerializer.Serialize(message);
 byte[] body = Encoding.UTF8.GetBytes(json);
