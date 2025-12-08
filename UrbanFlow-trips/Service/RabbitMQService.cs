@@ -1,6 +1,8 @@
 using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
+using UrbanFlow_trips.Options;
 
 namespace UrbanFlow_trips.Service;
 
@@ -9,13 +11,14 @@ public class RabbitMQService : IRabbitMQService
     private readonly ConnectionFactory _factory;
     private readonly JsonSerializerOptions _jsonOptions;
 
-    public RabbitMQService()
+    public RabbitMQService(IOptions<RabbitMQOptions> options)
     {
+        var option = options.Value;
         _factory = new ConnectionFactory()
         {
-            HostName = "rabbitmq",
-            UserName = "user",
-            Password = "password"
+            HostName = option.HostName,
+            UserName = option.UserName,
+            Password = option.Password
         };
 
         _jsonOptions = new JsonSerializerOptions
