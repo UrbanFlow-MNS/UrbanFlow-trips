@@ -6,5 +6,4 @@ public class RouteType
     public string RouteTypeName { get; set; }
     
     public ICollection<Routes> Routes { get; set; }
-
 }

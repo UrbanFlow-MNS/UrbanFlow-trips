@@ -20,6 +20,7 @@ builder.Services.AddDbContext<TripsDbContext>(options =>
 builder.Services.AddScoped<AgencyRepository>();
 builder.Services.AddScoped<RoutesRepository>();
 builder.Services.AddScoped<RouteTypeRepository>();
+builder.Services.AddScoped<StopRepository>();
 
 builder.Services.AddScoped<IRabbitMQService, RabbitMQService>();
 

@@ -10,6 +10,11 @@ public class StopsController : Controller
 {
     private readonly StopRepository _stopRepository;
 
+    public StopsController(StopRepository stopRepository)
+    {
+        _stopRepository = stopRepository;
+    }
+
     [HttpPost("create")]
     public async Task<IActionResult> CreateStop(CreateStopDTO stopDto)
     {

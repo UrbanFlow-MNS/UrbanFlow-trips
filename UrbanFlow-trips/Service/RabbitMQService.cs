@@ -29,8 +29,8 @@ public class RabbitMQService : IRabbitMQService
     
     public async Task PublishAsync(string queueName, object message, string eventPattern)
     {
-        using var connection = await _factory.CreateConnectionAsync();
-        using var channel = await connection.CreateChannelAsync();
+        await using var connection = await _factory.CreateConnectionAsync();
+        await using var channel = await connection.CreateChannelAsync();
 
         await channel.QueueDeclareAsync(queueName, durable: false, exclusive: false, autoDelete: false);
 
