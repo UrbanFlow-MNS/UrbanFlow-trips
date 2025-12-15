@@ -18,11 +18,19 @@ public class RoutesController : Controller
     [HttpPost("create")]
     public async Task<IActionResult> CreateAgency(CreateRouteDTO routeDTO)
     {
-        await _routesRepository.CreateRouteAsync(routeDTO);
+        _routesRepository.CreateRouteAsync(routeDTO);
         return Ok(new
         {
             message = "Route created successfully"
         });
+    }
+
+    [HttpGet("filter")]
+    public async Task<IActionResult> FilterRoutes([FromQuery] RouteFilterDTO filter)
+    {
+        var routes = await _routesRepository.GetRoutesFilter(filter);
+        if (!routes.Any()) return NotFound();
+        return Ok(routes);
     }
 
     [HttpGet("all")]
