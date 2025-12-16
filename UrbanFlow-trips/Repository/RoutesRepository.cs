@@ -17,6 +17,31 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper _mapper)
         await dbContext.SaveChangesAsync();
     }
     
+    public async Task<GetCompleteRouteDTO?> GetCompleteRouteAsync(int id)
+    {
+        return await dbContext.Routes
+            .Where(r => r.RouteId == id)
+            .Select(r => new GetCompleteRouteDTO
+            {
+                RouteId = r.RouteId,
+                RouteShortName = r.RouteShortName,
+                RouteLongName = r.RouteLongName,
+                RouteTypeName = r.RouteTypeId.ToString(),
+                StopDetails = r.Trips
+                    .SelectMany(t => t.StopTrips)
+                    .OrderBy(st => st.StopSequence)
+                    .Select(st => new GetStopDetailsDto
+                    {
+                        StopId = st.StopId,
+                        StopName = st.Stop.StopName,
+                        Latitude = st.Stop.StopLat,
+                        ArrivalTime = st.ArrivalTime,
+                        SequenceOrder = st.StopSequence
+                    }).ToList()
+
+            }).FirstOrDefaultAsync();
+    }
+    
 
     public async Task<List<GetRouteDTO>> GetRoutesFilter(RouteFilterDTO filter)
     {
