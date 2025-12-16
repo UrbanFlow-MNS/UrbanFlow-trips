@@ -45,7 +45,6 @@ public class TripRepository(TripsDbContext dbcontext, StopTripRepository stopTri
             Console.WriteLine("Oopsie " + e);
             await transaction.RollbackAsync();
         }
- 
     }
 
     public async Task<List<Trip>> GetAllTripsAsync()

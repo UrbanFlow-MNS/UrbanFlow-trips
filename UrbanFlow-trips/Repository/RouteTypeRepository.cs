@@ -17,6 +17,7 @@ public class RouteTypeRepository(TripsDbContext dbContext)
         await dbContext.RouteTypes.AddAsync(routeType);
         await dbContext.SaveChangesAsync();
     }
+    
 
     public async Task<List<RouteType>> GetAllRouteTypesAsync()
     {

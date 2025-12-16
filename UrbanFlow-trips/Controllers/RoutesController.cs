@@ -38,4 +38,10 @@ public class RoutesController : Controller
     {
         return Ok(await _routesRepository.GetAllRoutesAsync());
     }
+
+    [HttpGet("getDetails/{id}")]
+    public async Task<IActionResult> GetRouteDetails(int id)
+    {
+        return Ok(await _routesRepository.GetCompleteRouteAsync(id));
+    }
 }
