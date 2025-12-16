@@ -5,7 +5,7 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class TripRepository(TripsDbContext dbcontext)
+public class TripRepository(TripsDbContext dbcontext, StopTripRepository stopTripRepository)
 {
     public async Task CreateTripAsync(CreateTripDTO tripDto)
     {
@@ -18,6 +18,22 @@ public class TripRepository(TripsDbContext dbcontext)
         
         await dbcontext.Trips.AddAsync(trip);
         await dbcontext.SaveChangesAsync();
+        
+        int tripId = trip.TripId;
+        int sequence = 1; 
+
+        foreach (var stopTripDto in tripDto.CreateStopTrips)
+        {
+            stopTripDto.TripId = tripId;
+            stopTripDto.StopSequence = sequence;
+            if (stopTripDto.DepartureTime == null)
+                stopTripDto.DepartureTime = stopTripDto.ArrivalTime;
+            
+            stopTripRepository.CreateStopTripAsync(stopTripDto);
+            sequence++;
+        }
+        
+
         
     }
 
