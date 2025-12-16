@@ -19,7 +19,6 @@ public class StopTripRepository(TripsDbContext dbcontext)
         };
         
         await dbcontext.StopTrips.AddAsync(stopTrip);
-        await dbcontext.SaveChangesAsync();
     }
 
     public async Task<List<Stop_Trip>> GetAllStopTripsAsync()
