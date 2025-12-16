@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UrbanFlow_trips.Database;
 using UrbanFlow_trips.DTO;
@@ -5,24 +6,19 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class RoutesRepository(TripsDbContext dbContext)
+public class RoutesRepository(TripsDbContext dbContext, IMapper _mapper)
 {
     public async Task CreateRouteAsync(CreateRouteDTO routeDto)
     {
-        Routes route = new Routes()
-        {
-            AgencyId = routeDto.AgencyId,
-            RouteTypeId = routeDto.RouteTypeId,
-            RouteShortName = routeDto.RouteShortName,
-            RouteLongName = routeDto.RouteLongName
-        };
+        var route = _mapper.Map<Routes>(routeDto);
+        
         
         await dbContext.Routes.AddAsync(route);
         await dbContext.SaveChangesAsync();
     }
     
 
-    public async Task<List<Routes>> GetRoutesFilter(RouteFilterDTO filter)
+    public async Task<List<GetRouteDTO>> GetRoutesFilter(RouteFilterDTO filter)
     {
         var query = dbContext.Routes.AsQueryable();
         
@@ -35,11 +31,14 @@ public class RoutesRepository(TripsDbContext dbContext)
         if (filter.RouteId != null)
             query = query.Where(route => route.RouteId == filter.RouteId);
         
-        return await query.ToListAsync();
+        
+        await query.ToListAsync();
+        return _mapper.Map<List<GetRouteDTO>>(query);
     }
 
-    public async Task<List<Routes>> GetAllRoutesAsync()
+    public async Task<List<GetRouteDTO>> GetAllRoutesAsync()
     {
-        return await dbContext.Routes.ToListAsync();
+        var routes =  await dbContext.Routes.ToListAsync();
+        return _mapper.Map<List<GetRouteDTO>>(routes);
     }
 }
