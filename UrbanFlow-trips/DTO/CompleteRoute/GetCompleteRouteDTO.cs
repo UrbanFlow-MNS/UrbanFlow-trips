@@ -6,5 +6,6 @@ public class GetCompleteRouteDTO
     public string RouteShortName { get; set; }
     public string RouteLongName { get; set; }
     public string RouteTypeName { get; set; }
-    public List<GetStopDetailsDto> StopDetails { get; set; }
+
+    public List<GetTripDetailsDTO> Trips { get; set; } = new();
 }

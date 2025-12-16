@@ -17,6 +17,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper _mapper)
         await dbContext.SaveChangesAsync();
     }
     
+    // Jointure de la mort mais je vois pas comment faire autrement
     public async Task<GetCompleteRouteDTO?> GetCompleteRouteAsync(int id)
     {
         return await dbContext.Routes
@@ -27,19 +28,28 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper _mapper)
                 RouteShortName = r.RouteShortName,
                 RouteLongName = r.RouteLongName,
                 RouteTypeName = r.RouteTypeId.ToString(),
-                StopDetails = r.Trips
-                    .SelectMany(t => t.StopTrips)
-                    .OrderBy(st => st.StopSequence)
-                    .Select(st => new GetStopDetailsDto
-                    {
-                        StopId = st.StopId,
-                        StopName = st.Stop.StopName,
-                        Latitude = st.Stop.StopLat,
-                        ArrivalTime = st.ArrivalTime,
-                        SequenceOrder = st.StopSequence
-                    }).ToList()
 
-            }).FirstOrDefaultAsync();
+                Trips = r.Trips
+                    .Select(t => new GetTripDetailsDTO()
+                    {
+                        TripId = t.TripId,
+
+                        Stops = t.StopTrips
+                            .OrderBy(st => st.StopSequence)
+                            .Select(st => new GetStopDetailsDTO()
+                            {
+                                StopId = st.StopId,
+                                StopName = st.Stop.StopName,
+                                Longitude = st.Stop.StopLong,
+                                Latitude = st.Stop.StopLat,
+                                ArrivalTime = st.ArrivalTime,
+                                SequenceOrder = st.StopSequence
+                            })
+                            .ToList()
+                    })
+                    .ToList()
+            })
+            .FirstOrDefaultAsync();
     }
     
 
