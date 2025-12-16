@@ -76,7 +76,7 @@ public class TripsDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Stop_Trip>()
-                .HasKey(t => t.TripId);
+                .HasKey(t => new { t.TripId, t.StopId });
 
             modelBuilder.Entity<Stop_Trip>()
                 .HasIndex(st => new { st.TripId, st.StopId })
