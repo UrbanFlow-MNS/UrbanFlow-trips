@@ -29,12 +29,9 @@ public class TripRepository(TripsDbContext dbcontext, StopTripRepository stopTri
             if (stopTripDto.DepartureTime == null)
                 stopTripDto.DepartureTime = stopTripDto.ArrivalTime;
             
-            stopTripRepository.CreateStopTripAsync(stopTripDto);
+            await stopTripRepository.CreateStopTripAsync(stopTripDto);
             sequence++;
         }
-        
-
-        
     }
 
     public async Task<List<Trip>> GetAllTripsAsync()

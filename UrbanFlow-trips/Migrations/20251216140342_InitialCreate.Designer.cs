@@ -12,7 +12,7 @@ using UrbanFlow_trips.Database;
 namespace UrbanFlow_trips.Migrations
 {
     [DbContext(typeof(TripsDbContext))]
-    [Migration("20251216122301_InitialCreate")]
+    [Migration("20251216140342_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -173,7 +173,7 @@ namespace UrbanFlow_trips.Migrations
                     b.Property<TimeOnly>("ArrivalTime")
                         .HasColumnType("time without time zone");
 
-                    b.Property<TimeOnly>("DepartureTime")
+                    b.Property<TimeOnly?>("DepartureTime")
                         .HasColumnType("time without time zone");
 
                     b.Property<int>("StopSequence")

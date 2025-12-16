@@ -144,7 +144,7 @@ namespace UrbanFlow_trips.Migrations
                     TripId = table.Column<int>(type: "integer", nullable: false),
                     StopId = table.Column<int>(type: "integer", nullable: false),
                     ArrivalTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false),
-                    DepartureTime = table.Column<TimeOnly>(type: "time without time zone", nullable: false),
+                    DepartureTime = table.Column<TimeOnly>(type: "time without time zone", nullable: true),
                     StopSequence = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
