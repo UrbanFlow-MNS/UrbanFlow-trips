@@ -32,6 +32,8 @@ builder.Services.AddScoped<AgencyRepository>();
 builder.Services.AddScoped<RoutesRepository>();
 builder.Services.AddScoped<RouteTypeRepository>();
 builder.Services.AddScoped<StopRepository>();
+builder.Services.AddScoped<TripRepository>();
+builder.Services.AddScoped<StopTripRepository>();
 builder.Services.AddScoped<IRabbitMQService, RabbitMQService>();
 
 

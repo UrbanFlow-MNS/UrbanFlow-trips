@@ -170,7 +170,7 @@ namespace UrbanFlow_trips.Migrations
                     b.Property<TimeOnly>("ArrivalTime")
                         .HasColumnType("time without time zone");
 
-                    b.Property<TimeOnly>("DepartureTime")
+                    b.Property<TimeOnly?>("DepartureTime")
                         .HasColumnType("time without time zone");
 
                     b.Property<int>("StopSequence")
