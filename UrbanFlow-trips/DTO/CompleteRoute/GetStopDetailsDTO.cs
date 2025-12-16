@@ -1,6 +1,6 @@
 namespace UrbanFlow_trips.DTO;
 
-public class GetStopDetailsDto
+public class GetStopDetailsDTO
 {
     public int StopId { get; set; }
     public string StopName { get; set; }
