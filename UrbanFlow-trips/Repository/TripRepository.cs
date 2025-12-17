@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UrbanFlow_trips.Database;
 using UrbanFlow_trips.DTO;
@@ -5,21 +6,15 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class TripRepository(TripsDbContext dbcontext, StopTripRepository stopTripRepository)
+public class TripRepository(TripsDbContext dbcontext, StopTripRepository stopTripRepository, IMapper _mapper)
 {
     public async Task CreateTripAsync(CreateTripDTO tripDto)
     {
-        var transaction = await dbcontext.Database.BeginTransactionAsync();
+        await using var transaction = await dbcontext.Database.BeginTransactionAsync();
 
         try
         {
-            Trip trip = new Trip()
-            {
-                RouteId = tripDto.RouteId,
-                ServiceId = tripDto.ServiceId,
-                TripHeadsign = tripDto.TripHeadsign
-            };
-
+            Trip trip = _mapper.Map<Trip>(tripDto);
             await dbcontext.Trips.AddAsync(trip);
             await dbcontext.SaveChangesAsync();
 
@@ -42,8 +37,8 @@ public class TripRepository(TripsDbContext dbcontext, StopTripRepository stopTri
         }
         catch (Exception e)
         {
-            Console.WriteLine("Oopsie " + e);
             await transaction.RollbackAsync();
+            throw new Exception("Error creating trip" + e.Message );
         }
     }
 
