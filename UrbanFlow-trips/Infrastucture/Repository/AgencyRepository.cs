@@ -6,7 +6,7 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class AgencyRepository(TripsDbContext dbcontext, IMapper mapper)
+public class AgencyRepository(TripsDbContext dbcontext, IMapper mapper) : IAgencyRepository
 {
     public async Task CreateAgencyAsync(CreateAgencyDTO agencyDto)
     {

@@ -6,7 +6,7 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class CalendarRepository(TripsDbContext dbContext, IMapper mapper)
+public class CalendarRepository(TripsDbContext dbContext, IMapper mapper) : ICalendarRepository
 {
     public async Task CreateCalendarAsync(CreateCalendarDTO calendarDto)
     {
