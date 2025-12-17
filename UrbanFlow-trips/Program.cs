@@ -9,7 +9,9 @@ using UrbanFlow_trips.Mapping;
 using UrbanFlow_trips.Options;
 using UrbanFlow_trips.Repository;
 using UrbanFlow_trips.Service;
-
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using UrbanFlow_trips.Application.Validators;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,6 +45,9 @@ builder.Services.AddScoped<IRabbitMQService, RabbitMQService>();
 
 
 builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateAgencyDTOValidator>();
+
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
