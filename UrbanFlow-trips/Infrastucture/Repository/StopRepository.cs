@@ -6,7 +6,7 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class StopRepository(TripsDbContext dbcontext, IMapper mapper)
+public class StopRepository(TripsDbContext dbcontext, IMapper mapper) : IStopRepository
 {
     public async Task CreateStopAsync(CreateStopDTO stopDto)
     {

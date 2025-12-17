@@ -6,7 +6,7 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class RouteTypeRepository(TripsDbContext dbContext, IMapper mapper)
+public class RouteTypeRepository(TripsDbContext dbContext, IMapper mapper) : IRouteTypeRepository
 {
     public async Task CreateRouteTypeAsync(CreateRouteTypeDTO routeTypeDto)
     {
