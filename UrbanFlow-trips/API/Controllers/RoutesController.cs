@@ -11,7 +11,7 @@ public class RoutesController(IRoutesRepository _routesRepository) : Controller
     [HttpPost("create")]
     public async Task<IActionResult> CreateAgency(CreateRouteDTO routeDTO)
     {
-        _routesRepository.CreateRouteAsync(routeDTO);
+        await _routesRepository.CreateRouteAsync(routeDTO);
         return Ok(new
         {
             message = "Route created successfully"
