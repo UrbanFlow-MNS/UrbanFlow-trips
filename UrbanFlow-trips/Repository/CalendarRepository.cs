@@ -6,11 +6,11 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class CalendarRepository(TripsDbContext dbContext, IMapper _mapper)
+public class CalendarRepository(TripsDbContext dbContext, IMapper mapper)
 {
     public async Task CreateCalendarAsync(CreateCalendarDTO calendarDto)
     {
-        var calendar = _mapper.Map<Calendar>(calendarDto);
+        var calendar = mapper.Map<Calendar>(calendarDto);
         await dbContext.Calendars.AddAsync(calendar);
         await dbContext.SaveChangesAsync();
     }
@@ -18,6 +18,6 @@ public class CalendarRepository(TripsDbContext dbContext, IMapper _mapper)
     public async Task<List<GetCalendarDTO>> GetAllCalendarsAsync()
     {
         var calendar = await dbContext.Calendars.ToListAsync();
-        return _mapper.Map<List<GetCalendarDTO>>(calendar);
+        return mapper.Map<List<GetCalendarDTO>>(calendar);
     }
 }

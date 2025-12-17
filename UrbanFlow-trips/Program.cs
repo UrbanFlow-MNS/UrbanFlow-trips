@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
+using Scalar.AspNetCore;
 using UrbanFlow_trips.Database;
 using UrbanFlow_trips.DTO;
 using UrbanFlow_trips.Mapping;
@@ -10,7 +11,11 @@ using UrbanFlow_trips.Repository;
 using UrbanFlow_trips.Service;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddOpenApi();
 
 // Configuration des mappers
 builder.Services.AddAutoMapper(
@@ -62,12 +67,18 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-/*
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseHttpsRedirection();  
+    app.MapOpenApi();
+    
+    app.MapScalarApiReference(options =>
+    {
+        options.Title = "UrbanFlow Trips API";
+        options.Theme = ScalarTheme.Moon;
+    });
 }
-*/
+
 
 app.UseHttpsRedirection();  
 app.UseAuthorization();

@@ -6,11 +6,11 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class RoutesRepository(TripsDbContext dbContext, IMapper _mapper)
+public class RoutesRepository(TripsDbContext dbContext, IMapper mapper)
 {
     public async Task CreateRouteAsync(CreateRouteDTO routeDto)
     {
-        var route = _mapper.Map<Routes>(routeDto);
+        var route = mapper.Map<Routes>(routeDto);
         
         
         await dbContext.Routes.AddAsync(route);
@@ -68,12 +68,12 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper _mapper)
         
         
         await query.ToListAsync();
-        return _mapper.Map<List<GetRouteDTO>>(query);
+        return mapper.Map<List<GetRouteDTO>>(query);
     }
 
     public async Task<List<GetRouteDTO>> GetAllRoutesAsync()
     {
         var routes =  await dbContext.Routes.ToListAsync();
-        return _mapper.Map<List<GetRouteDTO>>(routes);
+        return mapper.Map<List<GetRouteDTO>>(routes);
     }
 }

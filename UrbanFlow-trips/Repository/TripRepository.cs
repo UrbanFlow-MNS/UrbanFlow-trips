@@ -6,7 +6,7 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class TripRepository(TripsDbContext dbcontext, StopTripRepository stopTripRepository, IMapper _mapper)
+public class TripRepository(TripsDbContext dbcontext, StopTripRepository stopTripRepository, IMapper mapper)
 {
     public async Task CreateTripAsync(CreateTripDTO tripDto)
     {
@@ -14,7 +14,7 @@ public class TripRepository(TripsDbContext dbcontext, StopTripRepository stopTri
 
         try
         {
-            Trip trip = _mapper.Map<Trip>(tripDto);
+            Trip trip = mapper.Map<Trip>(tripDto);
             await dbcontext.Trips.AddAsync(trip);
             await dbcontext.SaveChangesAsync();
 

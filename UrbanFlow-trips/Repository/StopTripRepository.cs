@@ -6,12 +6,12 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class StopTripRepository(TripsDbContext dbcontext, IMapper _mapper)
+public class StopTripRepository(TripsDbContext dbcontext, IMapper mapper)
 {
     public async Task CreateStopTripAsync(CreateStopTripDTO stopTripDto)
     {
         
-        Stop_Trip stopTrip = _mapper.Map<Stop_Trip>(stopTripDto);
+        Stop_Trip stopTrip = mapper.Map<Stop_Trip>(stopTripDto);
         await dbcontext.StopTrips.AddAsync(stopTrip);
     }
 
