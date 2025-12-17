@@ -6,14 +6,8 @@ namespace UrbanFlow_trips.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CalendarController : Controller
+public class CalendarController(ICalendarRepository _calendarRepository) : Controller
 {
-    private readonly CalendarRepository _calendarRepository;
-    public CalendarController(CalendarRepository calendarRepository)
-    {
-        _calendarRepository = calendarRepository;
-    }
-    
     [HttpPost("create")]
     public async Task<IActionResult> CreateCalendar(CreateCalendarDTO calendarDto)
     {

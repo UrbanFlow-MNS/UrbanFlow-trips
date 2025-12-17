@@ -33,12 +33,12 @@ builder.Services.AddDbContext<TripsDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 // Injection de dépendances des repositories
-builder.Services.AddScoped<AgencyRepository>();
-builder.Services.AddScoped<RoutesRepository>();
-builder.Services.AddScoped<RouteTypeRepository>();
-builder.Services.AddScoped<StopRepository>();
-builder.Services.AddScoped<TripRepository>();
-builder.Services.AddScoped<StopTripRepository>();
+builder.Services.AddScoped<IAgencyRepository, AgencyRepository>();
+builder.Services.AddScoped<IRoutesRepository, RoutesRepository>();
+builder.Services.AddScoped<IRouteTypeRepository, RouteTypeRepository>();
+builder.Services.AddScoped<IStopRepository, StopRepository>();
+builder.Services.AddScoped<ITripRepository, TripRepository>();
+builder.Services.AddScoped<IStopTripRepository, StopTripRepository>();
 builder.Services.AddScoped<IRabbitMQService, RabbitMQService>();
 
 

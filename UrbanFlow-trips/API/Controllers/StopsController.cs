@@ -6,15 +6,8 @@ namespace UrbanFlow_trips.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class StopsController : Controller
+public class StopsController(IStopRepository _stopRepository) : Controller
 {
-    private readonly StopRepository _stopRepository;
-
-    public StopsController(StopRepository stopRepository)
-    {
-        _stopRepository = stopRepository;
-    }
-
     [HttpPost("create")]
     public async Task<IActionResult> CreateStop(CreateStopDTO stopDto)
     {

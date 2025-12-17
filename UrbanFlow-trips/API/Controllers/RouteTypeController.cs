@@ -6,14 +6,8 @@ namespace UrbanFlow_trips.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RouteTypeController : Controller
+public class RouteTypeController(IRouteTypeRepository _routesTypeRepository) : Controller
 {
-    private readonly RouteTypeRepository _routesTypeRepository;
-    
-    public RouteTypeController(RouteTypeRepository routesTypeRepository)
-    {
-        _routesTypeRepository = routesTypeRepository;
-    }
     
     [HttpPost("create")]
     public async Task<IActionResult> CreateAgency(CreateRouteTypeDTO routeDTO)
