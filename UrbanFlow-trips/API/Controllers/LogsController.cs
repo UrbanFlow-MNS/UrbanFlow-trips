@@ -6,15 +6,8 @@ namespace UrbanFlow_trips.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class LogsController : Controller
+public class LogsController(IRabbitMQService _mq) : Controller
 {
-    private readonly IRabbitMQService _mq;
-
-    public LogsController(IRabbitMQService mq)
-    {
-        _mq = mq;
-    }
-
     [HttpPost("create")]
     public async Task<IActionResult> SendLog(LogMessageDTO messageDto)
     {
