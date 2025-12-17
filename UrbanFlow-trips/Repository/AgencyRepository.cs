@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UrbanFlow_trips.Database;
 using UrbanFlow_trips.DTO;
@@ -5,21 +6,19 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class AgencyRepository(TripsDbContext dbcontext)
+public class AgencyRepository(TripsDbContext dbcontext, IMapper _mapper)
 {
     public async Task CreateAgencyAsync(CreateAgencyDTO agencyDto)
     {
-        Agency agency = new Agency()
-        {
-            AgencyName = agencyDto.AgencyName,
-            TimeZone = agencyDto.TimeZone
-        };
+        var agency = _mapper.Map<Agency>(agencyDto);
         await dbcontext.Agencies.AddAsync(agency);
         await dbcontext.SaveChangesAsync();
     }
 
-    public async Task<List<Agency>> GetAllAgenciesAsync()
+    public async Task<List<GetAgencyDTO>> GetAllAgenciesAsync()
     {
-        return await dbcontext.Agencies.ToListAsync();
+        var Agency = await dbcontext.Agencies.ToListAsync();
+        return _mapper.Map<List<GetAgencyDTO>>(Agency);
+        
     }
 }
