@@ -16,5 +16,11 @@ public class CreateRouteDTOValidator : AbstractValidator<CreateRouteDTO>
         RuleFor(x => x.RouteTypeId)
             .GreaterThan(0)
             .NotEmpty().WithMessage("Doit appartenir à une ville");
+        
+        /* Exemple pour vérifier en bdd si ça existe déjà ou pas
+        RuleFor(x => x.Email)
+            .MustAsync(async (email, cancellation) =>
+                !await userRepo.EmailExists(email))
+        */
     }
 }
