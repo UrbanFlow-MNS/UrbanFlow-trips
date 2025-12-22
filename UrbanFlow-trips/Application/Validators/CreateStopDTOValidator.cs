@@ -8,15 +8,15 @@ public class CreateStopDTOValidator : AbstractValidator<CreateStopDTO>
     public CreateStopDTOValidator()
     {
         RuleFor(x => x.StopName)
-            .NotEmpty().WithMessage("Le nom de l'arrêt ne peut pas être null")
-            .MaximumLength(50).WithMessage("Nom de l'arrêt ne peut pas être supérieur à 50 caractères");
+            .NotEmpty().WithMessage("Stop name can't be null")
+            .MaximumLength(50).WithMessage("Stop name must be less than 50 characters");
         
         RuleFor(x => x.StopLat)
-            .NotNull().WithMessage("La latitude est obligatoire")
-            .InclusiveBetween(-90m, 90m).WithMessage("Latitude doit être compris entre -90 et 90");
+            .NotNull().WithMessage("Latitude is mandatory")
+            .InclusiveBetween(-90m, 90m).WithMessage("Latitude must be between -90 and 90");
 
         RuleFor(x => x.StopLong)
-            .NotNull().WithMessage("La longitude est obligatoire")
-            .InclusiveBetween(-180m, 180m).WithMessage("Longitude doit être compris entre -180 et 180");
+            .NotNull().WithMessage("Longitude is mandatory")
+            .InclusiveBetween(-180m, 180m).WithMessage("Longitude must be between -180 and 180");
     }
 }
