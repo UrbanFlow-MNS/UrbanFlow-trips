@@ -9,6 +9,6 @@ public class CreateStopTripDTOValidator : AbstractValidator<CreateStopTripDTO>
     {
         RuleFor(x => x.DepartureTime)
             .LessThan(x => x.ArrivalTime)
-            .WithMessage("Heure de départ ne peut pas inférieure à l'heure d'arrivée");
+            .WithMessage("Departure time must be before arrival time");
     }
 }

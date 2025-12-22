@@ -8,8 +8,8 @@ public class CreateRouteTypeDTOValidator : AbstractValidator<CreateRouteTypeDTO>
     public CreateRouteTypeDTOValidator()
     {
         RuleFor(x => x.RouteTypeName)
-            .MaximumLength(50).WithMessage("Le nom du moyen de transport ne peut pas être supérieur à 50 caractères")
-            .NotEmpty().WithMessage("Ne peut pas être vide");
+            .MaximumLength(50).WithMessage("Mean fo transport must be less than 50 characters")
+            .NotEmpty().WithMessage("Can't be null");
         
     }
 }

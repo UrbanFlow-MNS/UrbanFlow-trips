@@ -8,14 +8,14 @@ public class CreateRouteDTOValidator : AbstractValidator<CreateRouteDTO>
     public CreateRouteDTOValidator()
     {
         RuleFor(x => x.RouteShortName)
-            .MaximumLength(50).WithMessage("Nom du diminutif de la ligne doit faire moins de 50 caractères")
-            .NotEmpty().WithMessage("Ne peut pas être vide");
+            .MaximumLength(50).WithMessage("Short name must be less than 50 characters")
+            .NotEmpty().WithMessage("Can't be null");
         RuleFor(x => x.RouteLongName)
-            .MaximumLength(100).WithMessage("Nom de la ligne doit faire moins de 100 caractères")
-            .NotEmpty().WithMessage("Ne peut pas être vide");
+            .MaximumLength(100).WithMessage("Name of city can't be superior to 100 characters")
+            .NotEmpty().WithMessage("Can't be null");
         RuleFor(x => x.RouteTypeId)
             .GreaterThan(0)
-            .NotEmpty().WithMessage("Doit appartenir à une ville");
+            .NotEmpty().WithMessage("Must be greater than 0");
         
         /* Exemple pour vérifier en bdd si ça existe déjà ou pas
         RuleFor(x => x.Email)
