@@ -37,4 +37,14 @@ public class RoutesController(IRoutesRepository _routesRepository) : Controller
     {
         return Ok(await _routesRepository.GetCompleteRouteAsync(id));
     }
+    
+    [HttpPut("update/{id}")]
+    public async Task<IActionResult> UpdateRoute(UpdateRouteDTO routeDto, int id)
+    {
+        await _routesRepository.UpdateRouteAsync(id, routeDto);
+        return Ok(new
+        {
+            message = "Route updated successfully"
+        });
+    }
 }
