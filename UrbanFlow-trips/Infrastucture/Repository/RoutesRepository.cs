@@ -16,8 +16,12 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
         await dbContext.Routes.AddAsync(route);
         await dbContext.SaveChangesAsync();
     }
+
+    public async Task<Routes?> GetRouteByIdAsync(int id)
+    {
+        return await dbContext.Routes.FindAsync(id);
+    }
     
-    // Jointure de la mort mais je vois pas comment faire autrement
     public async Task<GetCompleteRouteDTO?> GetCompleteRouteAsync(int id)
     {
         return await dbContext.Routes
@@ -69,6 +73,17 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
         
         await query.ToListAsync();
         return mapper.Map<List<GetRouteDTO>>(query);
+    }
+
+    public async Task UpdateRouteAsync(int id, UpdateRouteDTO routeDto)
+    {
+        var route = await GetRouteByIdAsync(id);
+        
+        if (route == null)
+            throw new NullReferenceException("Route not found");
+        
+        mapper.Map(routeDto, route);
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task<List<GetRouteDTO>> GetAllRoutesAsync()

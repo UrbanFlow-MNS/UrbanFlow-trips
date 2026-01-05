@@ -10,5 +10,6 @@ public class RouteMappingProfile : Profile
     {
         CreateMap<CreateRouteDTO, Routes>();
         CreateMap<Routes, GetRouteDTO>();
+        CreateMap<UpdateRouteDTO, Routes>();
     }
 }
