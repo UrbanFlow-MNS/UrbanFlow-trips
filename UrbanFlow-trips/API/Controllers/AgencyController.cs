@@ -23,4 +23,14 @@ public class AgencyController(IAgencyRepository _agencyRepository) : Controller
     {
         return Ok(await _agencyRepository.GetAllAgenciesAsync());
     }
+    
+    [HttpPut("update/{id}")]
+    public async Task<IActionResult> UpdateAgency(UpdateAgencyDTO agencyDto, int id)
+    {
+        await _agencyRepository.UpdateAgencyAsync(id, agencyDto);
+        return Ok(new
+        {
+            message = "Agency updated successfully"
+        });
+    }
 }

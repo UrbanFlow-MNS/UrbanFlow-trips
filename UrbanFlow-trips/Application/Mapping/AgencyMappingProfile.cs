@@ -10,5 +10,6 @@ public class AgencyMappingProfile : Profile
     {
         CreateMap<CreateAgencyDTO, Agency>();
         CreateMap<Agency, GetAgencyDTO>();
+        CreateMap<UpdateAgencyDTO, Agency>();
     }
 }
