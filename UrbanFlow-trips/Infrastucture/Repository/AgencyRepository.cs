@@ -15,10 +15,27 @@ public class AgencyRepository(TripsDbContext dbcontext, IMapper mapper) : IAgenc
         await dbcontext.SaveChangesAsync();
     }
 
+    public async Task<Agency?> GetAgencyByIdAsync(int id)
+    {
+        return await dbcontext.Agencies.FindAsync(id);
+    }
+
     public async Task<List<GetAgencyDTO>> GetAllAgenciesAsync()
     {
         var Agency = await dbcontext.Agencies.ToListAsync();
         return mapper.Map<List<GetAgencyDTO>>(Agency);
+    }
+    
+    public async Task UpdateAgencyAsync(int id, UpdateAgencyDTO agencyDto)
+    {
+        var agency = await GetAgencyByIdAsync(id);
+
+        if (agency == null)
+            throw new NullReferenceException("Agency not found");
+        
+        mapper.Map(agencyDto, agency);
+        
+        await dbcontext.SaveChangesAsync();
         
     }
 }
