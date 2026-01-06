@@ -10,5 +10,6 @@ public class StopMappingProfile : Profile
     {
         CreateMap<CreateStopDTO, Stop_Times>();
         CreateMap<Stop_Times, GetStopDTO>();
+        CreateMap<UpdateStopDTO, Stop_Times>();
     }
 }

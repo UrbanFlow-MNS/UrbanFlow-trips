@@ -23,4 +23,14 @@ public class StopsController(IStopRepository _stopRepository) : Controller
     {
         return Ok(await _stopRepository.GetAllStopsAsync());
     }
+    
+    [HttpPut("update/{id}")]
+    public async Task<IActionResult> UpdateStop(UpdateStopDTO stopDto, int id)
+    {
+        await _stopRepository.UpdateStopAsync(id, stopDto);
+        return Ok(new
+        {
+            message = "Stop updated successfully"
+        });
+    }
 }
