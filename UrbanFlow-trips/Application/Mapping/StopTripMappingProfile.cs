@@ -9,5 +9,6 @@ public class StopTripMappingProfile : Profile
     public StopTripMappingProfile()
     {
         CreateMap<CreateStopTripDTO, Stop_Trip>();
+        CreateMap<UpdateStopTripDTO, Stop_Trip>();
     }
 }

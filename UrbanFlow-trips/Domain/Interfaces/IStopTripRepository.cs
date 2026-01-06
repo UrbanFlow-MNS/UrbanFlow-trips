@@ -6,5 +6,6 @@ namespace UrbanFlow_trips.Repository;
 public interface IStopTripRepository
 {
     Task CreateStopTripAsync(CreateStopTripDTO stopTripDto);
-    Task<List<Stop_Trip>> GetAllStopTripsAsync();
+    Task UpdateStopTripAsync(int stopId, int tripId, UpdateStopTripDTO stopTripDto);
+    Task<Stop_Trip?> GetStopTripByIdAsync(int stopId, int tripId);
 }
