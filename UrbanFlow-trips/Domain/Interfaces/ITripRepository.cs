@@ -7,4 +7,7 @@ public interface ITripRepository
 {
     Task CreateTripAsync(CreateTripDTO tripDto);
     Task<List<Trip>> GetAllTripsAsync();
+    Task UpdateTripService(int id, UpdateTripServiceDTO serviceId);
+    
+    
 }

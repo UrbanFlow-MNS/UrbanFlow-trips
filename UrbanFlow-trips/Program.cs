@@ -36,6 +36,7 @@ builder.Services.AddDbContext<TripsDbContext>(options =>
 
 // Injection de dépendances des repositories
 builder.Services.AddScoped<IAgencyRepository, AgencyRepository>();
+builder.Services.AddScoped<ICalendarRepository, CalendarRepository>();
 builder.Services.AddScoped<IRoutesRepository, RoutesRepository>();
 builder.Services.AddScoped<IRouteTypeRepository, RouteTypeRepository>();
 builder.Services.AddScoped<IStopRepository, StopRepository>();

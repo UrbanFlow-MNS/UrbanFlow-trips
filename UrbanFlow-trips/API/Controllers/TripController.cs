@@ -19,14 +19,26 @@ public class TripController(ITripRepository _tripRepository, IStopTripRepository
     }
     
     
-    [HttpPut("update/{stopId}/{tripId}")]
-    public async Task<IActionResult> UpdateTrip([FromBody] UpdateStopTripDTO stopTripDto, int stopId, int tripId)
+    [HttpPut("updateHourly/{stopId}/{tripId}")]
+    public async Task<IActionResult> UpdateHourlyTrip([FromBody] UpdateStopTripDTO stopTripDto, int stopId, int tripId)
     {
         await _stopTripRepository.UpdateStopTripAsync(stopId, tripId, stopTripDto);
         return Ok(new
         {
-            message = "Trip updated successfully"
+            message = "Trip hours updated successfully"
         });
     }
+    
+    [HttpPut("updateHourly/{tripId}")]
+    public async Task<IActionResult> UpdateTripService([FromBody] UpdateTripServiceDTO service, int tripId)
+    {
+        await _tripRepository.UpdateTripService(tripId, service);
+        return Ok(new
+        {
+            message = "Trip's service updated successfully"
+        });
+    }
+    
+    
     
 }

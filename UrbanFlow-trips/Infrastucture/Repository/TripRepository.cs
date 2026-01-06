@@ -8,6 +8,21 @@ namespace UrbanFlow_trips.Repository;
 
 public class TripRepository(TripsDbContext dbcontext, IStopTripRepository stopTripRepository, IMapper mapper) : ITripRepository
 {
+    public async Task<Trip?> GetTripByIdAsync(int id)
+    {
+        return await dbcontext.Trips.FindAsync(id);
+    }
+
+    public async Task UpdateTripService(int id, UpdateTripServiceDTO serviceId)
+    {
+        var trip = await GetTripByIdAsync(id);
+        if (trip == null)
+            throw new NullReferenceException("Trip not found");
+        trip.ServiceId = serviceId.serviceId;
+        await dbcontext.SaveChangesAsync();
+    }
+    
+    
     public async Task CreateTripAsync(CreateTripDTO tripDto)
     {
         await using var transaction = await dbcontext.Database.BeginTransactionAsync();
