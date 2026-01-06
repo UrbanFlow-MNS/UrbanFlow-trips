@@ -13,18 +13,22 @@ public class TripRepository(TripsDbContext dbcontext, IStopTripRepository stopTr
         return await dbcontext.Trips.FindAsync(id);
     }
 
-    public async Task UpdateTripService(int id, UpdateTripServiceDTO serviceId)
+    public async Task UpdateTripService(int id, UpdateTripServiceDTO serviceDto)
     {
+        ArgumentNullException.ThrowIfNull(serviceDto);
+
         var trip = await GetTripByIdAsync(id);
         if (trip == null)
-            throw new NullReferenceException("Trip not found");
-        trip.ServiceId = serviceId.serviceId;
+            throw new KeyNotFoundException($"Trip with id {id} not found");
+        trip.ServiceId = serviceDto.serviceId;
         await dbcontext.SaveChangesAsync();
     }
     
     
     public async Task CreateTripAsync(CreateTripDTO tripDto)
     {
+        ArgumentNullException.ThrowIfNull(tripDto);
+
         await using var transaction = await dbcontext.Database.BeginTransactionAsync();
 
         try

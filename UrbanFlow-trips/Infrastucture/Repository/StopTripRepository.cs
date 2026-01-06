@@ -14,14 +14,15 @@ public class StopTripRepository(TripsDbContext dbcontext, IMapper mapper) : ISto
     }
     public async Task CreateStopTripAsync(CreateStopTripDTO stopTripDto)
     {
-        
+        ArgumentNullException.ThrowIfNull(stopTripDto);
+
         Stop_Trip stopTrip = mapper.Map<Stop_Trip>(stopTripDto);
         await dbcontext.StopTrips.AddAsync(stopTrip);
     }
 
     public async Task<List<Stop_Trip>> GetAllStopTripsAsync()
     {
-        return await dbcontext.StopTrips.ToListAsync();
+        return await dbcontext.StopTrips.AsNoTracking().ToListAsync();
     }
     
     
@@ -30,7 +31,7 @@ public class StopTripRepository(TripsDbContext dbcontext, IMapper mapper) : ISto
         var stopTrip = await GetStopTripByIdAsync(stopId, tripId);
         
         if (stopTrip == null)
-            throw new NullReferenceException("Stop Trip not found");
+            throw new KeyNotFoundException($"StopTrip (StopId={stopId}, TripId={tripId}) not found");
         
         mapper.Map(stopTripDto, stopTrip);
         await dbcontext.SaveChangesAsync();

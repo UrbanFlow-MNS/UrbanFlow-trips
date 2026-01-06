@@ -10,6 +10,8 @@ public class CalendarRepository(TripsDbContext dbContext, IMapper mapper) : ICal
 {
     public async Task CreateCalendarAsync(CreateCalendarDTO calendarDto)
     {
+        ArgumentNullException.ThrowIfNull(calendarDto);
+
         var calendar = mapper.Map<Calendar>(calendarDto);
         await dbContext.Calendars.AddAsync(calendar);
         await dbContext.SaveChangesAsync();
@@ -17,7 +19,7 @@ public class CalendarRepository(TripsDbContext dbContext, IMapper mapper) : ICal
 
     public async Task<List<GetCalendarDTO>> GetAllCalendarsAsync()
     {
-        var calendar = await dbContext.Calendars.ToListAsync();
-        return mapper.Map<List<GetCalendarDTO>>(calendar);
+        var calendars = await dbContext.Calendars.AsNoTracking().ToListAsync();
+        return mapper.Map<List<GetCalendarDTO>>(calendars);
     }
 }

@@ -12,6 +12,7 @@ using UrbanFlow_trips.Service;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using UrbanFlow_trips.Application.Validators;
+using UrbanFlow_trips.Infrastucture.Messaging;
 
 
 var builder = WebApplication.CreateBuilder(args);
