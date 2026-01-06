@@ -2,9 +2,11 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
+using UrbanFlow_trips.Infrastucture.Exceptions;
 using UrbanFlow_trips.Options;
+using UrbanFlow_trips.Service;
 
-namespace UrbanFlow_trips.Service;
+namespace UrbanFlow_trips.Infrastucture.Messaging;
 
 public class RabbitMQService : IRabbitMQService
 {
@@ -29,20 +31,44 @@ public class RabbitMQService : IRabbitMQService
     
     public async Task PublishAsync(string queueName, object message, string eventPattern)
     {
-        await using var connection = await _factory.CreateConnectionAsync();
-        await using var channel = await connection.CreateChannelAsync();
-
-        await channel.QueueDeclareAsync(queueName, durable: false, exclusive: false, autoDelete: false);
-
-        message = new
+        ArgumentException.ThrowIfNullOrWhiteSpace(queueName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(eventPattern);
+        ArgumentNullException.ThrowIfNull(message);
+        
+        try
         {
-            pattern = eventPattern,
-            data = message
-        };
-        
-        var json = JsonSerializer.Serialize(message, _jsonOptions);
-        var body = Encoding.UTF8.GetBytes(json);
-        
-        await channel.BasicPublishAsync(exchange: string.Empty, routingKey: queueName, body: body);
+            await using var connection = await _factory.CreateConnectionAsync();
+            await using var channel = await connection.CreateChannelAsync();
+
+            await channel.QueueDeclareAsync(
+                queueName, 
+                durable: true,  // Persistance
+                exclusive: false, 
+                autoDelete: false
+            );
+            
+    
+            var json = JsonSerializer.Serialize(message, _jsonOptions);
+            var body = Encoding.UTF8.GetBytes(json);
+
+    
+            var properties = new BasicProperties
+            {
+                Persistent = true,  // Messages persistants
+                ContentType = "application/json"
+            };
+    
+            await channel.BasicPublishAsync(
+                exchange: string.Empty, 
+                routingKey: queueName, 
+                mandatory: true,
+                basicProperties: properties,
+                body: body
+            );
+        }
+        catch (Exception ex)
+        {
+            throw new MessagingPublishException($"Failed to publish to {queueName}", ex);
+        }
     }
 }

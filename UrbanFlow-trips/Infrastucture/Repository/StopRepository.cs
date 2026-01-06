@@ -8,18 +8,26 @@ namespace UrbanFlow_trips.Repository;
 
 public class StopRepository(TripsDbContext dbcontext, IMapper mapper) : IStopRepository
 {
-    public async Task<Stop_Times?> GetStopByIdAsync(int id)
+    private async Task<Stop_Times?> GetStopByIdAsync(int id)
     {
         return await dbcontext.Stops.FindAsync(id);
     }
     public async Task UpdateStopAsync(int id, UpdateStopDTO stop)
     {
+        ArgumentNullException.ThrowIfNull(stop);
+
         var stopToUpdate = await GetStopByIdAsync(id);
+        
+        if (stopToUpdate == null)
+            throw new KeyNotFoundException($"Stop with id {id} not found");
+        
         mapper.Map(stop, stopToUpdate);
         await dbcontext.SaveChangesAsync();
     }
     public async Task CreateStopAsync(CreateStopDTO stopDto)
     {
+        ArgumentNullException.ThrowIfNull(stopDto);
+
         var stop = mapper.Map<Stop_Times>(stopDto);
         await dbcontext.Stops.AddAsync(stop);
         await dbcontext.SaveChangesAsync();
@@ -27,8 +35,7 @@ public class StopRepository(TripsDbContext dbcontext, IMapper mapper) : IStopRep
 
     public async Task<List<GetStopDTO>> GetAllStopsAsync()
     {
-        
-        var StopTimes = await dbcontext.Stops.ToListAsync();
-        return mapper.Map<List<GetStopDTO>>(StopTimes);
+        var stopTimes = await dbcontext.Stops.AsNoTracking().ToListAsync();
+        return mapper.Map<List<GetStopDTO>>(stopTimes);
     }
 }

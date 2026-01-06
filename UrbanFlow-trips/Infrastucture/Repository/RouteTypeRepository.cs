@@ -10,6 +10,8 @@ public class RouteTypeRepository(TripsDbContext dbContext, IMapper mapper) : IRo
 {
     public async Task CreateRouteTypeAsync(CreateRouteTypeDTO routeTypeDto)
     {
+        ArgumentNullException.ThrowIfNull(routeTypeDto);
+
         var routeType = mapper.Map<RouteType>(routeTypeDto);
         await dbContext.RouteTypes.AddAsync(routeType);
         await dbContext.SaveChangesAsync();
@@ -18,7 +20,7 @@ public class RouteTypeRepository(TripsDbContext dbContext, IMapper mapper) : IRo
 
     public async Task<List<GetRouteTypeDTO>> GetAllRouteTypesAsync()
     {
-        var routeType =  await dbContext.RouteTypes.ToListAsync();
+        var routeType =  await dbContext.RouteTypes.AsNoTracking().ToListAsync();
         return mapper.Map<List<GetRouteTypeDTO>>(routeType);
     }
 }

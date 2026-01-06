@@ -17,7 +17,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task<Routes?> GetRouteByIdAsync(int id)
+    private async Task<Routes?> GetRouteByIdAsync(int id)
     {
         return await dbContext.Routes.FindAsync(id);
     }
@@ -25,6 +25,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
     public async Task<GetCompleteRouteDTO?> GetCompleteRouteAsync(int id)
     {
         return await dbContext.Routes
+            .AsNoTracking()
             .Where(r => r.RouteId == id)
             .Select(r => new GetCompleteRouteDTO
             {
@@ -59,6 +60,8 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
 
     public async Task<List<GetRouteDTO>> GetRoutesFilter(RouteFilterDTO filter)
     {
+        ArgumentNullException.ThrowIfNull(filter);
+
         var query = dbContext.Routes.AsQueryable();
         
         if (filter.AgencyId != null)
@@ -71,7 +74,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
             query = query.Where(route => route.RouteId == filter.RouteId);
         
         
-        await query.ToListAsync();
+        await query.AsNoTracking().ToListAsync();
         return mapper.Map<List<GetRouteDTO>>(query);
     }
 
@@ -80,7 +83,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
         var route = await GetRouteByIdAsync(id);
         
         if (route == null)
-            throw new NullReferenceException("Route not found");
+            throw new KeyNotFoundException($"Route with id {id} not found");
         
         mapper.Map(routeDto, route);
         await dbContext.SaveChangesAsync();
@@ -88,7 +91,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
 
     public async Task<List<GetRouteDTO>> GetAllRoutesAsync()
     {
-        var routes =  await dbContext.Routes.ToListAsync();
+        var routes =  await dbContext.Routes.AsNoTracking().ToListAsync();
         return mapper.Map<List<GetRouteDTO>>(routes);
     }
 }
