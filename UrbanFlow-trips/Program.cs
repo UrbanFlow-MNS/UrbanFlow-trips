@@ -1,18 +1,15 @@
-using System.Text;
-using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
-using RabbitMQ.Client;
 using Scalar.AspNetCore;
 using UrbanFlow_trips.Database;
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Mapping;
 using UrbanFlow_trips.Options;
 using UrbanFlow_trips.Repository;
 using UrbanFlow_trips.Service;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using UrbanFlow_trips.Application.Mapping;
 using UrbanFlow_trips.Application.Validators;
 using UrbanFlow_trips.Infrastucture.Messaging;
+using UrbanFlow_trips.Infrastucture.Repository;
 
 
 var builder = WebApplication.CreateBuilder(args);

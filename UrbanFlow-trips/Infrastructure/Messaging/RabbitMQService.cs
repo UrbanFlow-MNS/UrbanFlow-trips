@@ -2,7 +2,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
-using UrbanFlow_trips.Infrastucture.Exceptions;
+using UrbanFlow_trips.Exceptions;
 using UrbanFlow_trips.Options;
 using UrbanFlow_trips.Service;
 

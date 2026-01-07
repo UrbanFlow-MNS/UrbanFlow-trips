@@ -6,12 +6,12 @@ namespace UrbanFlow_trips.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CalendarController(ICalendarRepository _calendarRepository) : Controller
+public class CalendarController(ICalendarRepository calendarRepository) : Controller
 {
     [HttpPost("create")]
     public async Task<IActionResult> CreateCalendar(CreateCalendarDTO calendarDto)
     {
-        await _calendarRepository.CreateCalendarAsync(calendarDto);
+        await calendarRepository.CreateCalendarAsync(calendarDto);
         return Ok(new
         {
             message = "Calendar created successfully"
@@ -21,7 +21,7 @@ public class CalendarController(ICalendarRepository _calendarRepository) : Contr
     [HttpGet("all")]
     public async Task<IActionResult> GetAllCalendars()
     {
-        return Ok(await _calendarRepository.GetAllCalendarsAsync());
+        return Ok(await calendarRepository.GetAllCalendarsAsync());
     }
     
 }
