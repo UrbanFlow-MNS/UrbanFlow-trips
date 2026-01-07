@@ -6,13 +6,13 @@ namespace UrbanFlow_trips.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RouteTypeController(IRouteTypeRepository _routesTypeRepository) : Controller
+public class RouteTypeController(IRouteTypeRepository routesTypeRepository) : Controller
 {
     
     [HttpPost("create")]
-    public async Task<IActionResult> CreateAgency(CreateRouteTypeDTO routeDTO)
+    public async Task<IActionResult> CreateAgency(CreateRouteTypeDTO routeDto)
     {
-        await _routesTypeRepository.CreateRouteTypeAsync(routeDTO);
+        await routesTypeRepository.CreateRouteTypeAsync(routeDto);
         return Ok(new
         {
             message = "Route type created successfully"
@@ -22,6 +22,6 @@ public class RouteTypeController(IRouteTypeRepository _routesTypeRepository) : C
     [HttpGet("all")]
     public async Task<IActionResult> GetAllAgencies()
     {
-        return Ok(await _routesTypeRepository.GetAllRouteTypesAsync());
+        return Ok(await routesTypeRepository.GetAllRouteTypesAsync());
     }
 }

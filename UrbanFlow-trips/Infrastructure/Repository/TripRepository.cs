@@ -3,8 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using UrbanFlow_trips.Database;
 using UrbanFlow_trips.DTO;
 using UrbanFlow_trips.Models;
+using UrbanFlow_trips.Repository;
 
-namespace UrbanFlow_trips.Repository;
+namespace UrbanFlow_trips.Infrastucture.Repository;
 
 public class TripRepository(TripsDbContext dbcontext, IStopTripRepository stopTripRepository, IMapper mapper) : ITripRepository
 {
@@ -20,7 +21,7 @@ public class TripRepository(TripsDbContext dbcontext, IStopTripRepository stopTr
         var trip = await GetTripByIdAsync(id);
         if (trip == null)
             throw new KeyNotFoundException($"Trip with id {id} not found");
-        trip.ServiceId = serviceDto.serviceId;
+        trip.ServiceId = serviceDto.ServiceId;
         await dbcontext.SaveChangesAsync();
     }
     
