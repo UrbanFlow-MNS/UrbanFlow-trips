@@ -6,10 +6,10 @@ namespace UrbanFlow_trips.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class StopsController(IStopRepository stopRepository) : Controller
+public class StopsController(IStopRepository stopRepository) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> CreateStop(CreateStopDTO stopDto)
+    public async Task<IActionResult> CreateStop(CreateStopDto stopDto)
     {
         await stopRepository.CreateStopAsync(stopDto);
         return Ok(new
@@ -25,7 +25,7 @@ public class StopsController(IStopRepository stopRepository) : Controller
     }
     
     [HttpPut("update/{id}")]
-    public async Task<IActionResult> UpdateStop(UpdateStopDTO stopDto, int id)
+    public async Task<IActionResult> UpdateStop(UpdateStopDto stopDto, int id)
     {
         await stopRepository.UpdateStopAsync(id, stopDto);
         return Ok(new

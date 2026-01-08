@@ -6,10 +6,10 @@ namespace UrbanFlow_trips.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class AgencyController(IAgencyRepository agencyRepository) : Controller
+public class AgencyController(IAgencyRepository agencyRepository) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> CreateAgency(CreateAgencyDTO agencyDto)
+    public async Task<IActionResult> CreateAgency(CreateAgencyDto agencyDto)
     {
         await agencyRepository.CreateAgencyAsync(agencyDto);
         return Ok(new
@@ -25,7 +25,7 @@ public class AgencyController(IAgencyRepository agencyRepository) : Controller
     }
     
     [HttpPut("update/{id}")]
-    public async Task<IActionResult> UpdateAgency(UpdateAgencyDTO agencyDto, int id)
+    public async Task<IActionResult> UpdateAgency(UpdateAgencyDto agencyDto, int id)
     {
         await agencyRepository.UpdateAgencyAsync(id, agencyDto);
         return Ok(new

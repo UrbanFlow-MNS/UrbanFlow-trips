@@ -5,9 +5,9 @@ namespace UrbanFlow_trips.Repository;
 
 public interface IRoutesRepository
 {
-    Task CreateRouteAsync(CreateRouteDTO routeDto);
-    Task<GetCompleteRouteDTO?> GetCompleteRouteAsync(int id);
-    Task<List<GetRouteDTO>> GetRoutesFilter(RouteFilterDTO filter);
-    Task<List<GetRouteDTO>> GetAllRoutesAsync();
-    Task UpdateRouteAsync(int id, UpdateRouteDTO routeDto);
+    Task CreateRouteAsync(CreateRouteDto routeDto);
+    Task<GetCompleteRouteDto?> GetCompleteRouteAsync(int id);
+    Task<List<GetRouteDto>> GetRoutesFilter(RouteFilterDto filter);
+    Task<List<GetRouteDto>> GetAllRoutesAsync();
+    Task UpdateRouteAsync(int id, UpdateRouteDto routeDto);
 }

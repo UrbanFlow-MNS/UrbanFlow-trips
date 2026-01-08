@@ -6,11 +6,11 @@ namespace UrbanFlow_trips.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RouteTypeController(IRouteTypeRepository routesTypeRepository) : Controller
+public class RouteTypeController(IRouteTypeRepository routesTypeRepository) : ControllerBase
 {
     
     [HttpPost("create")]
-    public async Task<IActionResult> CreateAgency(CreateRouteTypeDTO routeDto)
+    public async Task<IActionResult> CreateAgency(CreateRouteTypeDto routeDto)
     {
         await routesTypeRepository.CreateRouteTypeAsync(routeDto);
         return Ok(new

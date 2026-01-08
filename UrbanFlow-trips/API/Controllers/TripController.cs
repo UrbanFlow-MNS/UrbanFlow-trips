@@ -6,10 +6,10 @@ namespace UrbanFlow_trips.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class TripController(ITripRepository tripRepository, IStopTripRepository stopTripRepository) : Controller
+public class TripController(ITripRepository tripRepository, IStopTripRepository stopTripRepository) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> CreateTrip([FromBody] CreateTripDTO tripDto)
+    public async Task<IActionResult> CreateTrip([FromBody] CreateTripDto tripDto)
     {
         await tripRepository.CreateTripAsync(tripDto);
         return Ok(new
@@ -20,7 +20,7 @@ public class TripController(ITripRepository tripRepository, IStopTripRepository 
     
     
     [HttpPut("updateHourly/{stopId}/{tripId}")]
-    public async Task<IActionResult> UpdateHourlyTrip([FromBody] UpdateStopTripDTO stopTripDto, int stopId, int tripId)
+    public async Task<IActionResult> UpdateHourlyTrip([FromBody] UpdateStopTripDto stopTripDto, int stopId, int tripId)
     {
         await stopTripRepository.UpdateStopTripAsync(stopId, tripId, stopTripDto);
         return Ok(new
@@ -30,7 +30,7 @@ public class TripController(ITripRepository tripRepository, IStopTripRepository 
     }
     
     [HttpPut("updateHourly/{tripId}")]
-    public async Task<IActionResult> UpdateTripService([FromBody] UpdateTripServiceDTO service, int tripId)
+    public async Task<IActionResult> UpdateTripService([FromBody] UpdateTripServiceDto service, int tripId)
     {
         await tripRepository.UpdateTripService(tripId, service);
         return Ok(new

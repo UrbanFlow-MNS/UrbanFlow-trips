@@ -8,7 +8,7 @@ namespace UrbanFlow_trips.Repository;
 
 public class CalendarRepository(TripsDbContext dbContext, IMapper mapper) : ICalendarRepository
 {
-    public async Task CreateCalendarAsync(CreateCalendarDTO calendarDto)
+    public async Task CreateCalendarAsync(CreateCalendarDto calendarDto)
     {
         ArgumentNullException.ThrowIfNull(calendarDto);
 
@@ -17,9 +17,9 @@ public class CalendarRepository(TripsDbContext dbContext, IMapper mapper) : ICal
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<GetCalendarDTO>> GetAllCalendarsAsync()
+    public async Task<List<GetCalendarDto>> GetAllCalendarsAsync()
     {
         var calendars = await dbContext.Calendars.AsNoTracking().ToListAsync();
-        return mapper.Map<List<GetCalendarDTO>>(calendars);
+        return mapper.Map<List<GetCalendarDto>>(calendars);
     }
 }

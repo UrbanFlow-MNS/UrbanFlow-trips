@@ -1,6 +1,6 @@
 namespace UrbanFlow_trips.DTO;
 
-public class UpdateAgencyDTO
+public class GetAgencyDto
 {
     public string AgencyName { get; set; }
     public string TimeZone { get; set; }

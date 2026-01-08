@@ -12,7 +12,7 @@ public class StopTripRepository(TripsDbContext dbcontext, IMapper mapper) : ISto
     {
         return await dbcontext.StopTrips.Where(x => x.StopId == stopId && x.TripId == tripId).FirstOrDefaultAsync();
     }
-    public async Task CreateStopTripAsync(CreateStopTripDTO stopTripDto)
+    public async Task CreateStopTripAsync(CreateStopTripDto stopTripDto)
     {
         ArgumentNullException.ThrowIfNull(stopTripDto);
 
@@ -26,7 +26,7 @@ public class StopTripRepository(TripsDbContext dbcontext, IMapper mapper) : ISto
     }
     
     
-    public async Task UpdateStopTripAsync(int stopId, int tripId, UpdateStopTripDTO stopTripDto)
+    public async Task UpdateStopTripAsync(int stopId, int tripId, UpdateStopTripDto stopTripDto)
     {
         var stopTrip = await GetStopTripByIdAsync(stopId, tripId);
         

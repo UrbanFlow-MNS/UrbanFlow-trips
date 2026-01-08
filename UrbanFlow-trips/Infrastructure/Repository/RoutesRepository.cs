@@ -8,7 +8,7 @@ namespace UrbanFlow_trips.Repository;
 
 public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoutesRepository
 {
-    public async Task CreateRouteAsync(CreateRouteDTO routeDto)
+    public async Task CreateRouteAsync(CreateRouteDto routeDto)
     {
         var route = mapper.Map<Routes>(routeDto);
         
@@ -22,12 +22,12 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
         return await dbContext.Routes.FindAsync(id);
     }
     
-    public async Task<GetCompleteRouteDTO?> GetCompleteRouteAsync(int id)
+    public async Task<GetCompleteRouteDto?> GetCompleteRouteAsync(int id)
     {
         return await dbContext.Routes
             .AsNoTracking()
             .Where(r => r.RouteId == id)
-            .Select(r => new GetCompleteRouteDTO
+            .Select(r => new GetCompleteRouteDto
             {
                 RouteId = r.RouteId,
                 RouteShortName = r.RouteShortName,
@@ -35,13 +35,13 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
                 RouteTypeName = r.RouteTypeId.ToString(),
 
                 Trips = r.Trips
-                    .Select(t => new GetTripDetailsDTO()
+                    .Select(t => new GetTripDetailsDto()
                     {
                         TripId = t.TripId,
 
                         Stops = t.StopTrips
                             .OrderBy(st => st.StopSequence)
-                            .Select(st => new GetStopDetailsDTO()
+                            .Select(st => new GetStopDetailsDto()
                             {
                                 StopId = st.StopId,
                                 StopName = st.Stop.StopName,
@@ -58,7 +58,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
     }
     
 
-    public async Task<List<GetRouteDTO>> GetRoutesFilter(RouteFilterDTO filter)
+    public async Task<List<GetRouteDto>> GetRoutesFilter(RouteFilterDto filter)
     {
         ArgumentNullException.ThrowIfNull(filter);
 
@@ -75,10 +75,10 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
         
         
         await query.AsNoTracking().ToListAsync();
-        return mapper.Map<List<GetRouteDTO>>(query);
+        return mapper.Map<List<GetRouteDto>>(query);
     }
 
-    public async Task UpdateRouteAsync(int id, UpdateRouteDTO routeDto)
+    public async Task UpdateRouteAsync(int id, UpdateRouteDto routeDto)
     {
         var route = await GetRouteByIdAsync(id);
         
@@ -89,9 +89,9 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<GetRouteDTO>> GetAllRoutesAsync()
+    public async Task<List<GetRouteDto>> GetAllRoutesAsync()
     {
         var routes =  await dbContext.Routes.AsNoTracking().ToListAsync();
-        return mapper.Map<List<GetRouteDTO>>(routes);
+        return mapper.Map<List<GetRouteDto>>(routes);
     }
 }

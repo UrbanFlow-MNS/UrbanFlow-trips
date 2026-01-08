@@ -3,9 +3,9 @@ using UrbanFlow_trips.DTO;
 
 namespace UrbanFlow_trips.Application.Validators;
 
-public class CreateRouteDTOValidator : AbstractValidator<CreateRouteDTO>
+public class UpdateRouteDtoValidator : AbstractValidator<UpdateRouteDto>
 {
-    public CreateRouteDTOValidator()
+    public UpdateRouteDtoValidator()
     {
         RuleFor(x => x.RouteShortName)
             .MaximumLength(50).WithMessage("Short name must be less than 50 characters")
@@ -16,11 +16,5 @@ public class CreateRouteDTOValidator : AbstractValidator<CreateRouteDTO>
         RuleFor(x => x.RouteTypeId)
             .GreaterThan(0)
             .NotEmpty().WithMessage("Must be greater than 0");
-        
-        /* Exemple pour vérifier en bdd si ça existe déjà ou pas
-        RuleFor(x => x.Email)
-            .MustAsync(async (email, cancellation) =>
-                !await userRepo.EmailExists(email))
-        */
     }
 }

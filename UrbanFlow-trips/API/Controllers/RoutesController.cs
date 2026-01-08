@@ -6,10 +6,10 @@ namespace UrbanFlow_trips.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RoutesController(IRoutesRepository routesRepository) : Controller
+public class RoutesController(IRoutesRepository routesRepository) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> CreateAgency(CreateRouteDTO routeDto)
+    public async Task<IActionResult> CreateAgency(CreateRouteDto routeDto)
     {
         await routesRepository.CreateRouteAsync(routeDto);
         return Ok(new
@@ -19,7 +19,7 @@ public class RoutesController(IRoutesRepository routesRepository) : Controller
     }
 
     [HttpGet("filter")]
-    public async Task<IActionResult> FilterRoutes([FromQuery] RouteFilterDTO filter)
+    public async Task<IActionResult> FilterRoutes([FromQuery] RouteFilterDto filter)
     {
         var routes = await routesRepository.GetRoutesFilter(filter);
         if (!routes.Any()) return NotFound();
@@ -39,7 +39,7 @@ public class RoutesController(IRoutesRepository routesRepository) : Controller
     }
     
     [HttpPut("update/{id}")]
-    public async Task<IActionResult> UpdateRoute(UpdateRouteDTO routeDto, int id)
+    public async Task<IActionResult> UpdateRoute(UpdateRouteDto routeDto, int id)
     {
         await routesRepository.UpdateRouteAsync(id, routeDto);
         return Ok(new

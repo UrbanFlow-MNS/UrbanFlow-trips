@@ -6,10 +6,10 @@ namespace UrbanFlow_trips.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class LogsController(IRabbitMQService mq) : Controller
+public class LogsController(IRabbitMQService mq) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> SendLog(LogMessageDTO messageDto)
+    public async Task<IActionResult> SendLog(LogMessageDto messageDto)
     {
         await mq.PublishAsync("LOGS_QUEUE_IN", messageDto, "logs_created");
         return Ok("Log envoyé !");

@@ -8,7 +8,7 @@ public class RouteTypeMappingProfile : Profile
 {
     public RouteTypeMappingProfile()
     {
-        CreateMap<CreateRouteTypeDTO, RouteType>();
-        CreateMap<RouteType, GetRouteTypeDTO>();
+        CreateMap<CreateRouteTypeDto, RouteType>();
+        CreateMap<RouteType, GetRouteTypeDto>();
     }
 }

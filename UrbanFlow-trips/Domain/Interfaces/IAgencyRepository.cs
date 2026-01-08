@@ -6,7 +6,7 @@ namespace UrbanFlow_trips.Repository;
 
 public interface IAgencyRepository
 {
-    Task CreateAgencyAsync(CreateAgencyDTO agencyDto);
-    Task<List<GetAgencyDTO>> GetAllAgenciesAsync();
-    Task UpdateAgencyAsync(int id, UpdateAgencyDTO agency);
+    Task CreateAgencyAsync(CreateAgencyDto agencyDto);
+    Task<List<GetAgencyDto>> GetAllAgenciesAsync();
+    Task UpdateAgencyAsync(int id, UpdateAgencyDto agency);
 }

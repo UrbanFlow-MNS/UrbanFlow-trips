@@ -8,7 +8,7 @@ public class CalendarMappingProfile : Profile
 {
     public CalendarMappingProfile()
     {
-        CreateMap<CreateCalendarDTO, Calendar>();
-        CreateMap<Calendar, GetCalendarDTO>();
+        CreateMap<CreateCalendarDto, Calendar>();
+        CreateMap<Calendar, GetCalendarDto>();
     }
 }

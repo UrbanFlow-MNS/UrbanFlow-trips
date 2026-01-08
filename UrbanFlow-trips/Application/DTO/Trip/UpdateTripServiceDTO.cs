@@ -1,6 +1,6 @@
 namespace UrbanFlow_trips.DTO;
 
-public class UpdateTripServiceDTO
+public class UpdateTripServiceDto
 {
     public int ServiceId { get; set; }
 }
