@@ -3,9 +3,9 @@ using UrbanFlow_trips.DTO;
 
 namespace UrbanFlow_trips.Application.Validators;
 
-public class UpdateStopTripDTOValidator : AbstractValidator<UpdateStopTripDTO>
+public class CreateStopTripDtoValidator : AbstractValidator<CreateStopTripDto>
 {
-    public UpdateStopTripDTOValidator()
+    public CreateStopTripDtoValidator()
     {
         RuleFor(x => x.DepartureTime)
             .LessThan(x => x.ArrivalTime)

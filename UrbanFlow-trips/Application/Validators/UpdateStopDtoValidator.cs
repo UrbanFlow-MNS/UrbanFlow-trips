@@ -3,9 +3,9 @@ using UrbanFlow_trips.DTO;
 
 namespace UrbanFlow_trips.Application.Validators;
 
-public class UpdateStopDTOValidator : AbstractValidator<UpdateStopDTO>
+public class UpdateStopDtoValidator : AbstractValidator<UpdateStopDto>
 {
-    public UpdateStopDTOValidator()
+    public UpdateStopDtoValidator()
     {
         RuleFor(x => x.StopName)
             .NotEmpty().WithMessage("Stop name can't be null")

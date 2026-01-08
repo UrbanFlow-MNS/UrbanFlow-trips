@@ -3,9 +3,9 @@ using UrbanFlow_trips.DTO;
 
 namespace UrbanFlow_trips.Application.Validators;
 
-public class CreateRouteTypeDTOValidator : AbstractValidator<CreateRouteTypeDTO>
+public class CreateRouteTypeDtoValidator : AbstractValidator<CreateRouteTypeDto>
 {
-    public CreateRouteTypeDTOValidator()
+    public CreateRouteTypeDtoValidator()
     {
         RuleFor(x => x.RouteTypeName)
             .MaximumLength(50).WithMessage("Mean fo transport must be less than 50 characters")

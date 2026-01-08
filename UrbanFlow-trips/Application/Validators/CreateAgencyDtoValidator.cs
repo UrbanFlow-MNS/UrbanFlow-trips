@@ -4,9 +4,9 @@ using UrbanFlow_trips.DTO;
 
 namespace UrbanFlow_trips.Application.Validators;
 
-public class CreateAgencyDTOValidator : AbstractValidator<CreateAgencyDTO>
+public class CreateAgencyDtoValidator : AbstractValidator<CreateAgencyDto>
 {
-    public CreateAgencyDTOValidator()
+    public CreateAgencyDtoValidator()
     {
         RuleFor(x => x.AgencyName)
             .MaximumLength(50).WithMessage("Can't be null")

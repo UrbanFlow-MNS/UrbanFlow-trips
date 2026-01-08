@@ -14,7 +14,7 @@ public class TripRepository(TripsDbContext dbcontext, IStopTripRepository stopTr
         return await dbcontext.Trips.FindAsync(id);
     }
 
-    public async Task UpdateTripService(int id, UpdateTripServiceDTO serviceDto)
+    public async Task UpdateTripService(int id, UpdateTripServiceDto serviceDto)
     {
         ArgumentNullException.ThrowIfNull(serviceDto);
 
@@ -26,7 +26,7 @@ public class TripRepository(TripsDbContext dbcontext, IStopTripRepository stopTr
     }
     
     
-    public async Task CreateTripAsync(CreateTripDTO tripDto)
+    public async Task CreateTripAsync(CreateTripDto tripDto)
     {
         ArgumentNullException.ThrowIfNull(tripDto);
 

@@ -8,7 +8,7 @@ namespace UrbanFlow_trips.Repository;
 
 public class AgencyRepository(TripsDbContext dbcontext, IMapper mapper) : IAgencyRepository
 {
-    public async Task CreateAgencyAsync(CreateAgencyDTO agencyDto)
+    public async Task CreateAgencyAsync(CreateAgencyDto agencyDto)
     {
         ArgumentNullException.ThrowIfNull(agencyDto);
 
@@ -22,13 +22,13 @@ public class AgencyRepository(TripsDbContext dbcontext, IMapper mapper) : IAgenc
         return await dbcontext.Agencies.FindAsync(id);
     }
 
-    public async Task<List<GetAgencyDTO>> GetAllAgenciesAsync()
+    public async Task<List<GetAgencyDto>> GetAllAgenciesAsync()
     {
         var agency = await dbcontext.Agencies.AsNoTracking().ToListAsync();
-        return mapper.Map<List<GetAgencyDTO>>(agency);
+        return mapper.Map<List<GetAgencyDto>>(agency);
     }
     
-    public async Task UpdateAgencyAsync(int id, UpdateAgencyDTO agencyDto)
+    public async Task UpdateAgencyAsync(int id, UpdateAgencyDto agencyDto)
     {
         var agency = await GetAgencyByIdAsync(id);
 

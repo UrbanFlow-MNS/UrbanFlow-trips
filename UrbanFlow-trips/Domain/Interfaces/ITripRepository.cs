@@ -5,9 +5,9 @@ namespace UrbanFlow_trips.Repository;
 
 public interface ITripRepository
 {
-    Task CreateTripAsync(CreateTripDTO tripDto);
+    Task CreateTripAsync(CreateTripDto tripDto);
     Task<List<Trip>> GetAllTripsAsync();
-    Task UpdateTripService(int id, UpdateTripServiceDTO serviceId);
+    Task UpdateTripService(int id, UpdateTripServiceDto serviceId);
     
     
 }

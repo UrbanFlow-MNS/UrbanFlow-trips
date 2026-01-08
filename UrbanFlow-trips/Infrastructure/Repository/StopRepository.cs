@@ -12,7 +12,7 @@ public class StopRepository(TripsDbContext dbcontext, IMapper mapper) : IStopRep
     {
         return await dbcontext.Stops.FindAsync(id);
     }
-    public async Task UpdateStopAsync(int id, UpdateStopDTO stop)
+    public async Task UpdateStopAsync(int id, UpdateStopDto stop)
     {
         ArgumentNullException.ThrowIfNull(stop);
 
@@ -24,7 +24,7 @@ public class StopRepository(TripsDbContext dbcontext, IMapper mapper) : IStopRep
         mapper.Map(stop, stopToUpdate);
         await dbcontext.SaveChangesAsync();
     }
-    public async Task CreateStopAsync(CreateStopDTO stopDto)
+    public async Task CreateStopAsync(CreateStopDto stopDto)
     {
         ArgumentNullException.ThrowIfNull(stopDto);
 
@@ -33,9 +33,9 @@ public class StopRepository(TripsDbContext dbcontext, IMapper mapper) : IStopRep
         await dbcontext.SaveChangesAsync();
     }
 
-    public async Task<List<GetStopDTO>> GetAllStopsAsync()
+    public async Task<List<GetStopDto>> GetAllStopsAsync()
     {
         var stopTimes = await dbcontext.Stops.AsNoTracking().ToListAsync();
-        return mapper.Map<List<GetStopDTO>>(stopTimes);
+        return mapper.Map<List<GetStopDto>>(stopTimes);
     }
 }

@@ -8,8 +8,8 @@ public class AgencyMappingProfile : Profile
 {
     public AgencyMappingProfile()
     {
-        CreateMap<CreateAgencyDTO, Agency>();
-        CreateMap<Agency, GetAgencyDTO>();
-        CreateMap<UpdateAgencyDTO, Agency>();
+        CreateMap<CreateAgencyDto, Agency>();
+        CreateMap<Agency, GetAgencyDto>();
+        CreateMap<UpdateAgencyDto, Agency>();
     }
 }

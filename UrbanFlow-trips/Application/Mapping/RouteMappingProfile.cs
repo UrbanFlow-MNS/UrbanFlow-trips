@@ -8,8 +8,8 @@ public class RouteMappingProfile : Profile
 { 
     public RouteMappingProfile()
     {
-        CreateMap<CreateRouteDTO, Routes>();
-        CreateMap<Routes, GetRouteDTO>();
-        CreateMap<UpdateRouteDTO, Routes>();
+        CreateMap<CreateRouteDto, Routes>();
+        CreateMap<Routes, GetRouteDto>();
+        CreateMap<UpdateRouteDto, Routes>();
     }
 }

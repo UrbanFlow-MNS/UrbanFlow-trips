@@ -8,7 +8,7 @@ namespace UrbanFlow_trips.Repository;
 
 public class RouteTypeRepository(TripsDbContext dbContext, IMapper mapper) : IRouteTypeRepository
 {
-    public async Task CreateRouteTypeAsync(CreateRouteTypeDTO routeTypeDto)
+    public async Task CreateRouteTypeAsync(CreateRouteTypeDto routeTypeDto)
     {
         ArgumentNullException.ThrowIfNull(routeTypeDto);
 
@@ -18,9 +18,9 @@ public class RouteTypeRepository(TripsDbContext dbContext, IMapper mapper) : IRo
     }
     
 
-    public async Task<List<GetRouteTypeDTO>> GetAllRouteTypesAsync()
+    public async Task<List<GetRouteTypeDto>> GetAllRouteTypesAsync()
     {
         var routeType =  await dbContext.RouteTypes.AsNoTracking().ToListAsync();
-        return mapper.Map<List<GetRouteTypeDTO>>(routeType);
+        return mapper.Map<List<GetRouteTypeDto>>(routeType);
     }
 }

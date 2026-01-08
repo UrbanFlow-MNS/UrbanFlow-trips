@@ -6,10 +6,10 @@ namespace UrbanFlow_trips.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CalendarController(ICalendarRepository calendarRepository) : Controller
+public class CalendarController(ICalendarRepository calendarRepository) : ControllerBase
 {
     [HttpPost("create")]
-    public async Task<IActionResult> CreateCalendar(CreateCalendarDTO calendarDto)
+    public async Task<IActionResult> CreateCalendar(CreateCalendarDto calendarDto)
     {
         await calendarRepository.CreateCalendarAsync(calendarDto);
         return Ok(new

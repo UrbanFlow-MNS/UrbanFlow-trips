@@ -8,7 +8,7 @@ public class TripMappingProfile : Profile
 {
     public TripMappingProfile()
     {
-        CreateMap<CreateTripDTO, Trip>();
-        CreateMap < UpdateTripServiceDTO, Trip>();
+        CreateMap<CreateTripDto, Trip>();
+        CreateMap < UpdateTripServiceDto, Trip>();
     }
 }

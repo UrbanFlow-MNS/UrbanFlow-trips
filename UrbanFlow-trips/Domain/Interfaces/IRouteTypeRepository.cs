@@ -4,6 +4,6 @@ namespace UrbanFlow_trips.Repository;
 
 public interface IRouteTypeRepository
 {
-    Task CreateRouteTypeAsync(CreateRouteTypeDTO routeTypeDto);
-    Task<List<GetRouteTypeDTO>> GetAllRouteTypesAsync();
+    Task CreateRouteTypeAsync(CreateRouteTypeDto routeTypeDto);
+    Task<List<GetRouteTypeDto>> GetAllRouteTypesAsync();
 }

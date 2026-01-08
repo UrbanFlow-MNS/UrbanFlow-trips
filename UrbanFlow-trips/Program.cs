@@ -45,7 +45,7 @@ builder.Services.AddScoped<IRabbitMQService, RabbitMQService>();
 
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddValidatorsFromAssemblyContaining<CreateAgencyDTOValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateAgencyDtoValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
 
