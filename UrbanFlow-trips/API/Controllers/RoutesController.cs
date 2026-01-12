@@ -47,4 +47,14 @@ public class RoutesController(IRoutesRepository routesRepository) : ControllerBa
             message = "Route updated successfully"
         });
     }
+    
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> DeleteAgency(int id)
+    {
+        await routesRepository.DeleteRouteAsync(id);
+        return Ok(new
+        {
+            message = "Route deleted successfully"
+        });
+    }
 }

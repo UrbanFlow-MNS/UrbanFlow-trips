@@ -29,13 +29,35 @@ public class TripController(ITripRepository tripRepository, IStopTripRepository 
         });
     }
     
-    [HttpPut("updateHourly/{tripId}")]
+    [HttpPut("updateService/{tripId}")]
     public async Task<IActionResult> UpdateTripService([FromBody] UpdateTripServiceDto service, int tripId)
     {
         await tripRepository.UpdateTripService(tripId, service);
         return Ok(new
         {
             message = "Trip's service updated successfully"
+        });
+    }
+
+    [HttpDelete("delete/{stopId}/{tripId}")]
+    public async Task<IActionResult> DeleteStopTrip(int stopId, int tripId)
+    {
+        await stopTripRepository.DeleteStopTripAsync(stopId, tripId);
+        return Ok(new
+        {
+            message = "Tour 'stop trip' removed successfully"
+        });
+    }
+    
+    
+    
+    [HttpDelete("delete/{tripId}")]
+    public async Task<IActionResult> DeleteTrip(int tripId)
+    {
+        await tripRepository.DeleteTripAsync(tripId);
+        return Ok(new
+        {
+            message = "Trip deleted successfully"
         });
     }
     

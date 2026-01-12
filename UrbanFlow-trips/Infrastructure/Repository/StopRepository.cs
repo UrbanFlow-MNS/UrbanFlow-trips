@@ -33,6 +33,17 @@ public class StopRepository(TripsDbContext dbcontext, IMapper mapper) : IStopRep
         await dbcontext.SaveChangesAsync();
     }
 
+    public async Task DeleteStopAsync(int id)
+    {
+        var stop = await GetStopByIdAsync(id);
+        
+        if (stop == null)
+            throw new KeyNotFoundException($"Stop with id {id} not found");
+        
+        dbcontext.Stops.Remove(stop);
+        await dbcontext.SaveChangesAsync();
+    }
+
     public async Task<List<GetStopDto>> GetAllStopsAsync()
     {
         var stopTimes = await dbcontext.Stops.AsNoTracking().ToListAsync();

@@ -10,4 +10,5 @@ public interface IRoutesRepository
     Task<List<GetRouteDto>> GetRoutesFilter(RouteFilterDto filter);
     Task<List<GetRouteDto>> GetAllRoutesAsync();
     Task UpdateRouteAsync(int id, UpdateRouteDto routeDto);
+    Task DeleteRouteAsync(int id);
 }

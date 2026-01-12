@@ -61,6 +61,17 @@ public class TripRepository(TripsDbContext dbcontext, IStopTripRepository stopTr
             throw new Exception("Error creating trip" + e.Message );
         }
     }
+    
+    public async Task DeleteTripAsync(int id)
+    {
+        var trip = await GetTripByIdAsync(id);
+        
+        if (trip == null)
+            throw new KeyNotFoundException($"Trip with id {id} not found");
+        
+        dbcontext.Trips.Remove(trip);
+        await dbcontext.SaveChangesAsync();
+    }
 
     public async Task<List<Trip>> GetAllTripsAsync()
     {

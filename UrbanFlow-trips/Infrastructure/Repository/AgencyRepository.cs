@@ -27,6 +27,17 @@ public class AgencyRepository(TripsDbContext dbcontext, IMapper mapper) : IAgenc
         var agency = await dbcontext.Agencies.AsNoTracking().ToListAsync();
         return mapper.Map<List<GetAgencyDto>>(agency);
     }
+
+    public async Task DeleteAgencyAsync(int id)
+    {
+        var agency = await GetAgencyByIdAsync(id);
+        
+        if (agency == null)
+            throw new KeyNotFoundException($"Agency with id {id} not found");
+        
+        dbcontext.Agencies.Remove(agency);
+        await dbcontext.SaveChangesAsync();
+    }
     
     public async Task UpdateAgencyAsync(int id, UpdateAgencyDto agencyDto)
     {
@@ -38,6 +49,5 @@ public class AgencyRepository(TripsDbContext dbcontext, IMapper mapper) : IAgenc
         mapper.Map(agencyDto, agency);
         
         await dbcontext.SaveChangesAsync();
-        
     }
 }
