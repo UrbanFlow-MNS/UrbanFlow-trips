@@ -89,6 +89,17 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
         await dbContext.SaveChangesAsync();
     }
 
+    public async Task DeleteRouteAsync(int id)
+    {
+        var route = await GetRouteByIdAsync(id);
+        
+        if (route == null)
+            throw new KeyNotFoundException($"Route with id {id} not found");
+        
+        dbContext.Routes.Remove(route);
+        await dbContext.SaveChangesAsync();
+    }
+
     public async Task<List<GetRouteDto>> GetAllRoutesAsync()
     {
         var routes =  await dbContext.Routes.AsNoTracking().ToListAsync();

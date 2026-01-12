@@ -33,4 +33,17 @@ public class StopsController(IStopRepository stopRepository) : ControllerBase
             message = "Stop updated successfully"
         });
     }
+    
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> DeleteStop(int id)
+    {
+        await stopRepository.DeleteStopAsync(id);
+        return Ok(new
+        {
+            message = "Stop deleted successfully"
+        });
+    }
+    
+    
+    
 }

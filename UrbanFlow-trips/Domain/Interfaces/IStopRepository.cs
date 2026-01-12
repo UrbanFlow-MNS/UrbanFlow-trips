@@ -7,4 +7,5 @@ public interface IStopRepository
     Task CreateStopAsync(CreateStopDto stopDto);
     Task<List<GetStopDto>> GetAllStopsAsync();
     Task UpdateStopAsync(int id, UpdateStopDto stop);
+    Task DeleteStopAsync(int id);
 }

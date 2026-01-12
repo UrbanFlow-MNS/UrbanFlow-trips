@@ -9,4 +9,5 @@ public interface IAgencyRepository
     Task CreateAgencyAsync(CreateAgencyDto agencyDto);
     Task<List<GetAgencyDto>> GetAllAgenciesAsync();
     Task UpdateAgencyAsync(int id, UpdateAgencyDto agency);
+    Task DeleteAgencyAsync(int id);
 }

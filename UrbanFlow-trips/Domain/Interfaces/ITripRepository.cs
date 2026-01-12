@@ -8,6 +8,6 @@ public interface ITripRepository
     Task CreateTripAsync(CreateTripDto tripDto);
     Task<List<Trip>> GetAllTripsAsync();
     Task UpdateTripService(int id, UpdateTripServiceDto serviceId);
-    
-    
+    Task DeleteTripAsync(int id);
+
 }

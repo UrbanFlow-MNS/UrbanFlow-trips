@@ -33,4 +33,14 @@ public class AgencyController(IAgencyRepository agencyRepository) : ControllerBa
             message = "Agency updated successfully"
         });
     }
+    
+    [HttpDelete("delete/{id}")]
+    public async Task<IActionResult> DeleteAgency(int id)
+    {
+        await agencyRepository.DeleteAgencyAsync(id);
+        return Ok(new
+        {
+            message = "Agency deleted successfully"
+        });
+    }
 }
