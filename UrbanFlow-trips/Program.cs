@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using UrbanFlow_trips.Database;
@@ -6,8 +7,11 @@ using UrbanFlow_trips.Repository;
 using UrbanFlow_trips.Service;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MassTransit;
+using UrbanFlow_trips;
 using UrbanFlow_trips.Application.Mapping;
 using UrbanFlow_trips.Application.Validators;
+using UrbanFlow_trips.Infrastructure.Consumers;
 using UrbanFlow_trips.Infrastucture.Messaging;
 using UrbanFlow_trips.Infrastucture.Repository;
 
@@ -48,6 +52,35 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateAgencyDtoValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
+
+
+// Configuration de MassTransit en GRPC et potentiellement RabbitMQ dans le futur si nécessaire
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<GetCompleteRouteConsumer>();
+
+    x.UsingGrpc((context, cfg) =>
+    {
+        cfg.AddRawJsonSerializer();
+
+        cfg.ConfigureJsonSerializerOptions(options =>
+        {
+            options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            return options;
+        });
+
+        cfg.Host(h =>
+        {
+            h.Host = "0.0.0.0.";
+            h.Port = 19796;
+        });
+
+        cfg.ReceiveEndpoint("trips-service-queue", e =>
+        {
+            e.ConfigureConsumer<GetCompleteRouteConsumer>(context);
+        });
+    });
+});
 
 var app = builder.Build();
 
