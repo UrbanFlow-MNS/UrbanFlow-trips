@@ -10,12 +10,13 @@ public class GetCompleteRouteConsumer : IConsumer<GetTripRequest>
 
     public GetCompleteRouteConsumer(ITripRepository tripRepository)
     {
-        tripRepository = _tripRepository;
+        _tripRepository = tripRepository;
     }
     
     public async Task Consume(ConsumeContext<GetTripRequest> context)
     {
         var trips = await _tripRepository.GetAllTripsAsync();
+        Console.WriteLine("GRPC Bien consommé");
         await context.RespondAsync(trips);
     }
 }

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanFlow-trips", "UrbanFlow-trips\UrbanFlow-trips.csproj", "{476C7E3B-BE83-4717-8EE3-BC9BCC67795F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UrbanFlow-trips.GrpcService", "UrbanFlow-trips.GrpcService\UrbanFlow-trips.GrpcService.csproj", "{F60461A2-2117-4B3D-832E-5B616F127181}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{476C7E3B-BE83-4717-8EE3-BC9BCC67795F}.Release|x64.Build.0 = Release|Any CPU
 		{476C7E3B-BE83-4717-8EE3-BC9BCC67795F}.Release|x86.ActiveCfg = Release|Any CPU
 		{476C7E3B-BE83-4717-8EE3-BC9BCC67795F}.Release|x86.Build.0 = Release|Any CPU
+		{F60461A2-2117-4B3D-832E-5B616F127181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F60461A2-2117-4B3D-832E-5B616F127181}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F60461A2-2117-4B3D-832E-5B616F127181}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F60461A2-2117-4B3D-832E-5B616F127181}.Debug|x64.Build.0 = Debug|Any CPU
+		{F60461A2-2117-4B3D-832E-5B616F127181}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F60461A2-2117-4B3D-832E-5B616F127181}.Debug|x86.Build.0 = Debug|Any CPU
+		{F60461A2-2117-4B3D-832E-5B616F127181}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F60461A2-2117-4B3D-832E-5B616F127181}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F60461A2-2117-4B3D-832E-5B616F127181}.Release|x64.ActiveCfg = Release|Any CPU
+		{F60461A2-2117-4B3D-832E-5B616F127181}.Release|x64.Build.0 = Release|Any CPU
+		{F60461A2-2117-4B3D-832E-5B616F127181}.Release|x86.ActiveCfg = Release|Any CPU
+		{F60461A2-2117-4B3D-832E-5B616F127181}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
