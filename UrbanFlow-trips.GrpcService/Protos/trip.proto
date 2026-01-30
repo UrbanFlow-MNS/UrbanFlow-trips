@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "UrbanFlow_trips.GrpcService";
+
+package trip;
+
+service TripService {
+  rpc FindAll (Empty) returns (TripsList);
+}
+
+message Empty {}
+
+message TripData {
+  int32 id = 1;
+  // TODO: Mathias fais l'objet stpppppp
+}
+
+message TripsList {
+  repeated TripData trips = 1;
+}
