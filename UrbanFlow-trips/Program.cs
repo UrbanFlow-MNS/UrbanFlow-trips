@@ -12,10 +12,12 @@ using UrbanFlow_trips.Application.Mapping;
 using UrbanFlow_trips.Application.Validators;
 using UrbanFlow_trips.Infrastucture.Messaging;
 using UrbanFlow_trips.Infrastucture.Repository;
+using UrbanFlow_trips.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddGrpc();
 
 builder.Services.AddOpenApi();
 
@@ -87,6 +89,13 @@ if (app.Environment.IsDevelopment())
         options.Theme = ScalarTheme.Moon;
     });
 }
+
+app.MapGrpcService<GreeterService>();
+app.MapGrpcService<TripService>();
+// juste pour tester le greeter
+app.MapGet("/",
+    () =>
+        "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
 
 app.UseHttpsRedirection();  
