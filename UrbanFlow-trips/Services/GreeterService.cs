@@ -1,7 +1,7 @@
 using Grpc.Core;
 using UrbanFlow_trips.GrpcService;
 
-namespace UrbanFlow_trips.GrpcService.Services;
+namespace UrbanFlow_trips.Services;
 
 public class GreeterService : Greeter.GreeterBase
 {
