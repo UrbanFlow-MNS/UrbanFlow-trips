@@ -21,8 +21,41 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
     {
         return await dbContext.Routes.FindAsync(id);
     }
+
+    public async Task<List<GetCompleteRouteDto>> GetAllCompleteRoutesAsync()
+    {
+        return await dbContext.Routes
+            .AsNoTracking()
+            .Select(r => new GetCompleteRouteDto
+            {
+                RouteId = r.RouteId,
+                RouteShortName = r.RouteShortName,
+                RouteLongName = r.RouteLongName,
+                RouteTypeName = r.RouteTypeId.ToString(),
+
+                Trips = r.Trips
+                    .Select(t => new GetTripDetailsDto()
+                    {
+                        TripId = t.TripId,
+
+                        Stops = t.StopTrips
+                            .OrderBy(st => st.StopSequence)
+                            .Select(st => new GetStopDetailsDto()
+                            {
+                                StopId = st.StopId,
+                                StopName = st.Stop.StopName,
+                                Longitude = st.Stop.StopLong,
+                                Latitude = st.Stop.StopLat,
+                                ArrivalTime = st.ArrivalTime,
+                                SequenceOrder = st.StopSequence
+                            })
+                            .ToList()
+                    })
+                    .ToList()
+            }).ToListAsync();
+    }
     
-    public async Task<GetCompleteRouteDto?> GetCompleteRouteAsync(int id)
+    public async Task<GetCompleteRouteDto?> GetCompleteRouteByIdAsync(int id)
     {
         return await dbContext.Routes
             .AsNoTracking()

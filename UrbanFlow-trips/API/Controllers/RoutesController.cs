@@ -27,7 +27,7 @@ public class RoutesController(IRoutesRepository routesRepository) : ControllerBa
     }
 
     [HttpGet("all")]
-    public async Task<IActionResult> GetAllAgencies()
+    public async Task<IActionResult> GetAllRoutes()
     {
         return Ok(await routesRepository.GetAllRoutesAsync());
     }
@@ -35,7 +35,13 @@ public class RoutesController(IRoutesRepository routesRepository) : ControllerBa
     [HttpGet("getDetails/{id}")]
     public async Task<IActionResult> GetRouteDetails(int id)
     {
-        return Ok(await routesRepository.GetCompleteRouteAsync(id));
+        return Ok(await routesRepository.GetCompleteRouteByIdAsync(id));
+    }
+
+    [HttpGet("getAllCompleteRoutes")]
+    public async Task<IActionResult> GetAllCompleteRoutes()
+    {
+        return Ok(await routesRepository.GetAllCompleteRoutesAsync());
     }
     
     [HttpPut("update/{id}")]
@@ -57,4 +63,6 @@ public class RoutesController(IRoutesRepository routesRepository) : ControllerBa
             message = "Route deleted successfully"
         });
     }
+    
+    
 }
