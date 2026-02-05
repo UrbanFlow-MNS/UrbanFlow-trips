@@ -15,7 +15,7 @@ public class TripService : Tripper.TripperBase
     }
     public override async Task<CompleteRoute> FindAll(RouteRequest request, ServerCallContext context)
     {
-        var route = await _repository.GetCompleteRouteAsync(request.Id);
+        var route = await _repository.GetCompleteRouteByIdAsync(request.Id);
 
         if (route == null)
             throw new RpcException(new Status(StatusCode.NotFound, $"Route {request.Id} not found"));
