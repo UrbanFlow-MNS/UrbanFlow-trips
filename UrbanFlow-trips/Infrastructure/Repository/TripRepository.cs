@@ -77,4 +77,9 @@ public class TripRepository(TripsDbContext dbcontext, IStopTripRepository stopTr
     {
         return await dbcontext.Trips.ToListAsync();
     }
+    
+    public async Task<bool> TripExistsAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await dbcontext.Trips.AnyAsync(x => x.TripId == id, cancellationToken);
+    }
 }

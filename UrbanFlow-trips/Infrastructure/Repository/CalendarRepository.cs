@@ -22,4 +22,9 @@ public class CalendarRepository(TripsDbContext dbContext, IMapper mapper) : ICal
         var calendars = await dbContext.Calendars.AsNoTracking().ToListAsync();
         return mapper.Map<List<GetCalendarDto>>(calendars);
     }
+    
+    public async Task<bool> CalendarExistsAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Calendars.AnyAsync(x => x.ServiceId == id, cancellationToken);
+    }
 }

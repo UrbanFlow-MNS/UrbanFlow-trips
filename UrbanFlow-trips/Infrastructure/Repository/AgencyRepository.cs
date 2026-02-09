@@ -50,4 +50,9 @@ public class AgencyRepository(TripsDbContext dbcontext, IMapper mapper) : IAgenc
         
         await dbcontext.SaveChangesAsync();
     }
+
+    public async Task<bool> AgencyExistsAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await dbcontext.Agencies.AnyAsync(x => x.AgencyId == id, cancellationToken);
+    }
 }

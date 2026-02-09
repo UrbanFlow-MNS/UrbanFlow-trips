@@ -12,4 +12,5 @@ public interface IRoutesRepository
     Task UpdateRouteAsync(int id, UpdateRouteDto routeDto);
     Task DeleteRouteAsync(int id);
     Task<List<GetCompleteRouteDto>> GetAllCompleteRoutesAsync();
+    Task<bool> RouteExistsAsync(int id, CancellationToken cancellationToken = default);
 }

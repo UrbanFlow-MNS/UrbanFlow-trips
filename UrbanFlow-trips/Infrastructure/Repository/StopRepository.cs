@@ -49,4 +49,9 @@ public class StopRepository(TripsDbContext dbcontext, IMapper mapper) : IStopRep
         var stopTimes = await dbcontext.Stops.AsNoTracking().ToListAsync();
         return mapper.Map<List<GetStopDto>>(stopTimes);
     }
+
+    public async Task<bool> StopExistsAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await dbcontext.Stops.AnyAsync(x => x.StopId == id, cancellationToken);
+    }
 }

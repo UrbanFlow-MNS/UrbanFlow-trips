@@ -47,5 +47,10 @@ public class StopTripRepository(TripsDbContext dbcontext, IMapper mapper) : ISto
         mapper.Map(stopTripDto, stopTrip);
         await dbcontext.SaveChangesAsync();
     }
+
+    public async Task<bool> StopTripExistsAsync(int stopId, int tripId, CancellationToken cancellationToken = default)
+    {
+        return await dbcontext.StopTrips.AnyAsync(x => x.StopId == stopId && x.TripId == tripId, cancellationToken);
+    }
     
 }
