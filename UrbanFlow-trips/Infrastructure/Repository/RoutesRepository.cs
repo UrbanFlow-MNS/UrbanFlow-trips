@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UrbanFlow_trips.Database;
 using UrbanFlow_trips.DTO;
+using UrbanFlow_trips.Exceptions;
 using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
@@ -11,12 +12,12 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper, IAgencyR
     public async Task CreateRouteAsync(CreateRouteDto routeDto)
     {
         var route = mapper.Map<Routes>(routeDto);
-        
+
         if (!await agencyRepository.AgencyExistsAsync(routeDto.AgencyId))
-            throw new KeyNotFoundException($"Agency with id {routeDto.AgencyId} not found");
+            throw new NotFoundException($"Agency with id {routeDto.AgencyId} not found", 404);
         
         if (!await routeTypeRepository.RouteTypeExistsAsync(routeDto.RouteTypeId))
-            throw new KeyNotFoundException($"RouteType with id {routeDto.RouteTypeId} not found");
+            throw new NotFoundException($"Agency with id {routeDto.RouteTypeId} not found", 404);
         
         await dbContext.Routes.AddAsync(route);
         await dbContext.SaveChangesAsync();
