@@ -9,5 +9,6 @@ public interface ITripRepository
     Task<List<Trip>> GetAllTripsAsync();
     Task UpdateTripService(int id, UpdateTripServiceDto serviceId);
     Task DeleteTripAsync(int id);
+    Task<bool> TripExistsAsync(int id, CancellationToken cancellationToken = default);
 
 }

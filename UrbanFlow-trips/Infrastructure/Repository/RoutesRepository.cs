@@ -138,4 +138,9 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
         var routes =  await dbContext.Routes.AsNoTracking().ToListAsync();
         return mapper.Map<List<GetRouteDto>>(routes);
     }
+    
+    public async Task<bool> RouteExistsAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Routes.AnyAsync(x => x.RouteId == id, cancellationToken);
+    }
 }

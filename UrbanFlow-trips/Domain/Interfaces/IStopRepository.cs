@@ -8,4 +8,5 @@ public interface IStopRepository
     Task<List<GetStopDto>> GetAllStopsAsync();
     Task UpdateStopAsync(int id, UpdateStopDto stop);
     Task DeleteStopAsync(int id);
+    Task<bool> StopExistsAsync(int id, CancellationToken cancellationToken = default);
 }

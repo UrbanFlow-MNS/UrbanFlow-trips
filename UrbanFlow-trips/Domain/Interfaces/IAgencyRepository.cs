@@ -10,4 +10,5 @@ public interface IAgencyRepository
     Task<List<GetAgencyDto>> GetAllAgenciesAsync();
     Task UpdateAgencyAsync(int id, UpdateAgencyDto agency);
     Task DeleteAgencyAsync(int id);
+    Task<bool> AgencyExistsAsync(int id, CancellationToken cancellationToken = default);
 }

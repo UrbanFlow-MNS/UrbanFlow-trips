@@ -9,4 +9,5 @@ public interface IStopTripRepository
     Task UpdateStopTripAsync(int stopId, int tripId, UpdateStopTripDto stopTripDto);
     Task<Stop_Trip?> GetStopTripByIdAsync(int stopId, int tripId);
     Task DeleteStopTripAsync(int stopId, int tripId);
+    Task<bool> StopTripExistsAsync(int stopId, int tripId, CancellationToken cancellationToken = default);
 }

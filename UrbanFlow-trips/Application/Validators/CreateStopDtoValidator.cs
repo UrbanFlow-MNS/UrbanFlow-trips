@@ -1,11 +1,12 @@
 using FluentValidation;
 using UrbanFlow_trips.DTO;
+using UrbanFlow_trips.Repository;
 
 namespace UrbanFlow_trips.Application.Validators;
 
 public class CreateStopDtoValidator : AbstractValidator<CreateStopDto>
 {
-    public CreateStopDtoValidator()
+    public CreateStopDtoValidator(IAgencyRepository agencyRepository)
     {
         RuleFor(x => x.StopName)
             .NotEmpty().WithMessage("Stop name can't be null")
@@ -18,5 +19,10 @@ public class CreateStopDtoValidator : AbstractValidator<CreateStopDto>
         RuleFor(x => x.StopLong)
             .NotNull().WithMessage("Longitude is mandatory")
             .InclusiveBetween(-180m, 180m).WithMessage("Longitude must be between -180 and 180");
+        
+        RuleFor(x => x.AgencyId)
+            .MustAsync(async (agencyId, cancellation) =>
+                !await agencyRepository.AgencyExistsAsync(agencyId, cancellation))
+            .WithMessage("Agency doesn't exist");
     }
 }

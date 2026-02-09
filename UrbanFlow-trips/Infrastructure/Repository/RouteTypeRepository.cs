@@ -23,4 +23,9 @@ public class RouteTypeRepository(TripsDbContext dbContext, IMapper mapper) : IRo
         var routeType =  await dbContext.RouteTypes.AsNoTracking().ToListAsync();
         return mapper.Map<List<GetRouteTypeDto>>(routeType);
     }
+    
+    public async Task<bool> RouteTypeExistsAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.RouteTypes.AnyAsync(x => x.RouteTypeId == id, cancellationToken);
+    }
 }
