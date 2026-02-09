@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UrbanFlow_trips.Database;
 using UrbanFlow_trips.DTO;
+using UrbanFlow_trips.Exceptions;
 using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
@@ -17,7 +18,7 @@ public class StopTripRepository(TripsDbContext dbcontext, IMapper mapper, IStopR
         ArgumentNullException.ThrowIfNull(stopTripDto);
         
         if (!await stopRepository.StopExistsAsync(stopTripDto.StopId))
-            throw new KeyNotFoundException($"Stop with id {stopTripDto.StopId} not found");
+            throw new NotFoundException($"Agency with id {stopTripDto.StopId} not found", 404);
 
         Stop_Trip stopTrip = mapper.Map<Stop_Trip>(stopTripDto);
         await dbcontext.StopTrips.AddAsync(stopTrip);

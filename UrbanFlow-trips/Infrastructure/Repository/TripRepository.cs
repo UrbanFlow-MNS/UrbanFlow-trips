@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UrbanFlow_trips.Database;
 using UrbanFlow_trips.DTO;
+using UrbanFlow_trips.Exceptions;
 using UrbanFlow_trips.Models;
 using UrbanFlow_trips.Repository;
 
@@ -31,14 +32,14 @@ public class TripRepository(TripsDbContext dbcontext, IStopTripRepository stopTr
         ArgumentNullException.ThrowIfNull(tripDto);
         
         if (!await routesRepository.RouteExistsAsync(tripDto.RouteId))
-            throw new KeyNotFoundException($"Route with id {tripDto.RouteId} not found");
+            throw new NotFoundException($"Agency with id {tripDto.RouteId} not found", 404);
         
         if (!await calendarRepository.CalendarExistsAsync(tripDto.ServiceId))
-            throw new KeyNotFoundException($"Service with id {tripDto.ServiceId} not found");
+            throw new NotFoundException($"Agency with id {tripDto.ServiceId} not found", 404);
         
         foreach (var stopTripDto in tripDto.CreateStopTrips)
             if (!await stopRepository.StopExistsAsync(stopTripDto.StopId))
-                throw new KeyNotFoundException($"Stop with id {stopTripDto.StopId} not found");
+                throw new NotFoundException($"Agency with id {stopTripDto.StopId} not found", 404);
         
 
         await using var transaction = await dbcontext.Database.BeginTransactionAsync();
