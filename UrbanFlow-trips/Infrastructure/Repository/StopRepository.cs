@@ -6,7 +6,7 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class StopRepository(TripsDbContext dbcontext, IMapper mapper) : IStopRepository
+public class StopRepository(TripsDbContext dbcontext, IMapper mapper, IAgencyRepository agencyRepository) : IStopRepository
 {
     private async Task<Stop_Times?> GetStopByIdAsync(int id)
     {
@@ -27,6 +27,9 @@ public class StopRepository(TripsDbContext dbcontext, IMapper mapper) : IStopRep
     public async Task CreateStopAsync(CreateStopDto stopDto)
     {
         ArgumentNullException.ThrowIfNull(stopDto);
+        
+        if (!await agencyRepository.AgencyExistsAsync(stopDto.AgencyId))
+            throw new KeyNotFoundException($"Agency with id {stopDto.AgencyId} not found");
 
         var stop = mapper.Map<Stop_Times>(stopDto);
         await dbcontext.Stops.AddAsync(stop);

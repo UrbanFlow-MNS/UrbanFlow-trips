@@ -12,9 +12,5 @@ public class CreateStopTripDtoValidator : AbstractValidator<CreateStopTripDto>
             .LessThan(x => x.ArrivalTime)
             .WithMessage("Departure time must be before arrival time");
         
-        RuleFor(x => x.StopId)
-            .MustAsync(async (stopId, cancellation) =>
-                !await stopRepository.StopExistsAsync(stopId, cancellation))
-            .WithMessage("Stop doesn't exist");
     }
 }
