@@ -7,7 +7,7 @@ using UrbanFlow_trips.Repository;
 
 namespace UrbanFlow_trips.Infrastucture.Repository;
 
-public class TripRepository(TripsDbContext dbcontext, IStopTripRepository stopTripRepository, IMapper mapper) : ITripRepository
+public class TripRepository(TripsDbContext dbcontext, IStopTripRepository stopTripRepository, IMapper mapper, IRoutesRepository routesRepository, ICalendarRepository calendarRepository, IStopRepository stopRepository) : ITripRepository
 {
     public async Task<Trip?> GetTripByIdAsync(int id)
     {
@@ -29,6 +29,17 @@ public class TripRepository(TripsDbContext dbcontext, IStopTripRepository stopTr
     public async Task CreateTripAsync(CreateTripDto tripDto)
     {
         ArgumentNullException.ThrowIfNull(tripDto);
+        
+        if (!await routesRepository.RouteExistsAsync(tripDto.RouteId))
+            throw new KeyNotFoundException($"Route with id {tripDto.RouteId} not found");
+        
+        if (!await calendarRepository.CalendarExistsAsync(tripDto.ServiceId))
+            throw new KeyNotFoundException($"Service with id {tripDto.ServiceId} not found");
+        
+        foreach (var stopTripDto in tripDto.CreateStopTrips)
+            if (!await stopRepository.StopExistsAsync(stopTripDto.StopId))
+                throw new KeyNotFoundException($"Stop with id {stopTripDto.StopId} not found");
+        
 
         await using var transaction = await dbcontext.Database.BeginTransactionAsync();
 

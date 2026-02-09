@@ -17,15 +17,5 @@ public class CreateRouteDtoValidator : AbstractValidator<CreateRouteDto>
         RuleFor(x => x.RouteTypeId)
             .GreaterThan(0)
             .NotEmpty().WithMessage("Must be greater than 0");
-
-        RuleFor(x => x.AgencyId)
-            .MustAsync(async (agencyId, cancellation) =>
-                !await agencyRepository.AgencyExistsAsync(agencyId, cancellation))
-            .WithMessage("Agency doesn't exist");
-        
-        RuleFor(x => x.RouteTypeId)
-            .MustAsync(async (routeTypeId, cancellation) =>
-                !await routeTypeRepository.RouteTypeExistsAsync(routeTypeId, cancellation))
-            .WithMessage("RouteType doesn't exist");
     }
 }

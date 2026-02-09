@@ -19,10 +19,5 @@ public class CreateStopDtoValidator : AbstractValidator<CreateStopDto>
         RuleFor(x => x.StopLong)
             .NotNull().WithMessage("Longitude is mandatory")
             .InclusiveBetween(-180m, 180m).WithMessage("Longitude must be between -180 and 180");
-        
-        RuleFor(x => x.AgencyId)
-            .MustAsync(async (agencyId, cancellation) =>
-                !await agencyRepository.AgencyExistsAsync(agencyId, cancellation))
-            .WithMessage("Agency doesn't exist");
     }
 }
