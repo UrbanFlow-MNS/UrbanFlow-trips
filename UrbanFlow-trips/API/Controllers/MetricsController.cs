@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace YourProject.Controllers;
 
 [ApiController]
 [Route("metrics")]
-public class MetricsController(IPrometheusService prometheusService) : ControllerBase
+public class PrometheusController(IPrometheusService prometheusService) : ControllerBase
 {
 
     [HttpGet]
