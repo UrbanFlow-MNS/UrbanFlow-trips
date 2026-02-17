@@ -42,6 +42,6 @@ message StopDetails {
   string stop_name = 2;
   double longitude = 3;
   double latitude = 4;
-  string arrival_time = 5;  // Format: "HH:mm:ss"
+  string arrival_time = 5;
   int32 sequence_order = 6;
 }
