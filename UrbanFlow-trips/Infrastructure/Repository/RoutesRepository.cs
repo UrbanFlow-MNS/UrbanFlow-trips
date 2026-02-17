@@ -12,7 +12,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper, IAgencyR
     public async Task CreateRouteAsync(CreateRouteDto routeDto)
     {
         var route = mapper.Map<Routes>(routeDto);
-
+        
         if (!await agencyRepository.AgencyExistsAsync(routeDto.AgencyId))
             throw new NotFoundException($"Agency with id {routeDto.AgencyId} not found", 404);
         
