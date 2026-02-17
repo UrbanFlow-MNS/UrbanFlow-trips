@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
+namespace UrbanFlow_trips.Controllers;
 
 [ApiController]
 [Route("metrics")]
