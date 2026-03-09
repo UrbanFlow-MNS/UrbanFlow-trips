@@ -6,6 +6,6 @@ public class GetStopDetailsDto
     public string StopName { get; set; }
     public decimal Longitude { get; set; }
     public decimal Latitude { get; set; }
-    public TimeOnly ArrivalTime { get; set; }
+    public TimeSpan ArrivalTime { get; set; }
     public int SequenceOrder { get; set; }
 }

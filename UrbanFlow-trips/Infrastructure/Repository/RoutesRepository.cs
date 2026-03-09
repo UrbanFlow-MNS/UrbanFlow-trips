@@ -46,7 +46,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
                                 StopName = st.Stop.StopName,
                                 Longitude = st.Stop.StopLong,
                                 Latitude = st.Stop.StopLat,
-                                ArrivalTime = st.ArrivalTime,
+                                ArrivalTime = st.ArrivalTime.ToTimeSpan(),
                                 SequenceOrder = st.StopSequence
                             })
                             .ToList()
@@ -59,7 +59,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
     {
         return await dbContext.Routes
             .AsNoTracking()
-            .Where(r => r.RouteId == id)
+            .Where(r => r.AgencyId == id)
             .Select(r => new GetCompleteRouteDto
             {
                 RouteId = r.RouteId,
@@ -80,7 +80,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
                                 StopName = st.Stop.StopName,
                                 Longitude = st.Stop.StopLong,
                                 Latitude = st.Stop.StopLat,
-                                ArrivalTime = st.ArrivalTime,
+                                ArrivalTime = st.ArrivalTime.ToTimeSpan(),
                                 SequenceOrder = st.StopSequence
                             })
                             .ToList()
