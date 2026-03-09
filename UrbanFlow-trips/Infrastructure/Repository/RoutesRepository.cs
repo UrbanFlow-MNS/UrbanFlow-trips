@@ -46,7 +46,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
                                 StopName = st.Stop.StopName,
                                 Longitude = st.Stop.StopLong,
                                 Latitude = st.Stop.StopLat,
-                                ArrivalTime = st.ArrivalTime.ToTimeSpan().Seconds,
+                                ArrivalTime = st.ArrivalTime.ToTimeSpan().TotalSeconds,
                                 SequenceOrder = st.StopSequence
                             })
                             .ToList()
@@ -80,7 +80,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
                                 StopName = st.Stop.StopName,
                                 Longitude = st.Stop.StopLong,
                                 Latitude = st.Stop.StopLat,
-                                ArrivalTime = st.ArrivalTime.ToTimeSpan().Seconds,
+                                ArrivalTime = st.ArrivalTime.ToTimeSpan().TotalSeconds,
                                 SequenceOrder = st.StopSequence
                             })
                             .ToList()
