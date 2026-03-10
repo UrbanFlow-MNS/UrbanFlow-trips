@@ -32,7 +32,6 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
                 RouteShortName = r.RouteShortName,
                 RouteLongName = r.RouteLongName,
                 RouteTypeName = r.RouteTypeId.ToString(),
-
                 Trips = r.Trips
                     .Select(t => new GetTripDetailsDto()
                     {
@@ -55,7 +54,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
             }).ToListAsync();
     }
     
-    public async Task<GetCompleteRouteDto?> GetCompleteRouteByIdAsync(int id)
+    public async Task<List<GetCompleteRouteDto>> GetCompleteRouteByIdAsync(int id)
     {
         return await dbContext.Routes
             .AsNoTracking()
@@ -86,8 +85,7 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoute
                             .ToList()
                     })
                     .ToList()
-            })
-            .FirstOrDefaultAsync();
+            }).ToListAsync();
     }
     
 
