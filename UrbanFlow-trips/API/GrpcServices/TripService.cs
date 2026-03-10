@@ -58,44 +58,45 @@ public class TripService : Tripper.TripperBase
 
         return response;
     }
+    
 
-    public override async Task<CompleteRoute> FindById(RouteRequest request, ServerCallContext context)
+    public override async Task<AllCompleteRoute> FindById(RouteRequest request, ServerCallContext context)
     {
-        var route = await _repository.GetCompleteRouteByIdAsync(request.Id);
+        var routes = await _repository.GetCompleteRouteByIdAsync(request.Id);
+        
+        var response = new AllCompleteRoute();
 
-        if (route == null)
-            throw new RpcException(new Status(StatusCode.NotFound, $"Route {request.Id} not found"));
-
-        var response = new CompleteRoute
+        foreach (var route in routes)
         {
-            RouteId = route.RouteId,
-            RouteShortName = route.RouteShortName ?? "",
-            RouteLongName = route.RouteLongName ?? "",
-            RouteTypeName = route.RouteTypeName ?? "",
-        };
-
-        foreach (var trip in route.Trips)
-        {
-            var tripDetails = new TripDetails { TripId = trip.TripId };
-
-            foreach (var stop in trip.Stops)
+            var completeRoute = new CompleteRoute
             {
-                tripDetails.Stops.Add(new StopDetails
+                RouteId = route.RouteId,
+                RouteShortName = route.RouteShortName ?? "",
+                RouteLongName = route.RouteLongName ?? "",
+                RouteTypeName = route.RouteTypeName ?? "",
+            };
+
+            foreach (var trip in route.Trips)
+            {
+                var tripDetails = new TripDetails { TripId = trip.TripId };
+
+                foreach (var stop in trip.Stops)
                 {
-                    StopId = stop.StopId,
-                    StopName = stop.StopName ?? "",
-                    Longitude = (double) stop.Longitude,
-                    Latitude = (double) stop.Latitude,
-                    ArrivalTime = stop.ArrivalTime.ToString() ?? "",
-                    SequenceOrder = stop.SequenceOrder
-                });
+                    tripDetails.Stops.Add(new StopDetails
+                    {
+                        StopId = stop.StopId,
+                        StopName = stop.StopName ?? "",
+                        Longitude = (double)stop.Longitude,
+                        Latitude = (double)stop.Latitude,
+                        ArrivalTime = stop.ArrivalTime.ToString() ?? "",
+                        SequenceOrder = stop.SequenceOrder
+                    });
+                }
+                completeRoute.Trips.Add(tripDetails);
             }
-
-            response.Trips.Add(tripDetails);
+            response.Routes.Add(completeRoute);
         }
-
         return response;
     }
-
     
 }
