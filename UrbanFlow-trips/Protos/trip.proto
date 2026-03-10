@@ -5,7 +5,7 @@ option csharp_namespace = "UrbanFlow_trips";
 package trip;
 
 service Tripper {
-  rpc FindById (RouteRequest) returns (CompleteRoute);
+  rpc FindById (RouteRequest) returns (AllCompleteRoute);
   rpc FindAll (Empty) returns (AllCompleteRoute);
 }
 
