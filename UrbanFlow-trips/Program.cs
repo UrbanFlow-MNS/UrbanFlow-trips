@@ -54,8 +54,12 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateAgencyDtoValidator>()
 
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddGrpcClient<Vehicler.VehiclerClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcServices:TransportManagement"]);
+});
 
-// Configuration de MassTransit en GRPC et potentiellement RabbitMQ dans le futur si nécessaire
+builder.Services.AddScoped<VehicleService>();
 
 var app = builder.Build();
 
