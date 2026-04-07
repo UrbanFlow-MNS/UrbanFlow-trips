@@ -45,7 +45,7 @@ builder.Services.AddScoped<IStopRepository, StopRepository>();
 builder.Services.AddScoped<ITripRepository, TripRepository>();
 builder.Services.AddScoped<IStopTripRepository, StopTripRepository>();
 builder.Services.AddScoped<IRabbitMQService, RabbitMQService>();
-builder.Services.AddScoped<IPrometheusService, PrometheusService>();
+builder.Services.AddSingleton<PrometheusService>();
 
 
 builder.Services.AddControllers();
@@ -54,8 +54,12 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateAgencyDtoValidator>()
 
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddGrpcClient<Vehicler.VehiclerClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcServices:TransportManagement"]);
+});
 
-// Configuration de MassTransit en GRPC et potentiellement RabbitMQ dans le futur si nécessaire
+builder.Services.AddScoped<VehicleService>();
 
 var app = builder.Build();
 

@@ -1,6 +1,6 @@
 using Prometheus;
 
-public class PrometheusService : IPrometheusService
+public class PrometheusService
 {
     public PrometheusService()
     {

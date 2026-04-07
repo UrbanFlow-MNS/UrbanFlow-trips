@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "UrbanFlow_trips";
+
+package vehicle;
+
+service Vehicler {
+  rpc FindById (VehicleRequest) returns (VehicleResponse);
+}
+
+message VehicleRequest {
+  int32 id = 1;
+}
+
+message VehicleResponse {
+  string vehicle_name = 1;
+}
