@@ -4,7 +4,7 @@ namespace UrbanFlow_trips.Controllers;
 
 [ApiController]
 [Route("metrics")]
-public class PrometheusController(IPrometheusService prometheusService) : ControllerBase
+public class PrometheusController(PrometheusService prometheusService) : ControllerBase
 {
 
     [HttpGet]
