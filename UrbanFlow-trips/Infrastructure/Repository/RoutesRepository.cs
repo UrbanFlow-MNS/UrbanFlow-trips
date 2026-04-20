@@ -7,18 +7,11 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Repository;
 
-public class RoutesRepository(TripsDbContext dbContext, IMapper mapper, IAgencyRepository agencyRepository, IRouteTypeRepository routeTypeRepository) : IRoutesRepository
+public class RoutesRepository(TripsDbContext dbContext, IMapper mapper) : IRoutesRepository
 {
     public async Task CreateRouteAsync(CreateRouteDto routeDto)
     {
         var route = mapper.Map<Routes>(routeDto);
-        
-        if (!await agencyRepository.AgencyExistsAsync(routeDto.AgencyId))
-            throw new NotFoundException($"Agency with id {routeDto.AgencyId} not found", 404);
-        
-        if (!await routeTypeRepository.RouteTypeExistsAsync(routeDto.RouteTypeId))
-            throw new NotFoundException($"Agency with id {routeDto.RouteTypeId} not found", 404);
-        
         await dbContext.Routes.AddAsync(route);
         await dbContext.SaveChangesAsync();
     }

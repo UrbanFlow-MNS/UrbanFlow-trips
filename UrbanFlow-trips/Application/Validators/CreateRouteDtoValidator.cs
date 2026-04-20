@@ -6,7 +6,7 @@ namespace UrbanFlow_trips.Application.Validators;
 
 public class CreateRouteDtoValidator : AbstractValidator<CreateRouteDto>
 {
-    public CreateRouteDtoValidator(IAgencyRepository agencyRepository, IRouteTypeRepository routeTypeRepository)
+    public CreateRouteDtoValidator()
     {
         RuleFor(x => x.RouteShortName)
             .MaximumLength(50).WithMessage("Short name must be less than 50 characters")

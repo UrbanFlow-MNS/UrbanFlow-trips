@@ -1,12 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using UrbanFlow_trips.DTO;
 using UrbanFlow_trips.Repository;
+using UrbanFlow_trips.Services;
 
 namespace UrbanFlow_trips.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RoutesController(IRoutesRepository routesRepository) : ControllerBase
+public class RoutesController(IRoutesRepository routesRepository, VehicleService vehicleService) : ControllerBase
 {
     [HttpPost("create")]
     public async Task<IActionResult> CreateAgency(CreateRouteDto routeDto)
@@ -63,6 +64,15 @@ public class RoutesController(IRoutesRepository routesRepository) : ControllerBa
             message = "Route deleted successfully"
         });
     }
+    
+    
+    [HttpGet("test/{id}")]
+    public async Task<IActionResult> Test(int id)
+    {
+        var vehicle = await vehicleService.GetVehicleNameByRouteTypeIdAsync(id);
+        return Ok(vehicle);
+    }
+    
     
     
 }

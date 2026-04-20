@@ -10,9 +10,7 @@ public class TripsDbContext : DbContext
     {
     }
     
-        public DbSet<Agency> Agencies { get; set; }
         public DbSet<Routes> Routes { get; set; }
-        public DbSet<RouteType> RouteTypes { get; set; }
         public DbSet<Calendar> Calendars { get; set; }
         public DbSet<Trip> Trips { get; set; }
         public DbSet<Stop_Times> Stops { get; set; }
@@ -20,24 +18,6 @@ public class TripsDbContext : DbContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Agency>()
-                .HasKey(a => a.AgencyId);
-
-            modelBuilder.Entity<Agency>()
-                .HasMany(a => a.Routes)
-                .WithOne(r => r.Agency)
-                .HasForeignKey(r => r.AgencyId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<RouteType>()
-                .HasKey(rt => rt.RouteTypeId);
-
-            modelBuilder.Entity<RouteType>()
-                .HasMany(rt => rt.Routes)
-                .WithOne(r => r.RouteType)
-                .HasForeignKey(r => r.RouteTypeId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<Routes>()
                 .HasKey(r => r.RouteId);
 
@@ -82,11 +62,6 @@ public class TripsDbContext : DbContext
                 .HasIndex(st => new { st.TripId, st.StopId })
                 .IsUnique();
             
-            modelBuilder.Entity<Stop_Times>()
-                .HasOne(s => s.Agency)
-                .WithMany(a => a.Stops)
-                .HasForeignKey(s => s.AgencyId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
         }
