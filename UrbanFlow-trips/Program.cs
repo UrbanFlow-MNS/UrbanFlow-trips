@@ -48,7 +48,7 @@ builder.Services.AddSingleton<PrometheusService>();
 
 builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddValidatorsFromAssemblyContaining<CreateAgencyDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateRouteDtoValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
 
