@@ -8,7 +8,5 @@ public class Stop_Times
     public decimal StopLat { get; set; }
     public decimal StopLong { get; set; }
     
-    public Agency Agency { get; set; }  
-
     public ICollection<Stop_Trip> StopTrips { get; set; }
 }

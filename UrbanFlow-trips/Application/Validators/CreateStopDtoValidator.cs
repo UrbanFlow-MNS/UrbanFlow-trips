@@ -6,7 +6,7 @@ namespace UrbanFlow_trips.Application.Validators;
 
 public class CreateStopDtoValidator : AbstractValidator<CreateStopDto>
 {
-    public CreateStopDtoValidator(IAgencyRepository agencyRepository)
+    public CreateStopDtoValidator()
     {
         RuleFor(x => x.StopName)
             .NotEmpty().WithMessage("Stop name can't be null")
