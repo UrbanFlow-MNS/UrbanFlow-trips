@@ -106,24 +106,36 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper, VehicleS
     }
     
 
+
     public async Task<List<GetRouteDto>> GetRoutesFilter(RouteFilterDto filter)
     {
         ArgumentNullException.ThrowIfNull(filter);
 
-        var query = dbContext.Routes.AsQueryable();
-        
+        var query = dbContext.Routes.AsNoTracking().AsQueryable();
+
         if (filter.AgencyId != null)
             query = query.Where(route => route.AgencyId == filter.AgencyId);
-        
+
         if (filter.RouteTypeId != null)
             query = query.Where(route => route.RouteTypeId == filter.RouteTypeId);
-        
+
         if (filter.RouteId != null)
             query = query.Where(route => route.RouteId == filter.RouteId);
-        
-        
-        await query.AsNoTracking().ToListAsync();
-        return mapper.Map<List<GetRouteDto>>(query);
+
+        var routes = await query
+            .Select(r => new { r.RouteId, r.AgencyId, r.RouteTypeId, r.RouteShortName, r.RouteLongName })
+            .ToListAsync();
+
+        var tasks = routes.Select(async r => new GetRouteDto
+        {
+            RouteId = r.RouteId,
+            AgencyId = r.AgencyId,
+            RouteShortName = r.RouteShortName,
+            RouteLongName = r.RouteLongName,
+            RouteTypeName = await vService.GetVehicleNameByRouteTypeIdAsync(r.RouteTypeId) ?? "null"
+        });
+
+        return (await Task.WhenAll(tasks)).ToList();
     }
 
     public async Task UpdateRouteAsync(int id, UpdateRouteDto routeDto)
@@ -150,8 +162,21 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper, VehicleS
 
     public async Task<List<GetRouteDto>> GetAllRoutesAsync()
     {
-        var routes =  await dbContext.Routes.AsNoTracking().ToListAsync();
-        return mapper.Map<List<GetRouteDto>>(routes);
+        var routes = await dbContext.Routes
+            .AsNoTracking()
+            .Select(r => new { r.RouteId, r.AgencyId, r.RouteTypeId, r.RouteShortName, r.RouteLongName })
+            .ToListAsync();
+
+        var tasks = routes.Select(async r => new GetRouteDto
+        {
+            RouteId = r.RouteId,
+            AgencyId = r.AgencyId,
+            RouteShortName = r.RouteShortName,
+            RouteLongName = r.RouteLongName,
+            RouteTypeName = await vService.GetVehicleNameByRouteTypeIdAsync(r.RouteTypeId) ?? "null"
+        });
+
+        return (await Task.WhenAll(tasks)).ToList();
     }
     
     public async Task<bool> RouteExistsAsync(int id, CancellationToken cancellationToken = default)

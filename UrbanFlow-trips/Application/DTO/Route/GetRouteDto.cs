@@ -1,11 +1,11 @@
 namespace UrbanFlow_trips.DTO;
 
-public class GetRouteDto
+public class GetRouteDto()
 {
     public int RouteId { get; set; }
     public int AgencyId { get; set; }
     
-    public string RouteTypeName { get; set; }
+    public string RouteTypeName { get; set; } 
 
     public string? RouteShortName { get; set; }
     public string? RouteLongName { get; set; }
