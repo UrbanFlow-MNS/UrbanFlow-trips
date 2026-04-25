@@ -7,7 +7,9 @@ using UrbanFlow_trips.Repository;
 using UrbanFlow_trips.Service;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MassTransit;
 using UrbanFlow_trips;
+using UrbanFlow_trips.API.Consumers;
 using UrbanFlow_trips.Application.Mapping;
 using UrbanFlow_trips.Application.Validators;
 using UrbanFlow_trips.Infrastucture.Messaging;
@@ -58,6 +60,38 @@ builder.Services.AddGrpcClient<Vehicler.VehiclerClient>(options =>
 });
 
 builder.Services.AddScoped<VehicleService>();
+
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<PostLogsConsumer>();
+
+    x.SetDefaultEndpointNameFormatter();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("rabbitmq", "/", h =>
+        {
+            h.Username("user");
+            h.Password("password");
+        });
+
+        cfg.ConfigureJsonSerializerOptions(options =>
+        {
+            options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            return options;
+        });
+        
+        
+        cfg.ReceiveEndpoint("LOGS_QUEUE_IN", e =>
+        {
+            
+            e.UseRawJsonDeserializer();
+            e.ConfigureConsumer<PostLogsConsumer>(context);
+            
+        });
+    });
+});
 
 var app = builder.Build();
 
