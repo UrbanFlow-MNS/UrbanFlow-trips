@@ -44,7 +44,6 @@ builder.Services.AddScoped<IRoutesRepository, RoutesRepository>();
 builder.Services.AddScoped<IStopRepository, StopRepository>();
 builder.Services.AddScoped<ITripRepository, TripRepository>();
 builder.Services.AddScoped<IStopTripRepository, StopTripRepository>();
-builder.Services.AddScoped<IRabbitMQService, RabbitMQService>();
 builder.Services.AddSingleton<PrometheusService>();
 
 
