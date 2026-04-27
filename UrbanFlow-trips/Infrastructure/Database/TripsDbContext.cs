@@ -15,6 +15,7 @@ public class TripsDbContext : DbContext
         public DbSet<Trip> Trips { get; set; }
         public DbSet<Stop_Times> Stops { get; set; }
         public DbSet<Stop_Trip> StopTrips { get; set; }
+        public DbSet<Incident> Incidents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -61,6 +62,10 @@ public class TripsDbContext : DbContext
             modelBuilder.Entity<Stop_Trip>()
                 .HasIndex(st => new { st.TripId, st.StopId })
                 .IsUnique();
+            
+            modelBuilder.Entity<Incident>()
+                .HasKey(i => i.IncidentId);
+            
             
 
             base.OnModelCreating(modelBuilder);
