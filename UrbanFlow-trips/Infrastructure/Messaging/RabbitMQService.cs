@@ -7,9 +7,12 @@ using UrbanFlow_trips.Options;
 using UrbanFlow_trips.Service;
 
 namespace UrbanFlow_trips.Infrastucture.Messaging;
-
+// Normalement je devrais plus en avoir besoin pcq MassTransit fait bien le taff + y a un conflit entre les versions de
+// MassTransit et de RabbitMQ donc je préfère garder MassTransit mais je garde quand même ce service en commentaire on sait jamais 
+/*
 public class RabbitMQService : IRabbitMQService
 {
+    
     private readonly ConnectionFactory _factory;
     private readonly JsonSerializerOptions _jsonOptions;
 
@@ -71,4 +74,6 @@ public class RabbitMQService : IRabbitMQService
             throw new MessagingPublishException($"Failed to publish to {queueName}", ex);
         }
     }
+ 
 }
+   */
