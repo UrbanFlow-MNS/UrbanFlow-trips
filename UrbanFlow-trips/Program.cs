@@ -79,6 +79,7 @@ builder.Services.AddScoped<VehicleService>();
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<PostLogsConsumer>();
+    x.AddConsumer<CreateIncidentConsumer>();
 
     x.SetDefaultEndpointNameFormatter();
 
