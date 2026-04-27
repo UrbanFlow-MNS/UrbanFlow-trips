@@ -7,6 +7,8 @@ using UrbanFlow_trips.Repository;
 using UrbanFlow_trips.Service;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Grpc.Core;
+using Grpc.Net.Client.Configuration;
 using MassTransit;
 using UrbanFlow_trips;
 using UrbanFlow_trips.API.Consumers;
@@ -44,6 +46,7 @@ builder.Services.AddScoped<IRoutesRepository, RoutesRepository>();
 builder.Services.AddScoped<IStopRepository, StopRepository>();
 builder.Services.AddScoped<ITripRepository, TripRepository>();
 builder.Services.AddScoped<IStopTripRepository, StopTripRepository>();
+builder.Services.AddScoped<IRabbitMQService, RabbitMQService>();
 builder.Services.AddSingleton<PrometheusService>();
 
 
@@ -56,11 +59,21 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddGrpcClient<Vehicler.VehiclerClient>(options =>
 {
     options.Address = new Uri(builder.Configuration["GrpcServices:TransportManagement"]);
+})
+.ConfigureChannel(options =>
+{
+    options.HttpHandler = new SocketsHttpHandler
+    {
+        KeepAlivePingDelay = TimeSpan.FromSeconds(10),
+        KeepAlivePingTimeout = TimeSpan.FromSeconds(5),
+        KeepAlivePingPolicy = HttpKeepAlivePingPolicy.Always,
+        EnableMultipleHttp2Connections = true
+    };
 });
 
 builder.Services.AddScoped<VehicleService>();
 
-
+// Config MassTransit
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<PostLogsConsumer>();
@@ -82,13 +95,18 @@ builder.Services.AddMassTransit(x =>
         });
         
         
-        cfg.ReceiveEndpoint("LOGS_QUEUE_IN", e =>
+        cfg.ReceiveEndpoint("LOGS_QUEUE", e =>
         {
-            
             e.UseRawJsonDeserializer();
             e.ConfigureConsumer<PostLogsConsumer>(context);
-            
         });
+        
+        cfg.ReceiveEndpoint("INCIDENTS_QUEUE", e =>
+        {
+            e.UseRawJsonDeserializer();
+            e.Durable = true;
+            e.ConfigureConsumer<CreateIncidentConsumer>(context);
+        });    
     });
 });
 
