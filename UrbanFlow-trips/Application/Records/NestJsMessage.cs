@@ -1,10 +1,8 @@
 using System.Text.Json.Serialization;
+using UrbanFlow_trips.Application.Records;
 
-public record NestJsMessage<T>
+public record NestJsWrapper()
 {
-    [JsonPropertyName("pattern")]
-    public string Pattern { get; init; }
-
-    [JsonPropertyName("data")]
-    public T Data { get; init; }
+    public string Pattern { get; set; }
+    public CreateIncidentRecord Data { get; set; }
 }

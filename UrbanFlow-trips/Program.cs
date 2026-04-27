@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -15,7 +16,6 @@ using UrbanFlow_trips.API.Consumers;
 using UrbanFlow_trips.Application.Mapping;
 using UrbanFlow_trips.Application.Validators;
 using UrbanFlow_trips.Infrastructure.Repository;
-using UrbanFlow_trips.Infrastucture.Messaging;
 using UrbanFlow_trips.Infrastucture.Repository;
 using UrbanFlow_trips.Services;
 
@@ -47,7 +47,6 @@ builder.Services.AddScoped<IRoutesRepository, RoutesRepository>();
 builder.Services.AddScoped<IStopRepository, StopRepository>();
 builder.Services.AddScoped<ITripRepository, TripRepository>();
 builder.Services.AddScoped<IStopTripRepository, StopTripRepository>();
-builder.Services.AddScoped<IRabbitMQService, RabbitMQService>();
 builder.Services.AddScoped<IIncidentRepository, IncidentRepository>();
 builder.Services.AddSingleton<PrometheusService>();
 
@@ -81,36 +80,32 @@ builder.Services.AddMassTransit(x =>
     x.AddConsumer<PostLogsConsumer>();
     x.AddConsumer<CreateIncidentConsumer>();
 
-    x.SetDefaultEndpointNameFormatter();
-
     x.UsingRabbitMq((context, cfg) =>
     {
         cfg.Host("rabbitmq", "/", h =>
         {
-            h.Username("user");
-            h.Password("password");
-        });
-
-        cfg.ConfigureJsonSerializerOptions(options =>
-        {
-            options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-            return options;
+            h.Username("urban");
+            h.Password("atSYR32V");
         });
         
-        /*
+        
         cfg.ReceiveEndpoint("LOGS_QUEUE", e =>
         {
-            e.UseRawJsonDeserializer();
+            e.Durable = false;
             e.ConfigureConsumer<PostLogsConsumer>(context);
         });
-        */
+        
         
         cfg.ReceiveEndpoint("INCIDENTS_QUEUE", e =>
         {
-            e.UseRawJsonDeserializer();
             e.Durable = true;
+            e.DefaultContentType = new ContentType("application/json");
+            e.UseRawJsonDeserializer(RawSerializerOptions.AnyMessageType);
             e.ConfigureConsumer<CreateIncidentConsumer>(context);
-        });    
+        });
+
+        Console.WriteLine("ReceiveEndpoint INCIDENTS_QUEUE configuré");
+
     });
 });
 

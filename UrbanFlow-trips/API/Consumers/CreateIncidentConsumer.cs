@@ -1,33 +1,45 @@
+using System.Text.Json;
 using MassTransit;
 using UrbanFlow_trips.Application.Records;
 using UrbanFlow_trips.DTO.Incident;
 using UrbanFlow_trips.Infrastructure.Repository;
 
-namespace UrbanFlow_trips.API.Consumers;
-
-public class CreateIncidentConsumer(ILogger<CreateIncidentConsumer> logger, IIncidentRepository repo) :  IConsumer<NestJsMessage<CreateIncidentRecord>>
+public class CreateIncidentConsumer(ILogger<CreateIncidentConsumer> logger, IIncidentRepository repo)
+    : IConsumer<CreateIncidentRecord>
 {
-
-    public async Task Consume(ConsumeContext<NestJsMessage<CreateIncidentRecord>> context)
+    public async Task Consume(ConsumeContext<CreateIncidentRecord> context)
     {
-        if (context.Message.Pattern != "incident.created")
-            return;
+        Console.WriteLine(context.Headers.ToList().ToString());
+        Console.WriteLine(context.Message);
+        Console.WriteLine(context.SerializerContext);
 
-        var incident = context.Message.Data;
+
+        var rawBytes = context.ReceiveContext.GetBody();
+        var rawJson = System.Text.Encoding.UTF8.GetString(rawBytes);
+        Console.WriteLine(rawJson);
+
+        var wrapper = JsonSerializer.Deserialize<NestJsWrapper>(rawJson, 
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        if (wrapper?.Pattern != "incident.created" || wrapper.Data is null)
+        {
+            logger.LogWarning("Message ignoré : pattern ou data invalide");
+            return;
+        }
+
+        var incident = wrapper.Data;
 
         logger.LogInformation(
-            "Incident reçu : Id={IncidentId}, Site={RouteId}, Priorité={Priority}",
+            "Incident reçu : Id={IncidentId}, Site={SiteId}, Priorité={Priority}",
             incident.IncidentId, incident.SiteId, incident.Priority);
 
         foreach (var routeId in incident.AffectedRouteIds)
         {
-            CreateIncidentDto incidentDto = new CreateIncidentDto
+            await repo.CreateIncidentAsync(new CreateIncidentDto
             {
                 RouteId = routeId,
                 EstimateDuration = incident.EstimateDuration,
-            };
-
-            await repo.CreateIncidentAsync(incidentDto);
+            });
         }
     }
 }
