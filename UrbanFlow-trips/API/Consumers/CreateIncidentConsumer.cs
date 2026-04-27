@@ -22,9 +22,8 @@ public class CreateIncidentConsumer :  IConsumer<NestJsMessage<CreateIncidentRec
         _logger.LogInformation(
             "Incident reçu : Id={IncidentId}, Site={SiteId}, Priorité={Priority}",
             incident.IncidentId, incident.SiteId, incident.Priority);
-        
-        
 
+        
         await Task.CompletedTask;
     }
 }
