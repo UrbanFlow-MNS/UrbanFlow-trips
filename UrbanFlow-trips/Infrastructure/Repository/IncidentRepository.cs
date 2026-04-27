@@ -6,7 +6,7 @@ using UrbanFlow_trips.Models;
 
 namespace UrbanFlow_trips.Infrastructure.Repository;
 
-public class IncidentRepository(TripsDbContext dbContext, IMapper mapper)
+public class IncidentRepository(TripsDbContext dbContext, IMapper mapper) : IIncidentRepository
 {
     public async Task CreateIncidentAsync(CreateIncidentDto incidentDto)
     {
@@ -15,5 +15,10 @@ public class IncidentRepository(TripsDbContext dbContext, IMapper mapper)
         var incident = mapper.Map<Incident>(incidentDto);
         await dbContext.Incidents.AddAsync(incident);
         await dbContext.SaveChangesAsync();
+    }
+
+    public async Task<Incident?> DeleteIncidentAsync(int id)
+    {
+        return await dbContext.Incidents.FindAsync(id);
     }
 }

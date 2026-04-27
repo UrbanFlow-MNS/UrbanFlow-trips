@@ -1,9 +1,11 @@
 using MassTransit;
 using UrbanFlow_trips.Application.Records;
+using UrbanFlow_trips.DTO.Incident;
+using UrbanFlow_trips.Infrastructure.Repository;
 
 namespace UrbanFlow_trips.API.Consumers;
 
-public class CreateIncidentConsumer(ILogger logger) :  IConsumer<NestJsMessage<CreateIncidentRecord>>
+public class CreateIncidentConsumer(ILogger<CreateIncidentConsumer> logger, IIncidentRepository repo) :  IConsumer<NestJsMessage<CreateIncidentRecord>>
 {
 
     public async Task Consume(ConsumeContext<NestJsMessage<CreateIncidentRecord>> context)
@@ -14,10 +16,18 @@ public class CreateIncidentConsumer(ILogger logger) :  IConsumer<NestJsMessage<C
         var incident = context.Message.Data;
 
         logger.LogInformation(
-            "Incident reçu : Id={IncidentId}, Site={SiteId}, Priorité={Priority}",
+            "Incident reçu : Id={IncidentId}, Site={RouteId}, Priorité={Priority}",
             incident.IncidentId, incident.SiteId, incident.Priority);
 
-        
-        await Task.CompletedTask;
+        foreach (var routeId in incident.AffectedRouteIds)
+        {
+            CreateIncidentDto incidentDto = new CreateIncidentDto
+            {
+                RouteId = routeId,
+                EstimateDuration = incident.EstimateDuration,
+            };
+
+            await repo.CreateIncidentAsync(incidentDto);
+        }
     }
 }
