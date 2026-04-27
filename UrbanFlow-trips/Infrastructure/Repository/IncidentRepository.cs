@@ -21,4 +21,11 @@ public class IncidentRepository(TripsDbContext dbContext, IMapper mapper) : IInc
     {
         return await dbContext.Incidents.FindAsync(id);
     }
+
+    public int? EstimateMinutesLateByRouteId(int routeId)
+    {
+        int minutes = dbContext.Incidents.Find(routeId).EstimateDuration;
+        
+        return minutes;
+    }
 }
