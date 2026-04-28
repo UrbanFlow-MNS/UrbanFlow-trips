@@ -32,6 +32,10 @@
         <Protobuf Include="Protos\greet.proto" GrpcServices="Server"/>
         <Protobuf Include="Protos\vehicle.proto" GrpcServices="Client"/>
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Application\UseCases\" />
+    </ItemGroup>
 
 
 </Project>

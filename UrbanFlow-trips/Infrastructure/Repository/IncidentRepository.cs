@@ -19,13 +19,23 @@ public class IncidentRepository(TripsDbContext dbContext, IMapper mapper) : IInc
 
     public async Task<Incident?> DeleteIncidentAsync(int id)
     {
-        return await dbContext.Incidents.FindAsync(id);
-    }
+        var incident = await dbContext.Incidents.FindAsync(id);
+        if (incident is null) return null;
 
+        dbContext.Incidents.Remove(incident);
+        await dbContext.SaveChangesAsync();
+        return incident;
+    }
     public int? EstimateMinutesLateByRouteId(int routeId)
     {
-        int minutes = dbContext.Incidents.Find(routeId).EstimateDuration;
-        
+        int? minutes = dbContext.Incidents.Find(routeId)?.EstimateDuration;
+        if (minutes == null || minutes <= 0)
+            return null;
         return minutes;
+    }
+
+    public bool IsRouteIdImpacted(int routeId)
+    {
+        return dbContext.Incidents.Any(route => route.RouteId == routeId);
     }
 }
