@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using UrbanFlow_trips.Application.Records;
 using UrbanFlow_trips.Database;
 using UrbanFlow_trips.DTO.Incident;
@@ -26,12 +27,13 @@ public class IncidentRepository(TripsDbContext dbContext, IMapper mapper) : IInc
         await dbContext.SaveChangesAsync();
         return incident;
     }
-    public int? EstimateMinutesLateByRouteId(int routeId)
+    public async Task<int?> EstimateMinutesLateByRouteId(int routeId)
     {
-        int? minutes = dbContext.Incidents.Find(routeId)?.EstimateDuration;
-        if (minutes == null || minutes <= 0)
-            return null;
-        return minutes;
+        var incident = await dbContext.Incidents
+            .AsNoTracking()
+            .FirstOrDefaultAsync(i => i.RouteId == routeId);
+
+        return incident?.EstimateDuration > 0 ? incident.EstimateDuration : null;
     }
 
     public bool IsRouteIdImpacted(int routeId)
