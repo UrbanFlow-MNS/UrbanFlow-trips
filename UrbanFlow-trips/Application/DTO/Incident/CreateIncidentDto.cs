@@ -1,4 +1,4 @@
-namespace UrbanFlow_trips.DTO.Incident;
+namespace UrbanFlow_trips.Application.DTO.Incident;
 
 public class CreateIncidentDto
 {

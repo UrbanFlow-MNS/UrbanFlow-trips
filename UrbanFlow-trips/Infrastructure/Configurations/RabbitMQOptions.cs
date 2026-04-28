@@ -1,4 +1,4 @@
-namespace UrbanFlow_trips.Options;
+namespace UrbanFlow_trips.Infrastructure.Configurations;
 
 public class RabbitMQOptions
 {

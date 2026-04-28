@@ -1,4 +1,4 @@
-using UrbanFlow_trips.DTO;
+using UrbanFlow_trips.Application.DTO.Calendar;
 
 namespace UrbanFlow_trips.Domain.Interfaces;
 

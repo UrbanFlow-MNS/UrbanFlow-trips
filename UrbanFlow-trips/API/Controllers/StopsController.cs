@@ -1,50 +1,50 @@
 using Microsoft.AspNetCore.Mvc;
+using UrbanFlow_trips.Application.DTO.Stop;
 using UrbanFlow_trips.Domain.Interfaces;
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Repository;
 
-namespace UrbanFlow_trips.Controllers;
-
-[Route("api/[controller]")]
-[ApiController]
-public class StopsController(IStopRepository stopRepository) : ControllerBase
+namespace UrbanFlow_trips.API.Controllers
 {
-    [HttpPost("create")]
-    public async Task<IActionResult> CreateStop(CreateStopDto stopDto)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class StopsController(IStopRepository stopRepository) : ControllerBase
     {
-        await stopRepository.CreateStopAsync(stopDto);
-        return Ok(new
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateStop(CreateStopDto stopDto)
         {
-            message = "Stop created successfully"
-        });
-    }
+            await stopRepository.CreateStopAsync(stopDto);
+            return Ok(new
+            {
+                message = "Stop created successfully"
+            });
+        }
     
-    [HttpGet("all")]
-    public async Task<IActionResult> GetAllStops()
-    {
-        return Ok(await stopRepository.GetAllStopsAsync());
-    }
-    
-    [HttpPut("update/{id}")]
-    public async Task<IActionResult> UpdateStop(UpdateStopDto stopDto, int id)
-    {
-        await stopRepository.UpdateStopAsync(id, stopDto);
-        return Ok(new
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllStops()
         {
-            message = "Stop updated successfully"
-        });
-    }
+            return Ok(await stopRepository.GetAllStopsAsync());
+        }
     
-    [HttpDelete("delete/{id}")]
-    public async Task<IActionResult> DeleteStop(int id)
-    {
-        await stopRepository.DeleteStopAsync(id);
-        return Ok(new
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateStop(UpdateStopDto stopDto, int id)
         {
-            message = "Stop deleted successfully"
-        });
+            await stopRepository.UpdateStopAsync(id, stopDto);
+            return Ok(new
+            {
+                message = "Stop updated successfully"
+            });
+        }
+    
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteStop(int id)
+        {
+            await stopRepository.DeleteStopAsync(id);
+            return Ok(new
+            {
+                message = "Stop deleted successfully"
+            });
+        }
+    
+    
+    
     }
-    
-    
-    
 }

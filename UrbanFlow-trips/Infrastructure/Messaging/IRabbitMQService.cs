@@ -1,4 +1,4 @@
-namespace UrbanFlow_trips.Service;
+namespace UrbanFlow_trips.Infrastructure.Messaging;
 
 public interface IRabbitMQService
 {

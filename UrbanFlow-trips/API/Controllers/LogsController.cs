@@ -1,9 +1,8 @@
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Service;
+using UrbanFlow_trips.Application.DTO;
 
-namespace UrbanFlow_trips.Controllers;
+namespace UrbanFlow_trips.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]

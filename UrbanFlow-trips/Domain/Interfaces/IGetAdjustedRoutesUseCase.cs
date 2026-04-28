@@ -1,4 +1,5 @@
-using UrbanFlow_trips.DTO;
+using UrbanFlow_trips.Application.DTO.CompleteRoute;
+using UrbanFlow_trips.Application.DTO.Route;
 
 namespace UrbanFlow_trips.Domain.Interfaces;
 

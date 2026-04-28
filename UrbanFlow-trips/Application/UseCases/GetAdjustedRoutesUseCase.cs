@@ -1,8 +1,8 @@
+using UrbanFlow_trips.Application.DTO.CompleteRoute;
+using UrbanFlow_trips.Application.DTO.Route;
 using UrbanFlow_trips.Domain.Interfaces;
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Infrastructure.Repository;
-using UrbanFlow_trips.Repository;
 
+namespace UrbanFlow_trips.Application.UseCases;
 
 public class GetAdjustedRoutesUseCase(IRoutesRepository routesRepository, IIncidentRepository incidentRepository) : IGetAdjustedRoutesUseCase
 {
@@ -17,8 +17,7 @@ public class GetAdjustedRoutesUseCase(IRoutesRepository routesRepository, IIncid
 
             var delaySeconds = delayMinutes.Value * 60;
 
-            foreach (var trip in route.Trips)
-            foreach (var stop in trip.Stops)
+            foreach (var stop in route.Trips.SelectMany(trip => trip.Stops))
                 stop.ArrivalTime += delaySeconds;
         }
 

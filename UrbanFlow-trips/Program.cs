@@ -2,10 +2,6 @@ using System.Net.Mime;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
-using UrbanFlow_trips.Database;
-using UrbanFlow_trips.Options;
-using UrbanFlow_trips.Repository;
-using UrbanFlow_trips.Service;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Grpc.Core;
@@ -13,12 +9,15 @@ using Grpc.Net.Client.Configuration;
 using MassTransit;
 using UrbanFlow_trips;
 using UrbanFlow_trips.API.Consumers;
+using UrbanFlow_trips.API.GrpcServices;
 using UrbanFlow_trips.Application.Mapping;
+using UrbanFlow_trips.Application.UseCases;
 using UrbanFlow_trips.Application.Validators;
 using UrbanFlow_trips.Domain.Interfaces;
+using UrbanFlow_trips.Domain.Service;
+using UrbanFlow_trips.Infrastructure.Configurations;
+using UrbanFlow_trips.Infrastructure.Database;
 using UrbanFlow_trips.Infrastructure.Repository;
-using UrbanFlow_trips.Infrastucture.Repository;
-using UrbanFlow_trips.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);

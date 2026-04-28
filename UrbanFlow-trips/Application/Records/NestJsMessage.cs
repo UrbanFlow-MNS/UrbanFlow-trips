@@ -1,8 +1,7 @@
-using System.Text.Json.Serialization;
-using UrbanFlow_trips.Application.Records;
+namespace UrbanFlow_trips.Application.Records;
 
 public record NestJsWrapper()
 {
-    public string Pattern { get; set; }
-    public CreateIncidentRecord Data { get; set; }
+    public required string Pattern { get; set; }
+    public required CreateIncidentRecord Data { get; set; }
 }

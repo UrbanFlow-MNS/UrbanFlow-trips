@@ -1,6 +1,6 @@
 using AutoMapper;
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Models;
+using UrbanFlow_trips.Application.DTO.StopTrip;
+using UrbanFlow_trips.Domain.Entities;
 
 namespace UrbanFlow_trips.Application.Mapping;
 

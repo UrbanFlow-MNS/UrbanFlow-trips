@@ -1,6 +1,6 @@
 using Grpc.Core;
 
-namespace UrbanFlow_trips.Services;
+namespace UrbanFlow_trips.API.GrpcServices;
 
 public class VehicleService
 {

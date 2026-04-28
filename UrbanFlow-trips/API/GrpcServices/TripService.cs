@@ -1,11 +1,9 @@
-using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using UrbanFlow_trips;
+using UrbanFlow_trips.Application.DTO.CompleteRoute;
+using UrbanFlow_trips.Application.DTO.Route;
 using UrbanFlow_trips.Domain.Interfaces;
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Repository;
 
-namespace UrbanFlow_trips.Services;
+namespace UrbanFlow_trips.API.GrpcServices;
 
 public class TripService(IGetAdjustedRoutesUseCase useCase) : Tripper.TripperBase
 {

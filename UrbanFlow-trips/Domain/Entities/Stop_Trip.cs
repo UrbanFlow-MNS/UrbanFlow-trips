@@ -1,4 +1,4 @@
-namespace UrbanFlow_trips.Models;
+namespace UrbanFlow_trips.Domain.Entities;
 
 public class Stop_Trip
 {
@@ -8,6 +8,6 @@ public class Stop_Trip
     public int StopId { get; set; }
     public int StopSequence { get; set; }
     
-    public Trip Trip { get; set; }
-    public Stop_Times Stop { get; set; }
+    public required Trip Trip { get; set; }
+    public required Stop_Times Stop { get; set; }
 }

@@ -1,10 +1,10 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using UrbanFlow_trips.Application.DTO.Incident;
 using UrbanFlow_trips.Application.Records;
-using UrbanFlow_trips.Database;
+using UrbanFlow_trips.Domain.Entities;
 using UrbanFlow_trips.Domain.Interfaces;
-using UrbanFlow_trips.DTO.Incident;
-using UrbanFlow_trips.Models;
+using UrbanFlow_trips.Infrastructure.Database;
 
 namespace UrbanFlow_trips.Infrastructure.Repository;
 

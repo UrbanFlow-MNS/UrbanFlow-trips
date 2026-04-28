@@ -1,5 +1,5 @@
-using UrbanFlow_trips.DTO.Incident;
-using UrbanFlow_trips.Models;
+using UrbanFlow_trips.Application.DTO.Incident;
+using UrbanFlow_trips.Domain.Entities;
 
 namespace UrbanFlow_trips.Domain.Interfaces;
 

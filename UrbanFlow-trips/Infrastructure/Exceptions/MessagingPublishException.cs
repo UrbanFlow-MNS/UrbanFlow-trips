@@ -1,4 +1,4 @@
-namespace UrbanFlow_trips.Exceptions;
+namespace UrbanFlow_trips.Infrastructure.Exceptions;
 
 public class MessagingPublishException : System.Exception
 {

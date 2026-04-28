@@ -1,13 +1,13 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using UrbanFlow_trips.Database;
+using UrbanFlow_trips.API.GrpcServices;
+using UrbanFlow_trips.Application.DTO.CompleteRoute;
+using UrbanFlow_trips.Application.DTO.Route;
+using UrbanFlow_trips.Domain.Entities;
 using UrbanFlow_trips.Domain.Interfaces;
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Exceptions;
-using UrbanFlow_trips.Models;
-using UrbanFlow_trips.Services;
+using UrbanFlow_trips.Infrastructure.Database;
 
-namespace UrbanFlow_trips.Repository;
+namespace UrbanFlow_trips.Infrastructure.Repository;
 
 public class RoutesRepository(TripsDbContext dbContext, IMapper mapper, VehicleService vService) : IRoutesRepository
 {

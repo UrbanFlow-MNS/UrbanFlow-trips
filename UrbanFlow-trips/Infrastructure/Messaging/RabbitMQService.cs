@@ -1,12 +1,4 @@
-using System.Text;
-using System.Text.Json;
-using Microsoft.Extensions.Options;
-using RabbitMQ.Client;
-using UrbanFlow_trips.Exceptions;
-using UrbanFlow_trips.Options;
-using UrbanFlow_trips.Service;
-
-namespace UrbanFlow_trips.Infrastucture.Messaging;
+namespace UrbanFlow_trips.Infrastructure.Messaging;
 // Normalement je devrais plus en avoir besoin pcq MassTransit fait bien le taff + y a un conflit entre les versions de
 // MassTransit et de RabbitMQ donc je préfère garder MassTransit mais je garde quand même ce service en commentaire on sait jamais 
 /*

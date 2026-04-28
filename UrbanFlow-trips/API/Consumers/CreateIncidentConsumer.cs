@@ -1,11 +1,12 @@
 using System.Text.Json;
 using MassTransit;
+using UrbanFlow_trips.Application.DTO.Incident;
 using UrbanFlow_trips.Application.Records;
 using UrbanFlow_trips.Domain.Interfaces;
-using UrbanFlow_trips.DTO.Incident;
-using UrbanFlow_trips.Infrastructure.Repository;
 
-public class CreateIncidentConsumer(ILogger<CreateIncidentConsumer> logger, IIncidentRepository repo)
+namespace UrbanFlow_trips.API.Consumers;
+
+public abstract class CreateIncidentConsumer(ILogger<CreateIncidentConsumer> logger, IIncidentRepository repo)
     : IConsumer<CreateIncidentRecord>
 {
     public async Task Consume(ConsumeContext<CreateIncidentRecord> context)
