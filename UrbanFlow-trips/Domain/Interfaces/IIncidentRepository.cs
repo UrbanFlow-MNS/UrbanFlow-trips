@@ -1,10 +1,11 @@
 using UrbanFlow_trips.DTO.Incident;
 using UrbanFlow_trips.Models;
 
-namespace UrbanFlow_trips.Infrastructure.Repository;
+namespace UrbanFlow_trips.Domain.Interfaces;
 
 public interface IIncidentRepository
 {
     Task CreateIncidentAsync(CreateIncidentDto incidentDto);
     Task<Incident?> DeleteIncidentAsync(int id);
+    Task<int?> EstimateMinutesLateByRouteId(int routeId);
 }

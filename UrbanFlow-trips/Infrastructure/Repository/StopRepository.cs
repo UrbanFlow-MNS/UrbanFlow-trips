@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UrbanFlow_trips.Database;
+using UrbanFlow_trips.Domain.Interfaces;
 using UrbanFlow_trips.DTO;
 using UrbanFlow_trips.Exceptions;
 using UrbanFlow_trips.Models;

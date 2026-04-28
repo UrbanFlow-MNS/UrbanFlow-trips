@@ -1,6 +1,6 @@
 using UrbanFlow_trips.DTO;
 
-namespace UrbanFlow_trips.Repository;
+namespace UrbanFlow_trips.Domain.Interfaces;
 
 public interface ICalendarRepository
 {

@@ -15,6 +15,7 @@ using UrbanFlow_trips;
 using UrbanFlow_trips.API.Consumers;
 using UrbanFlow_trips.Application.Mapping;
 using UrbanFlow_trips.Application.Validators;
+using UrbanFlow_trips.Domain.Interfaces;
 using UrbanFlow_trips.Infrastructure.Repository;
 using UrbanFlow_trips.Infrastucture.Repository;
 using UrbanFlow_trips.Services;
@@ -48,6 +49,7 @@ builder.Services.AddScoped<IStopRepository, StopRepository>();
 builder.Services.AddScoped<ITripRepository, TripRepository>();
 builder.Services.AddScoped<IStopTripRepository, StopTripRepository>();
 builder.Services.AddScoped<IIncidentRepository, IncidentRepository>();
+builder.Services.AddScoped<IGetAdjustedRoutesUseCase, GetAdjustedRoutesUseCase>();
 builder.Services.AddSingleton<PrometheusService>();
 
 

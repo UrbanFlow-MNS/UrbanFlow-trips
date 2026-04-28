@@ -1,7 +1,6 @@
 using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Models;
 
-namespace UrbanFlow_trips.Repository;
+namespace UrbanFlow_trips.Domain.Interfaces;
 
 public interface IRoutesRepository
 {

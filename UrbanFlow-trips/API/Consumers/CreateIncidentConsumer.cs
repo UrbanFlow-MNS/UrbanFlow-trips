@@ -1,6 +1,7 @@
 using System.Text.Json;
 using MassTransit;
 using UrbanFlow_trips.Application.Records;
+using UrbanFlow_trips.Domain.Interfaces;
 using UrbanFlow_trips.DTO.Incident;
 using UrbanFlow_trips.Infrastructure.Repository;
 

@@ -1,22 +1,17 @@
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using UrbanFlow_trips;
+using UrbanFlow_trips.Domain.Interfaces;
 using UrbanFlow_trips.Repository;
 
 namespace UrbanFlow_trips.Services;
 
-public class TripService : Tripper.TripperBase
+public class TripService(IGetAdjustedRoutesUseCase useCase) : Tripper.TripperBase
 {
-    private readonly IRoutesRepository _repository;
-
-    public TripService(IRoutesRepository repository)
-    {
-        _repository = repository;
-    }
-
+    
     public override async Task<AllCompleteRoute> FindAll(Empty request, ServerCallContext context)
     {
-        var routes = await _repository.GetAllCompleteRoutesAsync();
+        var routes = await useCase.ExecuteAsync();
         
         var response = new AllCompleteRoute();
 
@@ -62,7 +57,7 @@ public class TripService : Tripper.TripperBase
 
     public override async Task<AllCompleteRoute> FindById(RouteRequest request, ServerCallContext context)
     {
-        var routes = await _repository.GetCompleteRouteByIdAsync(request.Id);
+        var routes = await useCase.ExecuteAsync(request.Id);
         
         var response = new AllCompleteRoute();
 

@@ -1,4 +1,5 @@
 using FluentValidation;
+using UrbanFlow_trips.Domain.Interfaces;
 using UrbanFlow_trips.DTO;
 using UrbanFlow_trips.Repository;
 
