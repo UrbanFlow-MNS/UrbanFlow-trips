@@ -20,14 +20,6 @@ public class RoutesController(IRoutesRepository routesRepository, IGetAdjustedRo
         });
     }
 
-    [HttpGet("filter")]
-    public async Task<IActionResult> FilterRoutes([FromQuery] RouteFilterDto filter)
-    {
-        var routes = await routesRepository.GetRoutesFilter(filter);
-        if (!routes.Any()) return NotFound();
-        return Ok(routes);
-    }
-
     [HttpGet("all")]
     public async Task<IActionResult> GetAllRoutes()
     {
