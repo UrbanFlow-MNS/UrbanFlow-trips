@@ -23,121 +23,77 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper, VehicleS
         return await dbContext.Routes.FindAsync(id);
     }
 
-    public async Task<List<GetCompleteRouteDto>> GetAllCompleteRoutesAsync()
-    {
-        var routes = await dbContext.Routes
-            .AsNoTracking()
-            .Select(r => new
-            {
-                r.RouteId,
-                r.RouteShortName,
-                r.RouteLongName,
-                r.RouteTypeId,
-                Trips = r.Trips.Select(t => new GetTripDetailsDto
-                {
-                    TripId = t.TripId,
-                    Stops = t.StopTrips
-                        .OrderBy(st => st.StopSequence)
-                        .Select(st => new GetStopDetailsDto
-                        {
-                            StopId = st.StopId,
-                            StopName = st.Stop.StopName,
-                            Longitude = st.Stop.StopLong,
-                            Latitude = st.Stop.StopLat,
-                            ArrivalTime = st.ArrivalTime.ToTimeSpan().TotalSeconds,
-                            SequenceOrder = st.StopSequence
-                        })
-                        .ToList()
-                }).ToList()
-            })
-            .ToListAsync();
+    public Task<List<GetCompleteRouteDto>> GetAllCompleteRoutesAsync()
+        => GetRoutesFilter(new RouteFilterDto());
 
-        var tasks = routes.Select(async r => new GetCompleteRouteDto
-        {
-            RouteId = r.RouteId,
-            RouteShortName = r.RouteShortName,
-            RouteLongName = r.RouteLongName,
-            RouteTypeName = await vService.GetVehicleNameByRouteTypeIdAsync(r.RouteTypeId) ?? "null",
-            Trips = r.Trips
-        });
-
-        return (await Task.WhenAll(tasks)).ToList();
-    }
     
-    public async Task<List<GetCompleteRouteDto>> GetCompleteRouteByIdAsync( int id)
-    {
-        var routes = await dbContext.Routes
-            .AsNoTracking()
-            .Where(x =>  x.AgencyId == id)
-            .Select(r => new
+    public Task<List<GetCompleteRouteDto>> GetCompleteRouteByIdAsync(int routeId)
+        => GetRoutesFilter(new RouteFilterDto { RouteId = routeId });
+
+
+   public async Task<List<GetCompleteRouteDto>> GetRoutesFilter(RouteFilterDto filter)
+{
+    ArgumentNullException.ThrowIfNull(filter);
+
+    var query = dbContext.Routes.AsNoTracking().AsQueryable();
+
+    if (filter.AgencyId != null)
+        query = query.Where(route => route.AgencyId == filter.AgencyId);
+
+    if (filter.RouteTypeId != null)
+        query = query.Where(route => route.RouteTypeId == filter.RouteTypeId);
+
+    if (filter.RouteId != null)
+        query = query.Where(route => route.RouteId == filter.RouteId);
+
+    var routes = await query
+        .Select(r => new
+        {
+            r.RouteId,
+            r.RouteTypeId,
+            r.RouteShortName,
+            r.RouteLongName,
+            Trips = r.Trips.Select(t => new
             {
-                r.RouteId,
-                r.RouteShortName,
-                r.RouteLongName,
-                r.RouteTypeId,
-                Trips = r.Trips.Select(t => new GetTripDetailsDto
-                {
-                    TripId = t.TripId,
-                    Stops = t.StopTrips
-                        .OrderBy(st => st.StopSequence)
-                        .Select(st => new GetStopDetailsDto
-                        {
-                            StopId = st.StopId,
-                            StopName = st.Stop.StopName,
-                            Longitude = st.Stop.StopLong,
-                            Latitude = st.Stop.StopLat,
-                            ArrivalTime = st.ArrivalTime.ToTimeSpan().TotalSeconds,
-                            SequenceOrder = st.StopSequence
-                        })
-                        .ToList()
-                }).ToList()
+                t.TripId,
+                Stops = t.StopTrips
+                    .OrderBy(st => st.StopSequence)
+                    .Select(st => new
+                    {
+                        st.StopId,
+                        st.Stop.StopName,
+                        st.Stop.StopLong,
+                        st.Stop.StopLat,
+                        st.ArrivalTime,
+                        st.StopSequence
+                    })
             })
-            .ToListAsync();
+        })
+        .ToListAsync();
 
-        var tasks = routes.Select(async r => new GetCompleteRouteDto
-        {
-            RouteId = r.RouteId,
-            RouteShortName = r.RouteShortName,
-            RouteLongName = r.RouteLongName,
-            RouteTypeName = await vService.GetVehicleNameByRouteTypeIdAsync(r.RouteTypeId) ?? "null",
-            Trips = r.Trips
-        });
-
-        return (await Task.WhenAll(tasks)).ToList();
-    }
-    
-
-
-    public async Task<List<GetRouteDto>> GetRoutesFilter(RouteFilterDto filter)
+    var tasks = routes.Select(async r => new GetCompleteRouteDto
     {
-        ArgumentNullException.ThrowIfNull(filter);
-
-        var query = dbContext.Routes.AsNoTracking().AsQueryable();
-
-        if (filter.AgencyId != null)
-            query = query.Where(route => route.AgencyId == filter.AgencyId);
-
-        if (filter.RouteTypeId != null)
-            query = query.Where(route => route.RouteTypeId == filter.RouteTypeId);
-
-        if (filter.RouteId != null)
-            query = query.Where(route => route.RouteId == filter.RouteId);
-
-        var routes = await query
-            .Select(r => new { r.RouteId, r.AgencyId, r.RouteTypeId, r.RouteShortName, r.RouteLongName })
-            .ToListAsync();
-
-        var tasks = routes.Select(async r => new GetRouteDto
+        RouteId = r.RouteId,
+        RouteShortName = r.RouteShortName,
+        RouteLongName = r.RouteLongName,
+        RouteTypeName = await vService.GetVehicleNameByRouteTypeIdAsync(r.RouteTypeId) ?? "null",
+        Trips = r.Trips.Select(t => new GetTripDetailsDto
         {
-            RouteId = r.RouteId,
-            AgencyId = r.AgencyId,
-            RouteShortName = r.RouteShortName,
-            RouteLongName = r.RouteLongName,
-            RouteTypeName = await vService.GetVehicleNameByRouteTypeIdAsync(r.RouteTypeId) ?? "null"
-        });
+            TripId = t.TripId,
+            Stops = t.Stops.Select(st => new GetStopDetailsDto
+            {
+                StopId        = st.StopId,
+                StopName      = st.StopName,
+                Longitude     = st.StopLong,
+                Latitude      = st.StopLat,
+                ArrivalTime   = st.ArrivalTime.ToTimeSpan().TotalSeconds,
+                SequenceOrder = st.StopSequence
+            })
+        }).ToList()
+    });
 
-        return (await Task.WhenAll(tasks)).ToList();
-    }
+    return (await Task.WhenAll(tasks)).ToList();
+}
 
     public async Task UpdateRouteAsync(int id, UpdateRouteDto routeDto)
     {

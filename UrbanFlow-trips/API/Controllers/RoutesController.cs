@@ -47,9 +47,9 @@ public class RoutesController(IRoutesRepository routesRepository, IGetAdjustedRo
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetRoutes([FromQuery] int? agencyId)
+    public async Task<IActionResult> GetRoutes([FromQuery] RouteFilterDto filter)
     {
-        var routes = await useCase.ExecuteAsync(agencyId);
+        var routes = await useCase.ExecuteAsync(filter);
         return Ok(routes);
     }
     

@@ -4,5 +4,5 @@ namespace UrbanFlow_trips.Domain.Interfaces;
 
 public interface IGetAdjustedRoutesUseCase
 {
-    Task<List<GetCompleteRouteDto>> ExecuteAsync(int? agencyId = null);
+    Task<List<GetCompleteRouteDto>> ExecuteAsync(RouteFilterDto filter);
 }

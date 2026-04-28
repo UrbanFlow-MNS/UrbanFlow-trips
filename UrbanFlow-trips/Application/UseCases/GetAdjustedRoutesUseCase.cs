@@ -6,11 +6,9 @@ using UrbanFlow_trips.Repository;
 
 public class GetAdjustedRoutesUseCase(IRoutesRepository routesRepository, IIncidentRepository incidentRepository) : IGetAdjustedRoutesUseCase
 {
-    public async Task<List<GetCompleteRouteDto>> ExecuteAsync(int? agencyId = null)
+    public async Task<List<GetCompleteRouteDto>> ExecuteAsync(RouteFilterDto filter)
     {
-        var routes = agencyId.HasValue
-            ? await routesRepository.GetCompleteRouteByIdAsync(agencyId.Value)
-            : await routesRepository.GetAllCompleteRoutesAsync();
+        var routes = await routesRepository.GetRoutesFilter(filter);
 
         foreach (var route in routes)
         {
@@ -21,7 +19,7 @@ public class GetAdjustedRoutesUseCase(IRoutesRepository routesRepository, IIncid
 
             foreach (var trip in route.Trips)
             foreach (var stop in trip.Stops)
-                stop.ArrivalTime += delaySeconds;  
+                stop.ArrivalTime += delaySeconds;
         }
 
         return routes;
