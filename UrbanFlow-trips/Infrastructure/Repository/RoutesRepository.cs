@@ -68,13 +68,13 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper, VehicleS
                 TripId = t.TripId,
                 Stops = t.Stops.Select(st => new GetStopDetailsDto
                 {
-                    StopId        = st.StopId,
-                    StopName      = st.StopName,
-                    Longitude     = st.StopLong,
-                    Latitude      = st.StopLat,
-                    ArrivalTime   = st.ArrivalTime.ToTimeSpan().TotalSeconds,
+                    StopId = st.StopId,
+                    StopName = st.StopName,
+                    Longitude = st.StopLong,
+                    Latitude = st.StopLat,
+                    ArrivalTime = st.ArrivalTime.ToTimeSpan().TotalSeconds,
                     SequenceOrder = st.StopSequence
-                })
+                }).ToList()
             }).ToList()
         });
     return (await Task.WhenAll(tasks)).ToList();
