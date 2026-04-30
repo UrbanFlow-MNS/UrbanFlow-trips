@@ -1,5 +1,5 @@
 using FluentValidation;
-using UrbanFlow_trips.DTO;
+using UrbanFlow_trips.Application.DTO.Route;
 
 namespace UrbanFlow_trips.Application.Validators;
 

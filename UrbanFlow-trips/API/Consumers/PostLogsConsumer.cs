@@ -1,5 +1,5 @@
 using MassTransit;
-using UrbanFlow_trips.DTO;
+using UrbanFlow_trips.Application.DTO;
 
 namespace UrbanFlow_trips.API.Consumers;
 

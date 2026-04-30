@@ -1,8 +1,7 @@
-using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
-using UrbanFlow_trips.Models;
+using UrbanFlow_trips.Domain.Entities;
 
-namespace UrbanFlow_trips.Database;
+namespace UrbanFlow_trips.Infrastructure.Database;
 
 public class TripsDbContext : DbContext
 {

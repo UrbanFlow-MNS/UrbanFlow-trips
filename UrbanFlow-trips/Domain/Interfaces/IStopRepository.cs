@@ -1,6 +1,6 @@
-using UrbanFlow_trips.DTO;
+using UrbanFlow_trips.Application.DTO.Stop;
 
-namespace UrbanFlow_trips.Repository;
+namespace UrbanFlow_trips.Domain.Interfaces;
 
 public interface IStopRepository
 {

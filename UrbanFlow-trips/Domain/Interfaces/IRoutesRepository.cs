@@ -1,13 +1,13 @@
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Models;
+using UrbanFlow_trips.Application.DTO.CompleteRoute;
+using UrbanFlow_trips.Application.DTO.Route;
 
-namespace UrbanFlow_trips.Repository;
+namespace UrbanFlow_trips.Domain.Interfaces;
 
 public interface IRoutesRepository
 {
     Task CreateRouteAsync(CreateRouteDto routeDto);
     Task<List<GetCompleteRouteDto>> GetCompleteRouteByIdAsync(int id);
-    Task<List<GetRouteDto>> GetRoutesFilter(RouteFilterDto filter);
+    Task<List<GetCompleteRouteDto>> GetRoutesFilter(RouteFilterDto filter);
     Task<List<GetRouteDto>> GetAllRoutesAsync();
     Task UpdateRouteAsync(int id, UpdateRouteDto routeDto);
     Task DeleteRouteAsync(int id);

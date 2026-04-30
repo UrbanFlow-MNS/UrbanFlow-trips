@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using UrbanFlow_trips.Domain.Service;
 
-namespace UrbanFlow_trips.Controllers;
+namespace UrbanFlow_trips.API.Controllers;
 
 [ApiController]
 [Route("metrics")]

@@ -1,7 +1,7 @@
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Models;
+using UrbanFlow_trips.Application.DTO.Trip;
+using UrbanFlow_trips.Domain.Entities;
 
-namespace UrbanFlow_trips.Repository;
+namespace UrbanFlow_trips.Domain.Interfaces;
 
 public interface ITripRepository
 {

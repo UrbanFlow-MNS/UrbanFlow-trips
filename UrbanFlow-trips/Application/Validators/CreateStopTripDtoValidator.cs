@@ -1,6 +1,6 @@
 using FluentValidation;
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Repository;
+using UrbanFlow_trips.Application.DTO.StopTrip;
+using UrbanFlow_trips.Domain.Interfaces;
 
 namespace UrbanFlow_trips.Application.Validators;
 

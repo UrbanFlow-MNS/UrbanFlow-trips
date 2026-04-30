@@ -1,11 +1,12 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using UrbanFlow_trips.Database;
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Exceptions;
-using UrbanFlow_trips.Models;
+using UrbanFlow_trips.Application.DTO.StopTrip;
+using UrbanFlow_trips.Domain.Entities;
+using UrbanFlow_trips.Domain.Interfaces;
+using UrbanFlow_trips.Infrastructure.Database;
+using UrbanFlow_trips.Infrastructure.Exceptions;
 
-namespace UrbanFlow_trips.Repository;
+namespace UrbanFlow_trips.Infrastructure.Repository;
 
 public class StopTripRepository(TripsDbContext dbcontext, IMapper mapper, IStopRepository stopRepository) : IStopTripRepository
 {

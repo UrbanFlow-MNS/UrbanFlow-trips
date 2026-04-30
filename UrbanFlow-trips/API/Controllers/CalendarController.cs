@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Repository;
+using UrbanFlow_trips.Application.DTO.Calendar;
+using UrbanFlow_trips.Domain.Interfaces;
 
-namespace UrbanFlow_trips.Controllers;
+namespace UrbanFlow_trips.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

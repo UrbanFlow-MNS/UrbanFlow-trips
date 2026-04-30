@@ -1,4 +1,4 @@
-namespace UrbanFlow_trips.Models;
+namespace UrbanFlow_trips.Domain.Entities;
 
 public class Routes
 {

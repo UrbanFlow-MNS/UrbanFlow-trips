@@ -1,5 +1,7 @@
 using Prometheus;
 
+namespace UrbanFlow_trips.Domain.Service;
+
 public class PrometheusService
 {
     public PrometheusService()

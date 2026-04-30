@@ -1,4 +1,6 @@
-namespace UrbanFlow_trips.DTO;
+using UrbanFlow_trips.Application.DTO.StopTrip;
+
+namespace UrbanFlow_trips.Application.DTO.Trip;
 
 public class CreateTripDto
 {

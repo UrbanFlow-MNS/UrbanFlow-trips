@@ -1,13 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
-using UrbanFlow_trips.DTO;
-using UrbanFlow_trips.Repository;
-using UrbanFlow_trips.Services;
+using UrbanFlow_trips.Application.DTO.Route;
+using UrbanFlow_trips.Domain.Interfaces;
 
-namespace UrbanFlow_trips.Controllers;
+namespace UrbanFlow_trips.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class RoutesController(IRoutesRepository routesRepository, VehicleService vehicleService) : ControllerBase
+public class RoutesController(IRoutesRepository routesRepository, IGetAdjustedRoutesUseCase useCase) : ControllerBase
 {
     [HttpPost("create")]
     public async Task<IActionResult> CreateAgency(CreateRouteDto routeDto)
@@ -17,14 +16,6 @@ public class RoutesController(IRoutesRepository routesRepository, VehicleService
         {
             message = "Route created successfully"
         });
-    }
-
-    [HttpGet("filter")]
-    public async Task<IActionResult> FilterRoutes([FromQuery] RouteFilterDto filter)
-    {
-        var routes = await routesRepository.GetRoutesFilter(filter);
-        if (!routes.Any()) return NotFound();
-        return Ok(routes);
     }
 
     [HttpGet("all")]
@@ -45,6 +36,13 @@ public class RoutesController(IRoutesRepository routesRepository, VehicleService
         return Ok(await routesRepository.GetAllCompleteRoutesAsync());
     }
     
+    [HttpGet]
+    public async Task<IActionResult> GetRoutes([FromQuery] RouteFilterDto filter)
+    {
+        var routes = await useCase.ExecuteAsync(filter);
+        return Ok(routes);
+    }
+    
     [HttpPut("update/{id}")]
     public async Task<IActionResult> UpdateRoute(UpdateRouteDto routeDto, int id)
     {
@@ -63,14 +61,6 @@ public class RoutesController(IRoutesRepository routesRepository, VehicleService
         {
             message = "Route deleted successfully"
         });
-    }
-    
-    
-    [HttpGet("test/{id}")]
-    public async Task<IActionResult> Test(int id)
-    {
-        var vehicle = await vehicleService.GetVehicleNameByRouteTypeIdAsync(id);
-        return Ok(vehicle);
     }
     
     
