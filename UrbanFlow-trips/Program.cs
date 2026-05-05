@@ -79,7 +79,7 @@ builder.Services.AddScoped<VehicleService>();
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<PostLogsConsumer>();
-    x.AddConsumer<CreateIncidentConsumer>();
+    x.AddConsumer<IncidentConsumer>();
 
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -102,7 +102,7 @@ builder.Services.AddMassTransit(x =>
             e.Durable = true;
             e.DefaultContentType = new ContentType("application/json");
             e.UseRawJsonDeserializer(RawSerializerOptions.AnyMessageType);
-            e.ConfigureConsumer<CreateIncidentConsumer>(context);
+            e.ConfigureConsumer<IncidentConsumer>(context);
         });
 
         Console.WriteLine("ReceiveEndpoint INCIDENTS_QUEUE configuré");
