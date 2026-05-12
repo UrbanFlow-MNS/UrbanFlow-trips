@@ -28,7 +28,7 @@ public class IncidentConsumer(ILogger<IncidentConsumer> logger, IIncidentReposit
                 break;
 
             case "incident.closed":
-                await HandleClosed(wrapper.Data, logger, repo);
+                await HandleRemoved(wrapper.Data, logger, repo);
                 break;
 
             default:
@@ -47,13 +47,14 @@ public class IncidentConsumer(ILogger<IncidentConsumer> logger, IIncidentReposit
         {
             await repo.CreateIncidentAsync(new CreateIncidentDto
             {
+                IncidentId = incident.IncidentId,
                 RouteId = routeId,
                 EstimateDuration = incident.EstimateDuration,
             });
         }
     }
 
-    private static async Task HandleClosed(CreateIncidentRecord incident, ILogger logger, IIncidentRepository repo)
+    private static async Task HandleRemoved(CreateIncidentRecord incident, ILogger logger, IIncidentRepository repo)
     {
         logger.LogInformation(
             "Incident fermé : Id={IncidentId}", incident.IncidentId);
