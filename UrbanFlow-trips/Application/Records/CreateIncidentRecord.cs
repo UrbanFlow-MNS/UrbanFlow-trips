@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace UrbanFlow_trips.Application.Records;
 
-public abstract record CreateIncidentRecord
+public record CreateIncidentRecord
 {
     public int IncidentId { get; init; }
     public int SiteId { get; init; }

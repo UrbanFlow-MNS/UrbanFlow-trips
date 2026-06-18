@@ -5,10 +5,11 @@ using UrbanFlow_trips.Application.Records;
 using UrbanFlow_trips.Domain.Interfaces;
 
 namespace UrbanFlow_trips.API.Consumers;
-public class IncidentConsumer(ILogger<IncidentConsumer> logger, IIncidentRepository repo) : IConsumer<object> 
+public class IncidentConsumer(ILogger<IncidentConsumer> logger, IIncidentRepository repo) :IConsumer<CreateIncidentRecord>
 {
-    public async Task Consume(ConsumeContext<object> context)
+    public async Task Consume(ConsumeContext<CreateIncidentRecord> context)
     {
+        Console.WriteLine("Received Incident record");
         var rawJson = System.Text.Encoding.UTF8.GetString(
             context.ReceiveContext.GetBody());
 
