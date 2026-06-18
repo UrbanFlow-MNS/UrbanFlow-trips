@@ -63,7 +63,7 @@ public class TripsDbContext : DbContext
                 .IsUnique();
             
             modelBuilder.Entity<Incident>()
-                .HasKey(i => i.IncidentId);
+                .HasKey(i => i.Id);
             
             
 
