@@ -90,13 +90,6 @@ builder.Services.AddMassTransit(x =>
         });
         
         
-        cfg.ReceiveEndpoint("LOGS_QUEUE", e =>
-        {
-            e.Durable = false;
-            e.ConfigureConsumer<PostLogsConsumer>(context);
-        });
-        
-        
         cfg.ReceiveEndpoint("INCIDENTS_QUEUE", e =>
         {
             e.Durable = true;
@@ -157,3 +150,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+public partial class Program { }

@@ -82,20 +82,20 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper, VehicleS
 
     public async Task<List<GetCompleteRouteDto>> GetRoutesFilter(RouteFilterDto filter)
     {
-    ArgumentNullException.ThrowIfNull(filter);
+        ArgumentNullException.ThrowIfNull(filter);
 
-    var query = dbContext.Routes.AsNoTracking().AsQueryable();
+        var query = dbContext.Routes.AsNoTracking().AsQueryable();
 
-    if (filter.AgencyId != null)
-        query = query.Where(route => route.AgencyId == filter.AgencyId);
+        if (filter.AgencyId != null)
+            query = query.Where(route => route.AgencyId == filter.AgencyId);
 
-    if (filter.RouteTypeId != null)
-        query = query.Where(route => route.RouteTypeId == filter.RouteTypeId);
+        if (filter.RouteTypeId != null)
+            query = query.Where(route => route.RouteTypeId == filter.RouteTypeId);
 
-    if (filter.RouteId != null)
-        query = query.Where(route => route.RouteId == filter.RouteId);
+        if (filter.RouteId != null)
+            query = query.Where(route => route.RouteId == filter.RouteId);
 
-    return await MappingRoutes(query);
+        return await MappingRoutes(query);
     }
 
     public async Task UpdateRouteAsync(int id, UpdateRouteDto routeDto)
