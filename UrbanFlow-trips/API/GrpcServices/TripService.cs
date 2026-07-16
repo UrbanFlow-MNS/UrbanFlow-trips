@@ -48,7 +48,7 @@ public class TripService(IGetAdjustedRoutesUseCase useCase) : Tripper.TripperBas
                         StopName = stop.StopName ?? "",
                         Longitude = (double)stop.Longitude,
                         Latitude = (double)stop.Latitude,
-                        ArrivalTime = stop.ArrivalTime.ToString() ?? "",
+                        ArrivalTime = stop.CurrentArrivalTime.ToString() ?? "",
                         SequenceOrder = stop.SequenceOrder
                     });
                 }

@@ -72,7 +72,9 @@ public class RoutesRepository(TripsDbContext dbContext, IMapper mapper, VehicleS
                     StopName = st.StopName,
                     Longitude = st.StopLong,
                     Latitude = st.StopLat,
-                    ArrivalTime = st.ArrivalTime.ToTimeSpan().TotalSeconds,
+                    CurrentArrivalTime = st.ArrivalTime.ToTimeSpan().TotalSeconds,
+                    BaseArrivalTime = st.ArrivalTime.ToTimeSpan().TotalSeconds,
+                    Delay = 0,
                     SequenceOrder = st.StopSequence
                 }).ToList()
             }).ToList()

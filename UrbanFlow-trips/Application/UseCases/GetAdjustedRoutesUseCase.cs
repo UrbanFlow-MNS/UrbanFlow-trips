@@ -18,7 +18,15 @@ public class GetAdjustedRoutesUseCase(IRoutesRepository routesRepository, IIncid
             var delaySeconds = delayMinutes.Value * 60;
 
             foreach (var stop in route.Trips.SelectMany(trip => trip.Stops))
-                stop.ArrivalTime += delaySeconds;
+            {
+                stop.CurrentArrivalTime += delaySeconds;
+                stop.Delay += delaySeconds;
+                
+
+            }
+            
+            
+            
         }
 
         return routes;
