@@ -1,3 +1,4 @@
+using System.Security.Cryptography.Xml;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UrbanFlow_trips.Application.DTO.Incident;
@@ -21,7 +22,7 @@ public class IncidentRepository(TripsDbContext dbContext, IMapper mapper) : IInc
 
     public async Task<Incident?> DeleteIncidentAsync(int id)
     {
-        var incident = await dbContext.Incidents.FindAsync(id);
+        var incident = await dbContext.Incidents.Where(x => x.IncidentId == id).FirstOrDefaultAsync();
         if (incident is null) return null;
 
         dbContext.Incidents.Remove(incident);
